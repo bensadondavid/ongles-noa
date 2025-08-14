@@ -146,3 +146,13 @@
     width: 30px;
     height: 30px;
 }
+
+
+/* Login */
+
+.login{
+    background-color: #C2B9B2;
+    height: 100dvh;
+    width: 100dvw;
+    font-family: "BlackGold";
+}
