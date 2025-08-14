@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { lazy, Suspense } from "react"
 
-const Home = lazy(()=>import('./Pages/Home'))
+const Entry = lazy(()=>import('./Pages/Entry'))
 
 function App() {
 
@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Suspense>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Entry />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom"
 
-function Home() {
+function Infos() {
 
   return (
-    <div className="home">
+    <div className="infos">
 
     </div>
   )
 
 }
 
-export default Home
+export default Infos
