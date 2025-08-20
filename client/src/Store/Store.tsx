@@ -2,7 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import languageReducer from "./LanguageSlice";
-import userReducer from './userSlice'
+import userReducer from './UserSlice'
 
 const rootReducer = combineReducers({
   language: languageReducer,
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["language, user"],
+  whitelist: ["language"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

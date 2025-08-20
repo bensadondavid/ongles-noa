@@ -149,9 +149,73 @@
 
 /* Login */
 
+.back{
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: #9F9790;
+    font-family: 'BlackGold';
+    text-decoration: none;
+    border: solid 1px #9F9790;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 15px;
+}
+
 .login{
     background-color: #C2B9B2;
     height: 100dvh;
     width: 100dvw;
     font-family: "BlackGold";
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.login h1{
+    color: white;
+}
+
+.login form{
+    height: 40%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.login form input{
+    width: 180px;
+    padding: 7px 15px;
+    border: #9F9790 solid 3px;
+    border-radius: 20px;
+    color: #9F9790;
+}
+
+.login form input::placeholder{
+    text-align: center;
+    font-family: 'BlackGold';
+    color: #9F9790;
+}
+
+.login form button{
+    padding: 10px 20px;
+    border : solid #9F9790 3px;
+    border-radius: 20px;
+    color: #9F9790;
+    background-color: #fff;
+    font-family: "BlackGold";
+}
+
+.login-message{
+    text-align: center;
+    color: white;
+    font-size: large;
+    font-family: 'BlackGold';
+    margin-top: 30px;
 }
