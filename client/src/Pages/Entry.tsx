@@ -1,6 +1,7 @@
-import EmojiGoogle from "../assets/svg/EmojiGoogle"
 import { useDispatch, useSelector } from "react-redux"
 import { changeLanguage } from '../Store/LanguageSlice'
+import { Link, useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
 function Entry() {
 
@@ -23,9 +24,9 @@ function Entry() {
       <p className="entry-bensadon">Bensadon</p>
     </div>
     <div className="entry-connections">
-      <button>{languageState === 'french' ? "Se connecter" : languageState === 'hebrew' ? "להתחבר" : null}</button>
-      <button>{languageState === 'french' ? (<>Se connecter avec google <EmojiGoogle /></>) : languageState === 'hebrew' ? (<><EmojiGoogle/> Google להתחבר עם</>) : null}</button>
-      <button>{languageState === 'french' ? "S'inscrire" : languageState === 'hebrew' ? "להרשם" : null}</button>
+      <Link to='login'>{languageState === 'french' ? "Se connecter" : languageState === 'hebrew' ? "להתחבר" : null}</Link>
+      <Link to='sign-up'>{languageState === 'french' ? "S'inscrire" : languageState === 'hebrew' ? "להרשם" : null}</Link>
+      <Link to='galery'>{languageState === 'french' ? "Galerie" : languageState === 'hebrew' ? "גלריה" : null}</Link>
     </div>
 
     <div className="entry-social-networks">

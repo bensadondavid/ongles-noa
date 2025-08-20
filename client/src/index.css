@@ -65,6 +65,7 @@
     border-bottom-left-radius: 22px;
     border: 3px solid #9F9790;
     border-right: none;
+    background-color: #fff;
 }
 
 .entry-languages button:nth-child(2){
@@ -72,6 +73,7 @@
     border-top-right-radius: 22px;
     border-bottom-right-radius: 22px;
     border: 3px solid #9F9790;
+    background-color: #fff;
 }
 
 .entry-languages .flag{
@@ -111,21 +113,18 @@
     gap: 10px;
 }
 
-.entry-connections button{
-    width: 220px;
-    padding: 10px;
+.entry-connections a{
+    text-decoration: none;
+    width: 180px;
+    height: 30px;
     border-radius: 20px;
     color: #9F9790;
-    border: #9F9790 solid 3px
-}
-
-.entry-connections button:nth-child(2){
+    border: #9F9790 solid 3px;
+    background-color: #fff;
+    font-size: medium;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    flex-wrap: nowrap;
-    gap: 5px;
 }
 
 .entry-social-networks{
