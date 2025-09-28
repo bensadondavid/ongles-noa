@@ -21,7 +21,7 @@ const logIn = async(req, res)=>{
         if(!verifyPassword){
             return res.status(400).json({message : 'Invalid credentials'})
         }
-        const accessToken = jwt.sign({'userId' : String(user.id)}, secret, {expiresIn : '7d'})
+        const accessToken = jwt.sign({'userId' : String(user.id)}, secret, {expiresIn : '2h'})
         const refreshToken = crypto.randomBytes(64).toString('hex')
         const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
         const userAgent = req.headers['user-agent'] || "unknown"

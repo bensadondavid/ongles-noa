@@ -4,7 +4,7 @@ import { addUser } from "../Store/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 
 interface FormData{
-  email : string,
+  mailOrPhone : string,
   password : string
 }
 
@@ -17,7 +17,7 @@ function Login() {
   const navigate = useNavigate()
 
   const [formData, setFormData] = useState<FormData>({
-    email : '',
+    mailOrPhone : '',
     password : ''
   })
 
@@ -36,6 +36,7 @@ function Login() {
         headers : {
           'Content-Type' : 'application/json',
         },
+        credentials: 'include', 
         body : JSON.stringify(formData)
       })
       const data = await response.json()
@@ -43,6 +44,7 @@ function Login() {
         return setMessage(data.message)
       }
       dispatch(addUser({id : data.user.id, email : data.user.email}))
+      localStorage.setItem('access-token', data.accessToken)
       navigate('/prestations')
     }
     catch(error){
@@ -58,7 +60,7 @@ function Login() {
         <Link to='/' className="back">Back</Link>
         <h1>{languageState === 'french' ? 'Se connecter' : languageState === 'hebrew' ? 'להתחבר' : null}</h1>
         <form onSubmit={handleSubmit}>
-          <input type="text" name="email" value={formData.email} onChange={handleChange} autoComplete='email'
+          <input type="text" name="mailOrPhone" value={formData.mailOrPhone} onChange={handleChange} autoComplete='email'
           placeholder={languageState === 'french' ? 'E-mail' : languageState === 'hebrew' ? 'מייל' : ''}
           />
           <input type="password" name="password" value={formData.password} onChange={handleChange} autoComplete="current-password" 
