@@ -3,7 +3,8 @@ import { lazy, Suspense } from "react"
 
 const Entry = lazy(()=>import('./Pages/Entry'))
 const Login = lazy(()=>import('./Pages/Login'))
-const SignIn = lazy(()=>import('./Pages/SignIn'))
+const SignUp = lazy(()=>import('./Pages/SignUp'))
+const PrivateRoute = lazy(()=>import('./Components/PrivatePage'))
 
 function App() {
 
@@ -14,7 +15,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Entry />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route element={<PrivateRoute />}>
+            </Route>
           </Routes>
         </Suspense>
       </BrowserRouter>
