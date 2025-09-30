@@ -5,6 +5,7 @@ const Entry = lazy(()=>import('./Pages/Entry'))
 const Login = lazy(()=>import('./Pages/Login'))
 const SignUp = lazy(()=>import('./Pages/SignUp'))
 const PrivateRoute = lazy(()=>import('./Components/PrivatePage'))
+const Prestations = lazy(()=>import('./Pages/Prestations'))
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route element={<PrivateRoute />}>
+              <Route path="/prestations" element={<Prestations />} />
             </Route>
           </Routes>
         </Suspense>

@@ -20,7 +20,8 @@ function PrivatePage() {
               'Authorization' : `Bearer ${token}`
             }})
             if(verify.ok){
-              return setIsLoggedIn(true)
+              setIsLoggedIn(true)
+              return
             }
         }
         const response = await fetch(`${urlBack}/users/refresh`, {
@@ -30,7 +31,7 @@ function PrivatePage() {
         const data = await response.json()
         if(!response.ok){
           console.log(data.message);
-         return setIsLoggedIn(false)
+          return setIsLoggedIn(false)
         }
         localStorage.setItem('access-token', data.accessToken)
         setIsLoggedIn(true)
@@ -49,7 +50,7 @@ function PrivatePage() {
       return <div className="private-charging"><l-tailspin size="20" stroke="5" speed="0.9" color="#857667" ></l-tailspin></div>
     }
     return (
-      isLoggedIn ? <Outlet /> : <Navigate to='/users/login' replace />
+      isLoggedIn ? <Outlet /> : <Navigate to='/login' replace />
     )
 
 }

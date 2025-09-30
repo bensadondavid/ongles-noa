@@ -13,11 +13,11 @@ const refreshAccessToken = async(req, res)=>{
             [refreshToken]
         )
         if(result.rows.length === 0){
-            return res.status(400).json({message : 'Invalid token'})
+            return res.status(401).json({message : 'Invalid token'})
         }
         const verifyToken = result.rows[0]
         if(new Date(verifyToken.expires_at) < new Date()){
-            return res.status(400).json({message : 'Expired token'})
+            return res.status(401).json({message : 'Expired token'})
         }
          const userResult = await pool.query(
             `SELECT * FROM users_noa_ongles WHERE id = $1`,

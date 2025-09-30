@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import { changeLanguage } from '../Store/LanguageSlice'
 import { Link } from "react-router-dom"
+import { useState } from "react"
 
 function Entry() {
 
   const languageState = useSelector(state => state.language)
+  const userState = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   return (
@@ -22,11 +24,17 @@ function Entry() {
       <p className="entry-noa">Noa</p>
       <p className="entry-bensadon">Bensadon</p>
     </div>
+    {userState?.id ?
+    <div className="connected">
+      <p>hello {userState.name}</p>
+    </div>
+    :
     <div className="entry-connections">
       <Link to='login'>{languageState === 'french' ? "Se connecter" : languageState === 'hebrew' ? "להתחבר" : null}</Link>
       <Link to='sign-up'>{languageState === 'french' ? "S'inscrire" : languageState === 'hebrew' ? "להרשם" : null}</Link>
       <Link to='galery'>{languageState === 'french' ? "Galerie" : languageState === 'hebrew' ? "גלריה" : null}</Link>
     </div>
+    }
 
     <div className="entry-social-networks">
       <a href=""><img src="insta.png" /></a>
