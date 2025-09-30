@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "nodemon main/server.js",
+    "dev": "nodemon main/server.js",
     "start": "npm run dev"
   },
   "keywords": [],
@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",

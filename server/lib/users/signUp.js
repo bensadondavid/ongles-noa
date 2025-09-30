@@ -2,19 +2,15 @@ const pool = require('../db')
 const bcrypt = require('bcryptjs')
 
 const signUp = async(req, res)=>{
-    const baseUrl = process.env.FRONTEND_URL || 'http://localhost:5173'
     const { name, email, phone, password} = req.body
     try{
         // Look for an existing user
         const user = await pool.query(
-            `SELECT * FROM users WHERE
+            `SELECT * FROM users_noa_ongles WHERE
              LOWER(email) = LOWER($1)
              OR phone = $2`,
             [email, phone]
         )
-         if (password.length < 8) {
-            return res.status(400).json({ message: 'Password must be at least 8 characters' })
-        }
         if(user.rows.length !== 0){
             return res.status(409).json({message : 'Phone number or email already taken'})
         }
@@ -22,7 +18,7 @@ const signUp = async(req, res)=>{
         const hashedPassword = await bcrypt.hash(password, 10)
         // Creating a new user
          await pool.query(
-            `INSERT INTO users (name, email, phone, password)
+            `INSERT INTO users_noa_ongles (name, email, phone, hashed_password)
             VALUES($1, $2, $3, $4) 
             RETURNING *`,
             [name, email, phone, hashedPassword]

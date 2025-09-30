@@ -20,7 +20,7 @@ const refreshAccessToken = async(req, res)=>{
             return res.status(400).json({message : 'Expired token'})
         }
          const userResult = await pool.query(
-            `SELECT * FROM users WHERE id = $1`,
+            `SELECT * FROM users_noa_ongles WHERE id = $1`,
             [verifyToken.user_id]
         )
         const user = userResult.rows[0]
@@ -28,7 +28,6 @@ const refreshAccessToken = async(req, res)=>{
         const safeUser = {
             id: user.id,
             name: user.name,
-            lastname: user.lastname,
             email: user.email,
             phone: user.phone,
         }

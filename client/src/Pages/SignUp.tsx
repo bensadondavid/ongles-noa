@@ -38,6 +38,9 @@ function SignUp() {
       if(formData.password !== formData.verifyPassword){
         return setMessage(languageState === 'french' ? 'Les mots de passe ne correspondent pas' : languageState === 'hebrew' ? 'הסיסמאות לא תואמות' : '')
       }
+      if(formData.password.length < 8){
+        return setMessage(languageState === 'french' ? 'Le mot de passe doit contenir au mois 8 caractères' : languageState === 'hebrew' ? 'הסיסמה חייבת להיות באורך של לפחות 8 תווים' : '')
+      }
       const body = { name : formData.name, email : formData.email, phone : formData.phone, password : formData.password }
       const response = await fetch(`${urlBack}/users/sign-up`, {
         method : 'POST',

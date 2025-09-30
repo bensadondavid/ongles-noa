@@ -11,7 +11,7 @@ interface FormData{
 function Login() {
 
   const languageState = useSelector(state => state.language)
-  const urlBack = import.meta.env.VITE_URL_BACK
+  const urlBack = import.meta.env.VITE_URL_BACK || "http://localhost:3000"
   const [message, setMessage] = useState<string>('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -61,13 +61,14 @@ function Login() {
         <h1>{languageState === 'french' ? 'Se connecter' : languageState === 'hebrew' ? 'להתחבר' : null}</h1>
         <form onSubmit={handleSubmit}>
           <input type="text" name="mailOrPhone" value={formData.mailOrPhone} onChange={handleChange} autoComplete='email'
-          placeholder={languageState === 'french' ? 'E-mail' : languageState === 'hebrew' ? 'מייל' : ''}
+          placeholder={languageState === 'french' ? 'E-mail ou Téléphone' : languageState === 'hebrew' ? 'מייל ו טל' : ''}
           />
           <input type="password" name="password" value={formData.password} onChange={handleChange} autoComplete="current-password" 
            placeholder={languageState === 'french' ? 'Mot de passe' : languageState === 'hebrew' ? 'סיסמה' : ''}
           />
-          <button type="submit">{languageState === 'french' ? 'Se connecter' : languageState === 'hebrew' ? 'להתחבר' : null}</button>
+          <button type="submit">{languageState === 'french' ? 'Se connecter' : languageState === 'hebrew' ? 'להתחבר' : ""}</button>
         </form>
+        <p className="mdp-oublie">{languageState === 'french' ? 'Mot de passe oublié ?' : languageState === 'hebrew' ? '? שבחת סיסה' : ""}</p>
         {message && <p className="login-message">{message}</p> }
     </div>
   )

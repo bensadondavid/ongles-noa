@@ -12,8 +12,19 @@ function PrivatePage() {
 
     const verifyToken = async()=>{
       try{
-        const response = await fetch(`${urlBack}/verify`, {
-          method : 'GET',
+        const token = localStorage.getItem('access-token')
+        if(token){
+            const verify = await fetch(`${urlBack}/users/verify`, {
+            method : 'GET',
+            headers : {
+              'Authorization' : `Bearer ${token}`
+            }})
+            if(verify.ok){
+              return setIsLoggedIn(true)
+            }
+        }
+        const response = await fetch(`${urlBack}/users/refresh`, {
+          method : 'POST',
           credentials : 'include'
         })
         const data = await response.json()
@@ -21,6 +32,7 @@ function PrivatePage() {
           console.log(data.message);
          return setIsLoggedIn(false)
         }
+        localStorage.setItem('access-token', data.accessToken)
         setIsLoggedIn(true)
       }
       catch(error){

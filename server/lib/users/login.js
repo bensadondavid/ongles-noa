@@ -10,18 +10,18 @@ const logIn = async(req, res)=>{
     try{
         const {mailOrPhone, password} = req.body
         const result = await pool.query(
-            `SELECT * FROM users WHERE LOWER(email) = LOWER($1) or phone = LOWER($1)`,
+            `SELECT * FROM users_noa_ongles WHERE LOWER(email) = LOWER($1) or phone = $1`,
             [mailOrPhone]
         )
         if(result.rows.length === 0){
         return res.status(400).json({message : 'Unknown Email or Phone number'})
         }
         const user = result.rows[0]
-        const verifyPassword = await bcrypt.compare(password, user.password)
+        const verifyPassword = await bcrypt.compare(password, user.hashed_password)
         if(!verifyPassword){
             return res.status(400).json({message : 'Invalid credentials'})
         }
-        const accessToken = jwt.sign({'userId' : String(user.id)}, secret, {expiresIn : '2h'})
+        const accessToken = jwt.sign({'userId' : String(user.id)}, secret, {expiresIn : '1h'})
         const refreshToken = crypto.randomBytes(64).toString('hex')
         const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
         const userAgent = req.headers['user-agent'] || "unknown"
@@ -42,7 +42,6 @@ const logIn = async(req, res)=>{
         const safeUser = {
             id: user.id,
             name: user.name,
-            lastname: user.lastname,
             email: user.email,
             phone: user.phone,
         }
