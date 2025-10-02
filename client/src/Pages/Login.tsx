@@ -43,9 +43,9 @@ function Login() {
       if(!response.ok){
         return setMessage(data.message)
       }
-      dispatch(addUser({id : data.user.id, email : data.user.email}))
+      dispatch(addUser({id : data.user.id, name : data.user.name, email : data.user.email}))
       localStorage.setItem('access-token', data.accessToken)
-      navigate('/prestations')
+      navigate('/')
     }
     catch(error){
       console.log(error);
@@ -63,7 +63,7 @@ function Login() {
           <input type="text" name="mailOrPhone" value={formData.mailOrPhone} onChange={handleChange} autoComplete='email'
           placeholder={languageState === 'french' ? 'E-mail ou Téléphone' : languageState === 'hebrew' ? 'מייל ו טל' : ''}
           />
-          <input type="password" name="password" value={formData.password} onChange={handleChange} autoComplete="current-password" 
+          <input type="password" name="password" value={formData.password} onChange={handleChange} autoComplete="password" 
            placeholder={languageState === 'french' ? 'Mot de passe' : languageState === 'hebrew' ? 'סיסמה' : ''}
           />
           <button type="submit">{languageState === 'french' ? 'Se connecter' : languageState === 'hebrew' ? 'להתחבר' : ""}</button>

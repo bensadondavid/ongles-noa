@@ -21,7 +21,7 @@ const logIn = async(req, res)=>{
         if(!verifyPassword){
             return res.status(400).json({message : 'Invalid credentials'})
         }
-        const accessToken = jwt.sign({'userId' : String(user.id)}, secret, {expiresIn : '1h'})
+        const accessToken = jwt.sign({'userId' : String(user.id), 'userName' : String(user.name), 'userEmail' : String(user.email)}, secret, {expiresIn : '1h'})
         const refreshToken = crypto.randomBytes(64).toString('hex')
         const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
         const userAgent = req.headers['user-agent'] || "unknown"
@@ -33,8 +33,8 @@ const logIn = async(req, res)=>{
         )
         res.cookie('refresh-token', refreshToken,{
             httpOnly : true, 
-            sameSite : 'None',
-            secure : true,
+            sameSite : 'lax',
+            secure : false,
             maxAge : 30 * 24 * 60 * 60 * 1000,
             path : '/'
         }

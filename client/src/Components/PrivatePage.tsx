@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
 import { Outlet, Navigate } from "react-router-dom"
 import { tailspin } from 'ldrs'
+import { useDispatch } from "react-redux"
+import { addUser } from "../Store/userSlice"
 
 tailspin.register()
 
 function PrivatePage() {
 
     const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
-
+    const dispatch = useDispatch()
     const [isLoggedIn, setIsLoggedIn] = useState<null | boolean>(null)
 
     const verifyToken = async()=>{
@@ -34,6 +36,7 @@ function PrivatePage() {
           return setIsLoggedIn(false)
         }
         localStorage.setItem('access-token', data.accessToken)
+        dispatch(addUser({id : data.user.id, name : data.user.name, email : data.user.email }))
         setIsLoggedIn(true)
       }
       catch(error){

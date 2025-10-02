@@ -8,7 +8,7 @@ const verifyAccessToken = async(req, res)=>{
             return res.status(401).json({message : 'No access token found'})
         }
         const decoded = jwt.verify(accessToken, secret)
-        return res.status(200).json({ ok: true, userId: decoded.userId })
+        return res.status(200).json({ ok: true, id: decoded.userId, name : decoded.userName, email : decoded.userEmail })
     }
     catch(error){
        if (error.name === 'TokenExpiredError') {
