@@ -4,7 +4,7 @@ const secret = process.env.JWT_SECRET
 
 const refreshAccessToken = async(req, res)=>{
     try{
-        const refreshToken = req.cookies['refresh-token']
+        const refreshToken = req.cookies['refreshToken']
         if(!refreshToken){
             return res.status(400).json({message : 'No refresh token found'})
         }
