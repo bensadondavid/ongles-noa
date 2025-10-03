@@ -51,8 +51,6 @@ function Entry() {
       const response = await fetch(`${urlBack}/users/log-out`, {
         method : 'POST', 
         credentials : 'include',
-        headers : {'Content-Type' : 'application/json'},
-        body : JSON.stringify({ id : userState.id })
       })
       const data = await response.json()
       if(!response.ok){
@@ -77,11 +75,11 @@ function Entry() {
       <img src="first-img-ongle.png" className="img-entry-1"/>
       <img src="scnd-img-ongle.png" className="img-entry-2"/>
       <img src="third-img-ongle.png" className="img-entry-3"/>
-
-    <div className="entry-languages">
-      <button onClick={()=>dispatch(changeLanguage('french'))}><span className="flag">🇫🇷</span></button>
-      <button onClick={()=>dispatch(changeLanguage('hebrew'))}><span className="flag">🇮🇱</span></button>
-    </div>
+      
+      <div className="entry-languages">
+        <button onClick={()=>dispatch(changeLanguage('french'))}><span className="flag">🇫🇷</span></button>
+        <button onClick={()=>dispatch(changeLanguage('hebrew'))}><span className="flag">🇮🇱</span></button>
+      </div>
 
     <div className="entry-names">
       <p className="entry-noa">Noa</p>
@@ -89,13 +87,15 @@ function Entry() {
     </div>
     {connected ?
     <div className="connected">
-      <p>hello {userState?.name}</p>
+      <p>{languageState === 'french' ? `Bonjour ${userState?.name}` : languageState === 'hebrew' ? `${userState?.name} שלום` : ''}</p>
+      <Link to='/prestation' className="prendre-rdv">{languageState === 'french' ? "Prendre RDV" : languageState === 'hebrew' ? "לקבעו תור" : ''}</Link>
+      <button onClick={logOut} className="log-out">{languageState === 'french' ? "Se deconnecter" : languageState === 'hebrew' ? "להתנתק" : null}</button>
     </div>
     :
     <div className="entry-connections">
-      <Link to='login'>{languageState === 'french' ? "Se connecter" : languageState === 'hebrew' ? "להתחבר" : null}</Link>
-      <Link to='sign-up'>{languageState === 'french' ? "S'inscrire" : languageState === 'hebrew' ? "להרשם" : null}</Link>
-      <Link to='galery'>{languageState === 'french' ? "Galerie" : languageState === 'hebrew' ? "גלריה" : null}</Link>
+      <Link to='/login'>{languageState === 'french' ? "Se connecter" : languageState === 'hebrew' ? "להתחבר" : ''}</Link>
+      <Link to='/sign-up'>{languageState === 'french' ? "S'inscrire" : languageState === 'hebrew' ? "להרשם" : ''}</Link>
+      <Link to='/galery'>{languageState === 'french' ? "Galerie" : languageState === 'hebrew' ? "גלריה" : ''}</Link>
     </div>
     }
 
@@ -104,9 +104,7 @@ function Entry() {
       <a href=""><img src="whatsapp.png" /></a>
     </div>
 
-    <button onClick={logOut} className="log-out">{languageState === 'french' ? "Se deconnecter" : languageState === 'hebrew' ? "להתנתק" : null}</button>
-
-    </div>
+  </div>
   )
 
 }

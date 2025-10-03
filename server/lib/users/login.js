@@ -31,12 +31,13 @@ const logIn = async(req, res)=>{
              VALUES($1, $2, $3, $4, $5)`,
              [user.id, refreshToken, expiresAt, userAgent, ipAddress]
         )
+        const isProd = process.env.NODE_ENV === 'production';
         res.cookie('refresh-token', refreshToken,{
-            httpOnly : true, 
-            sameSite : 'lax',
-            secure : false,
-            maxAge : 30 * 24 * 60 * 60 * 1000,
-            path : '/'
+            httpOnly: true,
+            sameSite: isProd ? 'none' : 'lax', // cross-site en prod => 'none'
+            secure: isProd,                    // obligatoire si SameSite=None
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            path: '/',
         }
         )
         const safeUser = {
