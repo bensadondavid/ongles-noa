@@ -16,12 +16,14 @@ function PrivatePage() {
       try{
         const token = localStorage.getItem('access-token')
         if(token){
-            const verify = await fetch(`${urlBack}/users/verify`, {
+            const verify = await fetch(`${urlBack}/users/me`, {
             method : 'GET',
             headers : {
               'Authorization' : `Bearer ${token}`
             }})
             if(verify.ok){
+              const data = await verify.json()
+              dispatch(addUser({id : data.user.id, name : data.user.name, lastName : data.user.lastName, email : data.user.email }))
               setIsLoggedIn(true)
               return
             }

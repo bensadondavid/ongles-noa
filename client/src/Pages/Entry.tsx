@@ -88,7 +88,7 @@ function Entry() {
     {connected ?
     <div className="connected">
       <p>{languageState === 'french' ? `Bonjour ${userState?.name}` : languageState === 'hebrew' ? `${userState?.name} שלום` : ''}</p>
-      <Link to='/prestation' className="prendre-rdv">{languageState === 'french' ? "Prendre RDV" : languageState === 'hebrew' ? "לקבעו תור" : ''}</Link>
+      <Link to='/prestations' className="prendre-rdv">{languageState === 'french' ? "Prendre RDV" : languageState === 'hebrew' ? "לקבוע תור" : ''}</Link>
       <button onClick={logOut} className="log-out">{languageState === 'french' ? "Se deconnecter" : languageState === 'hebrew' ? "להתנתק" : null}</button>
     </div>
     :

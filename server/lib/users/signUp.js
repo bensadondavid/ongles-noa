@@ -2,7 +2,7 @@ const pool = require('../db')
 const bcrypt = require('bcryptjs')
 
 const signUp = async(req, res)=>{
-    const { name, email, phone, password} = req.body
+    const { name, email, phone, password, lastName} = req.body
     try{
         // Look for an existing user
         const user = await pool.query(
@@ -18,10 +18,10 @@ const signUp = async(req, res)=>{
         const hashedPassword = await bcrypt.hash(password, 10)
         // Creating a new user
          await pool.query(
-            `INSERT INTO users_noa_ongles (name, email, phone, hashed_password)
-            VALUES($1, $2, $3, $4) 
+            `INSERT INTO users_noa_ongles (name, email, phone, hashed_password, last_name)
+            VALUES($1, $2, $3, $, $5) 
             RETURNING *`,
-            [name, email, phone, hashedPassword]
+            [name, email, phone, hashedPassword, lastName]
         )
         res.status(201).json({message : 'New user added'})
     }

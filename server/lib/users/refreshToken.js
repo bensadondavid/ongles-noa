@@ -4,7 +4,7 @@ const secret = process.env.JWT_SECRET
 
 const refreshAccessToken = async(req, res)=>{
     try{
-        const refreshToken = req.cookies['refreshToken']
+        const refreshToken = req.cookies['refresh-token']
         if(!refreshToken){
             return res.status(400).json({message : 'No refresh token found'})
         }
@@ -24,10 +24,11 @@ const refreshAccessToken = async(req, res)=>{
             [verifyToken.user_id]
         )
         const user = userResult.rows[0]
-        const accessToken = jwt.sign({userId : verifyToken.user_id}, secret, {expiresIn : "1h"})
+        const accessToken = jwt.sign({'userId' : String(user.id)}, secret, {expiresIn : '15m'})
         const safeUser = {
             id: user.id,
             name: user.name,
+            lastName : user.last_name,
             email: user.email,
             phone: user.phone,
         }
