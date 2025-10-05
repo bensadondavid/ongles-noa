@@ -38,7 +38,7 @@ function PrivatePage() {
           return setIsLoggedIn(false)
         }
         localStorage.setItem('access-token', data.accessToken)
-        dispatch(addUser({id : data.user.id, name : data.user.name, email : data.user.email }))
+        dispatch(addUser({id : data.user.id, name : data.user.name, lastName : data.user.lastName, email : data.user.email }))
         setIsLoggedIn(true)
       }
       catch(error){

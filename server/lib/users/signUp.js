@@ -19,7 +19,7 @@ const signUp = async(req, res)=>{
         // Creating a new user
          await pool.query(
             `INSERT INTO users_noa_ongles (name, email, phone, hashed_password, last_name)
-            VALUES($1, $2, $3, $, $5) 
+            VALUES($1, $2, $3, $4, $5) 
             RETURNING *`,
             [name, email, phone, hashedPassword, lastName]
         )

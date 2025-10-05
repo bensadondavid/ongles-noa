@@ -6,7 +6,7 @@ const refreshAccessToken = async(req, res)=>{
     try{
         const refreshToken = req.cookies['refresh-token']
         if(!refreshToken){
-            return res.status(400).json({message : 'No refresh token found'})
+            return res.status(401).json({message : 'No refresh token found'})
         }
         const result = await pool.query(
             `SELECT * FROM refresh_tokens WHERE token = $1`, 

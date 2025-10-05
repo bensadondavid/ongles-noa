@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface User{
     id : string | null, 
+    lastName : string | null
     name : string | null
     email : string | null,
 }
 
 const initialState: User = {
   id: null,
+  lastName : null,
   name : null,
   email: null,
 };
@@ -19,6 +21,7 @@ const userSlice = createSlice({
     reducers : {
         addUser : (state, action)=>{
             state.id = action.payload.id;
+            state.lastName = action.payload.lastName
             state.name = action.payload.name;
             state.email = action.payload.email;
         },

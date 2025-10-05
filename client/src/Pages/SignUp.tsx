@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 interface FormData{
   name : string,
+  lastName : string,
   email : string,
   phone : string,
   password : string,
@@ -19,6 +20,7 @@ function SignUp() {
 
   const [formData, setFormData] = useState<FormData>({
     name : '',
+    lastName : '',
     email : '',
     phone : '',
     password : '',
@@ -41,7 +43,7 @@ function SignUp() {
       if(formData.password.length < 8){
         return setMessage(languageState === 'french' ? 'Le mot de passe doit contenir au mois 8 caractères' : languageState === 'hebrew' ? 'הסיסמה חייבת להיות באורך של לפחות 8 תווים' : '')
       }
-      const body = { name : formData.name, email : formData.email, phone : formData.phone, password : formData.password }
+      const body = { name : formData.name, lastName : formData.lastName, email : formData.email, phone : formData.phone, password : formData.password }
       const response = await fetch(`${urlBack}/users/sign-up`, {
         method : 'POST',
         headers : {
@@ -71,13 +73,16 @@ function SignUp() {
           <input type="text" name="name" value={formData.name} onChange={handleChange}
           placeholder={languageState === 'french' ? 'Prénom' : languageState === 'hebrew' ? 'שם' : ''}
           />
+            <input type="text" name="lastName" value={formData.lastName} onChange={handleChange}
+          placeholder={languageState === 'french' ? 'Nom' : languageState === 'hebrew' ? 'שם משפחה' : ''}
+          />
           <input type="text" name="email" value={formData.email} onChange={handleChange} autoComplete='email'
           placeholder={languageState === 'french' ? 'E-mail' : languageState === 'hebrew' ? 'מייל' : ''}
           />
           <input type="tel" name="phone" value={formData.phone} onChange={handleChange} autoComplete='tel'
           placeholder={languageState === 'french' ? 'Téléphone' : languageState === 'hebrew' ? 'טלפון' : ''}
           />
-          <input type="password" name="password" value={formData.password} onChange={handleChange} autoComplete="current-password" 
+          <input type="password" name="password" value={formData.password} onChange={handleChange} autoComplete="new-password" 
            placeholder={languageState === 'french' ? 'Mot de passe' : languageState === 'hebrew' ? 'סיסמה' : ''}
           />
            <input type="password" name="verifyPassword" value={formData.verifyPassword} onChange={handleChange} 

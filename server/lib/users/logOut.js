@@ -18,8 +18,8 @@ const logOut = async (req, res) => {
     });
     console.log('disconnected')
     return res.status(200).json({message : 'Log Out Successfull'});
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };

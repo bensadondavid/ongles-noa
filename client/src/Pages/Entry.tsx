@@ -17,13 +17,13 @@ function Entry() {
       // Verifyng if the access token exists and works
         const token = localStorage.getItem('access-token')
         if(token){
-            const verif = await fetch(`${urlBack}/users/verify`, {
+            const verif = await fetch(`${urlBack}/users/me`, {
               method : 'GET',
               headers : {'Authorization' : `Bearer ${token}`}
           })
           if(verif.ok){
             const res = await verif.json()
-            dispatch(addUser({id : res.id, name : res.name, email : res.email }))
+            dispatch(addUser({id : res.user.id, name : res.user.name, lastName : res.user.lastName, email : res.user.email }))
             return setConnected(true)
           }
         }
@@ -38,7 +38,7 @@ function Entry() {
           return
         }
         localStorage.setItem('access-token', data.accessToken)
-        dispatch(addUser({id : data.user.id, name : data.user.name, email : data.user.email }))
+        dispatch(addUser({id : data.user.id, name : data.user.name, lastName : data.user.lastName, email : data.user.email }))
         setConnected(true)
       }
     catch(error){
@@ -87,7 +87,7 @@ function Entry() {
     </div>
     {connected ?
     <div className="connected">
-      <p>{languageState === 'french' ? `Bonjour ${userState?.name}` : languageState === 'hebrew' ? `${userState?.name} שלום` : ''}</p>
+      <p>{languageState === 'french' ? `Bonjour ${userState?.name} ${userState?.lastName}` : languageState === 'hebrew' ? `${userState?.name} שלום` : ''}</p>
       <Link to='/prestations' className="prendre-rdv">{languageState === 'french' ? "Prendre RDV" : languageState === 'hebrew' ? "לקבוע תור" : ''}</Link>
       <button onClick={logOut} className="log-out">{languageState === 'french' ? "Se deconnecter" : languageState === 'hebrew' ? "להתנתק" : null}</button>
     </div>

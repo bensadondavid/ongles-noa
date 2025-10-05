@@ -14,12 +14,12 @@ const logIn = async(req, res)=>{
             [mailOrPhone]
         )
         if(result.rows.length === 0){
-        return res.status(400).json({message : 'Unknown Email or Phone number'})
+        return res.status(401).json({message : 'Unknown Email or Phone number'})
         }
         const user = result.rows[0]
         const verifyPassword = await bcrypt.compare(password, user.hashed_password)
         if(!verifyPassword){
-            return res.status(400).json({message : 'Invalid credentials'})
+            return res.status(401).json({message : 'Invalid credentials'})
         }
         const accessToken = jwt.sign({'userId' : String(user.id)}, secret, {expiresIn : '15m'})
         const refreshToken = crypto.randomBytes(64).toString('hex')
