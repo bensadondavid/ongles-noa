@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from "../Store/userSlice";
+import { addUser } from "../Store/UsersSlice";
 import { Link, useNavigate } from "react-router-dom";
 
 interface FormData{

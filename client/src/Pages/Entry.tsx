@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { changeLanguage } from '../Store/LanguageSlice'
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { addUser, clearUser } from "../Store/userSlice"
+import { addUser, clearUser } from "../Store/UsersSlice"
 
 function Entry() {
 

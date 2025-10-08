@@ -9,7 +9,7 @@ const refreshAccessToken = async(req, res)=>{
             return res.status(401).json({message : 'No refresh token found'})
         }
         const result = await pool.query(
-            `SELECT * FROM refresh_tokens WHERE token = $1`, 
+            `SELECT * FROM noa_ongles_refresh_tokens WHERE token = $1`, 
             [refreshToken]
         )
         if(result.rows.length === 0){

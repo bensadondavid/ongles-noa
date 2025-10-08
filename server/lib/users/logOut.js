@@ -6,7 +6,7 @@ const logOut = async (req, res) => {
 
     // Même si pas de cookie, on clear quand même et on répond 204
     if (refreshToken) {
-      await pool.query('DELETE FROM refresh_tokens WHERE token = $1', [refreshToken]);
+      await pool.query('DELETE FROM noa_ongles_refresh_tokens WHERE token = $1', [refreshToken]);
     }
 
     const isProd = process.env.NODE_ENV === 'production';

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Outlet, Navigate } from "react-router-dom"
 import { tailspin } from 'ldrs'
 import { useDispatch } from "react-redux"
-import { addUser } from "../Store/userSlice"
+import { addUser } from "../Store/UsersSlice"
 
 tailspin.register()
 

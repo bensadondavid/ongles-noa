@@ -27,7 +27,7 @@ const logIn = async(req, res)=>{
         const userAgent = req.headers['user-agent'] || "unknown"
         const ipAddress = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress
         await pool.query(
-            `INSERT INTO refresh_tokens (user_id, token, expires_at, user_agent, ip_address)
+            `INSERT INTO noa_ongles_refresh_tokens (user_id, token, expires_at, user_agent, ip_address)
              VALUES($1, $2, $3, $4, $5)`,
              [user.id, refreshToken, expiresAt, userAgent, ipAddress]
         )
