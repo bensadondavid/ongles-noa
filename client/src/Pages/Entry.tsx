@@ -3,11 +3,12 @@ import { changeLanguage } from '../Store/LanguageSlice'
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { addUser, clearUser } from "../Store/UsersSlice"
+import type { RootState } from "../Store/Store";
 
 function Entry() {
 
-  const languageState = useSelector(state => state.language)
-  const userState = useSelector(state => state.user)
+  const languageState = useSelector((state : RootState) => state.language)
+  const userState = useSelector((state : RootState) => state.user)
   const dispatch = useDispatch()
   const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
   const [connected, setConnected] = useState<boolean>(false)
@@ -43,6 +44,7 @@ function Entry() {
       }
     catch(error){
       console.log(error)
+      setConnected(false)
     }
   }
 

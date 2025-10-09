@@ -3,18 +3,20 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import languageReducer from "./LanguageSlice";
 import userReducer from './UsersSlice'
-import prestationreducer from './PrestationSlice'
+import prestationsReducer from './PrestationSlice'
+import optionsReducer from './OptionsSlice'
 
 const rootReducer = combineReducers({
   language: languageReducer,
   user : userReducer,
-  prestation : prestationreducer 
+  prestations : prestationsReducer,
+  options : optionsReducer
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["language", "prestation"],
+  whitelist: ["language", "prestations", "options"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -37,4 +39,6 @@ export const store = configureStore({
     }),
 });
 
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 export const persistor = persistStore(store);

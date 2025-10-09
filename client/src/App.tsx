@@ -6,6 +6,7 @@ const Login = lazy(()=>import('./Pages/Login'))
 const SignUp = lazy(()=>import('./Pages/SignUp'))
 const PrivateRoute = lazy(()=>import('./Components/PrivatePage'))
 const Prestations = lazy(()=>import('./Pages/Prestations'))
+const Options = lazy((()=>import('./Pages/Options')))
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/sign-up" element={<SignUp />} />
             <Route element={<PrivateRoute />}>
               <Route path="/prestations" element={<Prestations />} />
+              <Route path="/options" element={<Options />} />
             </Route>
           </Routes>
         </Suspense>

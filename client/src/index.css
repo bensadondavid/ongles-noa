@@ -262,3 +262,32 @@
     text-decoration: underline;
     color: #fff;
 }
+
+
+/* Prestations && options */
+
+.prestations, .options{
+    min-height: 100vh;
+    width: 100%;
+    background-color: #C2B9B2;
+    position: relative;
+}
+
+.prestations-title, .options-title{
+    color: white;
+    font-family: "Blackgold";
+    font-size: 15vw;
+    text-align: center;
+    text-shadow: 2px 2px 4px #fff;
+    padding-top: 10px;
+}
+
+.prestations-subtitle, .options-subtitle{
+    color: white;
+    font-family: "Moontime";
+    font-size: 15vw;
+    text-align: center;
+    position: fixed;
+    top: 30px;
+    right: 30%;
+}

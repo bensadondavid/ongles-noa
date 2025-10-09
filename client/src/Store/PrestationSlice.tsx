@@ -1,26 +1,20 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-interface Prestation{
-    id : null | string, 
-    type : null | string,
-    duration : null | number
-}
+const initialState : string[] = []
 
-const initialState : Prestation[] = []
-
-const prestationSlice = createSlice({
-    name : 'prestation',
+const prestationsSlice = createSlice({
+    name : 'prestations',
     initialState,
     reducers : {
-        addPrestation : (state, action: PayloadAction<Prestation>)=>{
+        addPrestation : (state, action: PayloadAction<string>)=>{
            const newPrestation = action.payload
             state.push(newPrestation)
         },
-        deletePrestation : (state, action : PayloadAction<Prestation>)=>{
-            return state.filter(presta => presta.id !== action.payload.id)
+        deletePrestation : (state, action : PayloadAction<string>)=>{
+            return state.filter(presta => presta !== action.payload)
         }
     }
 })
 
-export const {addPrestation, deletePrestation} = prestationSlice.actions
-export default prestationSlice.reducer
+export const {addPrestation, deletePrestation} = prestationsSlice.actions
+export default prestationsSlice.reducer
