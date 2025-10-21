@@ -270,16 +270,24 @@
     min-height: 100vh;
     width: 100%;
     background-color: #C2B9B2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: relative;
 }
 
 .prestations-title, .options-title{
+    width: 100%;
     color: white;
     font-family: "Blackgold";
     font-size: 15vw;
     text-align: center;
     text-shadow: 2px 2px 4px #fff;
     padding-top: 10px;
+    position: absolute;
+    top: 25px;
+    left: 0;
 }
 
 .prestations-subtitle, .options-subtitle{
@@ -287,7 +295,45 @@
     font-family: "Moontime";
     font-size: 15vw;
     text-align: center;
-    position: fixed;
-    top: 30px;
+    position: absolute;
+    top: 50px;
     right: 30%;
+}
+
+.prestations-list, .options-list{
+    height: fit-content;
+    width: 100%;
+    margin: 120px auto 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.prestations-button, .options-button, .prestations-button-active, .options-button-active{
+    width: 90%;
+    height: fit-content;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 30px;
+    font-family: "Nixie One", system-ui;
+    color: #8D8279;
+}
+
+.prestations-button-active, .options-button-active{
+    border: #8D8279 solid 2px;
+}
+
+.prestation-link, .option-link{
+    position: relative;
+    z-index: 10;
+    color: #8D8279;
+    font-family: "Moontime";
+    background-color: #fff;
+    font-size: 40px;
+    text-decoration: none;
+    padding: 0px 30px;
+    border: none;
+    border-radius: 30px;
 }

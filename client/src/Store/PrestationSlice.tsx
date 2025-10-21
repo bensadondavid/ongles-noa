@@ -8,6 +8,9 @@ const prestationsSlice = createSlice({
     reducers : {
         addPrestation : (state, action: PayloadAction<string>)=>{
            const newPrestation = action.payload
+           if(state.includes(newPrestation)){
+            return state
+           }
             state.push(newPrestation)
         },
         deletePrestation : (state, action : PayloadAction<string>)=>{

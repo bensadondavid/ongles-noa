@@ -8,6 +8,9 @@ const optionsSlice = createSlice({
     reducers : {
         addOption : (state, action: PayloadAction<string>)=>{
            const newOption = action.payload
+           if(state.includes(newOption)){
+            return state
+           }
             state.push(newOption)
         },
         deleteOption : (state, action : PayloadAction<string>)=>{
