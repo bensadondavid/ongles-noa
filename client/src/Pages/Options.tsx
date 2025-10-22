@@ -59,7 +59,7 @@ function Options() {
           </button>
         ))}
       </div>
-      <Link to='/options' className="option-link">Suivant</Link>
+      <Link to='/crenaux' className="option-link">Suivant</Link>
     </div>
   )
 
