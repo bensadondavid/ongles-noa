@@ -1,14 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../Store/Store";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-
-interface LanguageHeader {
-  french: string;
-  hebrew: string;
-}
 
 function Creneaux() {
 
@@ -16,6 +11,19 @@ function Creneaux() {
   const languageState = useSelector((state : RootState) => state.language)
 
   const [selected, setSelected] = useState<Date>();
+
+  const getAvailability = async ()=>{
+    const date = selected?.toISOString()
+    const response = await fetch(`/bookings/availability/${date}`, {
+      method : 'POST',
+      headers : {'Content-Type' : 'application/json'},
+      body : JSON.stringify({date})
+    })
+  }
+
+  useEffect(()=>{
+    getAvailability()
+  }, [selected])
 
   return (
     <div className="crenaux">
@@ -29,6 +37,9 @@ function Creneaux() {
             onSelect={setSelected}
             navLayout="around"
           />
+      </div>
+      <div className="horaires">
+
       </div>
     </div>
   )
