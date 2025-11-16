@@ -8,7 +8,7 @@ const me = async(req, res)=>{
             return res.status(401).json({ message: 'Unauthorized' })
         }
         const infos = await pool.query(
-            `SELECT id, name, last_name AS "lastName", phone, email FROM users_noa_ongles WHERE id = $1`,
+            `SELECT id, name, last_name AS "lastName", phone, email FROM noa_ongles_users WHERE id = $1`,
             [userId]
         )
         if(infos.rows.length === 0){

@@ -10,7 +10,7 @@ const logIn = async(req, res)=>{
     try{
         const {mailOrPhone, password} = req.body
         const result = await pool.query(
-            `SELECT * FROM users_noa_ongles WHERE LOWER(email) = LOWER($1) or phone = $1`,
+            `SELECT * FROM noa_ongles_users WHERE LOWER(email) = LOWER($1) or phone = $1`,
             [mailOrPhone]
         )
         if(result.rows.length === 0){

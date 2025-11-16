@@ -9,7 +9,7 @@ interface LanguageHeader {
 }
 
 interface LanguageItem {
-  id: string;
+  slug: string;
   french: string;
   hebrew: string;
   time : string;
@@ -28,21 +28,21 @@ function Options() {
 ];
 
   const options: LanguageItem[] = [
-    { id: "reparation-ongle-casse", french: "Réparation d’un ongle cassé", hebrew: "תיקון ציפורן שבורה", time : '10mn', price : '10sh' },
-    { id: "pose-faux-ongle", french: "Pose d’un faux ongle", hebrew: "הדבקת ציפורן מלאכותית", time : '5mn', price : '10sh' },
-    { id: "french", french: "French", hebrew: "פרנץ׳", time : '30mn', price : '20sh' },
-    { id: "baby-boomer", french: "Baby boomer", hebrew: "בייבי בומר", time : '30mn', price : '20sh' },
-    { id: "effet-chrome", french: "Effet chrome", hebrew: "אפקט כרום", time : '30mn', price : '20sh' },
-    { id: "stickers-paillettes-strass", french: "Stickers, paillettes, strass", hebrew: "מדבקות, נצנצים, אבני חן", time : '10mn', price : '10sh' },
-    { id: "nail-art-simple", french: "Nail art simple par ongle", hebrew: "עיצוב ציפורן פשוט", time : '10mn', price : '10sh' },
-    { id: "nail-art-elabore", french: "Nail art élaboré par ongle", hebrew: "עיצוב ציפורן מורכב", time : '30mn', price : '20sh' },
+    { slug : "reparation-ongle-casse", french: "Réparation d’un ongle cassé", hebrew: "תיקון ציפורן שבורה", time : '10mn', price : '10sh' },
+    { slug : "pose-faux-ongle", french: "Pose d’un faux ongle", hebrew: "הדבקת ציפורן מלאכותית", time : '5mn', price : '10sh' },
+    { slug : "french", french: "French", hebrew: "פרנץ׳", time : '30mn', price : '20sh' },
+    { slug : "baby-boomer", french: "Baby boomer", hebrew: "בייבי בומר", time : '30mn', price : '20sh' },
+    { slug : "effet-chrome", french: "Effet chrome", hebrew: "אפקט כרום", time : '30mn', price : '20sh' },
+    { slug : "stickers-paillettes-strass", french: "Stickers, paillettes, strass", hebrew: "מדבקות, נצנצים, אבני חן", time : '10mn', price : '10sh' },
+    { slug : "nail-art-simple", french: "Nail art simple par ongle", hebrew: "עיצוב ציפורן פשוט", time : '10mn', price : '10sh' },
+    { slug : "nail-art-elabore", french: "Nail art élaboré par ongle", hebrew: "עיצוב ציפורן מורכב", time : '30mn', price : '20sh' },
   ];
 
-  const addToOptions = (id : string)=>{
-     if (optionState.includes(id)) {
-      dispatch(deleteOption(id))
+  const addToOptions = (slug : string)=>{
+     if (optionState.includes(slug)) {
+      dispatch(deleteOption(slug))
     } else {
-      dispatch(addOption(id))
+      dispatch(addOption(slug))
     }
     }
 
@@ -53,7 +53,7 @@ function Options() {
 
       <div className="options-list">
         {options.map((item : LanguageItem)=>(
-          <button className={optionState.includes(item.id) ? 'options-button-active' : 'options-button'} key={item.id} onClick={()=>addToOptions(item.id)}>
+          <button className={optionState.includes(item.slug) ? 'options-button-active' : 'options-button'} key={item.slug} onClick={()=>addToOptions(item.slug)}>
             {languageState === 'french' ? item.french : languageState === 'hebrew' ? item.hebrew : ''} <br />
             {item.time} - {item.price}
           </button>

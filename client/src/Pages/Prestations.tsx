@@ -9,7 +9,7 @@ interface LanguageHeader {
 }
 
 interface LanguageItem {
-  id: string;
+  slug: string;
   french: string;
   hebrew: string;
   time : string;
@@ -28,20 +28,20 @@ function Prestations() {
 ];
 
   const prestations: LanguageItem[] = [
-    { id: "manucure-soins-ongles", french: "Manucure et soins des ongles", hebrew: "מניקור וטיפוח הציפורניים", time : '30mn', price : '50sh' },
-    { id: "deposes-de-gel", french: "Déposes de gel", hebrew: "הסרת ג׳ל" , time : '10mn', price : '20sh'},
-    { id: "deposes-de-faux-ongles", french: "Déposes de faux ongles", hebrew: "הסרת ציפורניים מלאכותיות", time : '30mn', price : '40sh' },
-    { id: "manucure-russe-et-gainage", french: "Manucure russe et gainage", hebrew: "מניקור רוסי וחיזוק הציפורן", time : '1h10', price : '110sh' },
-    { id: "manucure-russe-et-semi-permanent", french: "Manucure russe et semi permanent", hebrew: "מניקור רוסי ולק קבוע", time : '50mn', price : '100sh' },
-    { id: "capsules-gel-x", french: "Capsules gel x", hebrew: "קפסולות ג׳ל X" , time : '1h30', price : '210sh'},
-    { id: "pedicure-et-semis-permanent", french: "Pedicure et semis permanent", hebrew: "פדיקור ולק קבוע", time : '1h', price : '140sh' },
+    { slug: "manucure-soins-ongles", french: "Manucure et soins des ongles", hebrew: "מניקור וטיפוח הציפורניים", time : '30mn', price : '50sh' },
+    { slug: "deposes-de-gel", french: "Déposes de gel", hebrew: "הסרת ג׳ל" , time : '10mn', price : '20sh'},
+    { slug: "deposes-de-faux-ongles", french: "Déposes de faux ongles", hebrew: "הסרת ציפורניים מלאכותיות", time : '30mn', price : '40sh' },
+    { slug: "manucure-russe-et-gainage", french: "Manucure russe et gainage", hebrew: "מניקור רוסי וחיזוק הציפורן", time : '1h10', price : '110sh' },
+    { slug: "manucure-russe-et-semi-permanent", french: "Manucure russe et semi permanent", hebrew: "מניקור רוסי ולק קבוע", time : '50mn', price : '100sh' },
+    { slug: "capsules-gel-x", french: "Capsules gel x", hebrew: "קפסולות ג׳ל X" , time : '1h30', price : '210sh'},
+    { slug: "pedicure-et-semis-permanent", french: "Pedicure et semis permanent", hebrew: "פדיקור ולק קבוע", time : '1h', price : '140sh' },
   ];
 
-  const addToPrestations = (id : string)=>{
-   if (prestationState.includes(id)) {
-    dispatch(deletePrestation(id))
+  const addToPrestations = (slug : string)=>{
+   if (prestationState.includes(slug)) {
+    dispatch(deletePrestation(slug))
   } else {
-    dispatch(addPrestation(id))
+    dispatch(addPrestation(slug))
   }
   }
 
@@ -52,7 +52,7 @@ function Prestations() {
 
       <div className="prestations-list">
         {prestations.map((item : LanguageItem)=>(
-          <button className={prestationState.includes(item.id) ? 'prestations-button-active' : 'prestations-button'} key={item.id} onClick={()=>addToPrestations(item.id)}>
+          <button className={prestationState.includes(item.slug) ? 'prestations-button-active' : 'prestations-button'} key={item.slug} onClick={()=>addToPrestations(item.slug)}>
             {languageState === 'french' ? item.french : languageState === 'hebrew' ? item.hebrew : ''} <br />
             {item.time} - {item.price}
           </button>

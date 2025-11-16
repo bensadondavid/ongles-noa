@@ -6,7 +6,7 @@ const signUp = async(req, res)=>{
     try{
         // Look for an existing user
         const user = await pool.query(
-            `SELECT * FROM users_noa_ongles WHERE
+            `SELECT * FROM noa_ongles_users WHERE
              LOWER(email) = LOWER($1)
              OR phone = $2`,
             [email, phone]
@@ -18,7 +18,7 @@ const signUp = async(req, res)=>{
         const hashedPassword = await bcrypt.hash(password, 10)
         // Creating a new user
          await pool.query(
-            `INSERT INTO users_noa_ongles (name, email, phone, hashed_password, last_name)
+            `INSERT INTO noa_ongles_users (name, email, phone, hashed_password, last_name)
             VALUES($1, $2, $3, $4, $5) 
             RETURNING *`,
             [name, email, phone, hashedPassword, lastName]

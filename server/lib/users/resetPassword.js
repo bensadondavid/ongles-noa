@@ -8,7 +8,7 @@ const resetPassword = async(req, res)=>{
     try{
         const {mailOrPhone} = req.body
         const result = await pool.query(
-            `SELECT * FROM users_noa_ongles WHERE LOWER(email) = LOWER($1) or phone = $1`, 
+            `SELECT * FROM noa_ongles_users WHERE LOWER(email) = LOWER($1) or phone = $1`, 
             [mailOrPhone]
         )
         if(result.rows.length === 0){
@@ -18,7 +18,7 @@ const resetPassword = async(req, res)=>{
         const resetPasswordToken = crypto.randomBytes(32).toString('hex')
         const expiresAt = new Date(Date.now() + 1000 * 60 * 60)
         await pool.query(
-            `UPDATE users_noa_ongles
+            `UPDATE noa_ongles_users
             SET reset_password_token = $1, reset_password_expiration = $2 WHERE id = $3`,
             [resetPasswordToken, expiresAt, user.id]
         )

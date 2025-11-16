@@ -13,7 +13,7 @@ const newPassword = async (req, res) => {
     }
     const hashed = await bcrypt.hash(password, 10)
     const update = await pool.query(
-      `UPDATE users_noa_ongles
+      `UPDATE noa_ongles_users
          SET hashed_password = $1,
              reset_password_token = NULL,
              reset_password_expiration = NULL
