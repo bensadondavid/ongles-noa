@@ -6,22 +6,32 @@ const crenaux = async (req, res)=>{
         const {date, prestations, options} = req.body
         console.log(date, prestations, options)
 
+        // Recreate the date
         const [year, month, day] = date.split('-').map(Number);
 
         const newDate = new Date(Date.UTC(year, month - 1, day));
-        console.log(newDate);
         
         const newDay = newDate.getUTCDay()
 
-        const isClosed = await pool.query(
-            `SELECT is_closed FROM noa_ongles_opening_hours WHERE day_week = $1`, 
+        // Check if day off
+        const daysInfos = await pool.query(
+            `SELECT is_closed, day_start, day_end FROM noa_ongles_opening_hours WHERE day_week = $1`, 
             [newDay]
         )
-
-        const daysClosed = isClosed.rows
-        console.log(daysClosed);
+        const isClosed = daysInfos.rows[0].is_closed
+        console.log(isClosed);
+        if(isClosed){
+            return res.status(400).json({message : 'day off'})
+        }
         
+        // Retrieving the day start and day end 
 
+        const start = daysInfos.rows[0].day_start
+        const end = daysInfos.rows[0].day_end
+
+        console.log(start, end)
+
+        // Calculate the prestation time
         const prestaRows = await pool.query(
             `SELECT * FROM noa_ongles_services WHERE slug = ANY($1) AND type = 'main'`,
             [prestations]
@@ -41,8 +51,6 @@ const crenaux = async (req, res)=>{
             return acc + option.duration_minutes
         }, 0)
         const totalDuration = totalDurationPresta + totalDurationOptions
-        console.log(totalDurationPresta)
-        console.log(totalDurationOptions)
         console.log(totalDuration)
     }
     catch(error){
