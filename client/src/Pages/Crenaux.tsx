@@ -19,14 +19,19 @@ function Creneaux() {
   const getAvailability = async ()=>{
     try{
       if (!selected) return 
-      const date = selected?.toISOString().split('T')[0]
+
+      const date = selected.toLocaleDateString("sv-SE")
+
       console.log(date)
+
       const response = await fetch(`${urlBack}/bookings/availability`, {
         method : 'POST',
         headers : {'Content-Type' : 'application/json'},
         body : JSON.stringify({date ,prestations, options})
       })
+
       const data = await response.json()
+
       if(!response.ok){
         return setErrorMessage(data.message)
       }
