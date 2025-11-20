@@ -7,7 +7,7 @@ import "react-day-picker/style.css";
 
 function Creneaux() {
 
-  const urlBack = import.meta.env.URL_BACK || 'http://localhost:3000'
+  const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
   const dispatch = useDispatch()
   const languageState = useSelector((state : RootState) => state.language)
   const prestations = useSelector((state : RootState) => state.prestations)

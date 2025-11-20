@@ -28,18 +28,19 @@ const crenaux = async (req, res)=>{
 
         const start = daysInfos.rows[0].day_start
         const end = daysInfos.rows[0].day_end
-
-        console.log(start, end)
+        const startMinutes = Number(start.slice(0, 2)) * 60 + Number(start.slice(3, 5))
+        const endMinutes = Number(end.slice(0, 2)) * 60 + Number(end.slice(3, 5))
+        console.log(start, end, startMinutes, endMinutes)
 
         // Calculate the prestation time
         const prestaRows = await pool.query(
             `SELECT * FROM noa_ongles_services WHERE slug = ANY($1) AND type = 'main'`,
             [prestations]
         )
-        const optionRows = await pool.query(
+        const optionRows = options && options.length > 0 ? await pool.query(
             `SELECT * FROM noa_ongles_services WHERE slug = ANY($1) AND type = 'option'`,
             [options]
-        )
+        ) : {rows : []}
 
         const prestas = prestaRows.rows
         const opt = optionRows.rows

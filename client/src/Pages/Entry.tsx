@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { changeLanguage } from '../Store/LanguageSlice'
-import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react"
 import { addUser, clearUser } from "../Store/UsersSlice"
 import type { RootState } from "../Store/Store";
 
@@ -12,6 +12,7 @@ function Entry() {
   const dispatch = useDispatch()
   const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
   const [connected, setConnected] = useState<boolean>(false)
+  const navigate = useNavigate()
 
   const verifyConnected = async()=>{
     try{
@@ -33,11 +34,12 @@ function Entry() {
           method : 'POST', 
           credentials : 'include'
         })
-        const data = await response.json()
         if(!response.ok){
           setConnected(false)
+          navigate('/login')
           return
         }
+        const data = await response.json()
         localStorage.setItem('access-token', data.accessToken)
         dispatch(addUser({id : data.user.id, name : data.user.name, lastName : data.user.lastName, email : data.user.email }))
         setConnected(true)
@@ -45,6 +47,7 @@ function Entry() {
     catch(error){
       console.log(error)
       setConnected(false)
+      navigate('/login')
     }
   }
 
@@ -68,9 +71,6 @@ function Entry() {
     }
   }
 
-  useEffect(()=>{
-    verifyConnected()
-  },[])
 
   return (
     <div className="entry">
@@ -95,7 +95,7 @@ function Entry() {
     </div>
     :
     <div className="entry-connections">
-      <Link to='/login'>{languageState === 'french' ? "Se connecter" : languageState === 'hebrew' ? "להתחבר" : ''}</Link>
+      <button onClick={verifyConnected}>{languageState === 'french' ? "Se connecter" : languageState === 'hebrew' ? "להתחבר" : ''}</button>
       <Link to='/sign-up'>{languageState === 'french' ? "S'inscrire" : languageState === 'hebrew' ? "להרשם" : ''}</Link>
       <Link to='/galery'>{languageState === 'french' ? "Galerie" : languageState === 'hebrew' ? "גלריה" : ''}</Link>
     </div>
