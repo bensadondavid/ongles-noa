@@ -1,5 +1,43 @@
 {
-    "Home": {
-        "title":"Noa Bensadon"
+  "auth": {
+    "signUp": {
+      "title": "Créer un compte",
+      "subtitle": "Inscris-toi avec ton email, Google ou une passkey.",
+      "name": {
+        "label": "Nom",
+        "placeholder": "David"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "david@email.com"
+      },
+      "password": {
+        "label": "Mot de passe",
+        "description": "Minimum 8 caractères."
+      },
+      "submit": {
+        "default": "Créer mon compte",
+        "loading": "Création..."
+      },
+      "google": "Continuer avec Google",
+      "passkey": "Connexion avec passkey"
+    },
+    "signIn": {
+      "title": "Connexion",
+      "subtitle": "Connecte-toi avec ton email, Google ou une passkey.",
+      "email": {
+        "label": "Email",
+        "placeholder": "david@email.com"
+      },
+      "password": {
+        "label": "Mot de passe"
+      },
+      "submit": {
+        "default": "Se connecter",
+        "loading": "Connexion..."
+      },
+      "google": "Continuer avec Google",
+      "compte_existant" : "Vous avez déjà un compte ?"
     }
+  }
 }

@@ -1,5 +1,43 @@
 {
-    "Home": {
-        "title":"Noa Bensadon"
+  "auth": {
+    "signUp": {
+      "title": "יצירת חשבון",
+      "subtitle": "הירשם עם אימייל, Google או Passkey.",
+      "name": {
+        "label": "שם",
+        "placeholder": "David"
+      },
+      "email": {
+        "label": "אימייל",
+        "placeholder": "david@email.com"
+      },
+      "password": {
+        "label": "סיסמה",
+        "description": "לפחות 8 תווים."
+      },
+      "submit": {
+        "default": "צור חשבון",
+        "loading": "יוצר חשבון..."
+      },
+      "google": "המשך עם Google",
+      "passkey": "כניסה עם Passkey"
+    },
+    "signIn": {
+      "title": "התחברות",
+      "subtitle": "התחבר עם אימייל, Google או Passkey.",
+      "email": {
+        "label": "אימייל",
+        "placeholder": "david@email.com"
+      },
+      "password": {
+        "label": "סיסמה"
+      },
+      "submit": {
+        "default": "התחבר",
+        "loading": "מתחבר..."
+      },
+      "google": "המשך עם Google",
+      "compte_existant": "כבר יש לך חשבון?"
     }
+  }
 }
