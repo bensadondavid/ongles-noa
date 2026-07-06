@@ -20,7 +20,7 @@
         "loading": "יוצר חשבון..."
       },
       "google": "המשך עם Google",
-      "passkey": "כניסה עם Passkey"
+      "compte_existant": "כבר יש לך חשבון?"
     },
     "signIn": {
       "title": "התחברות",
@@ -37,7 +37,7 @@
         "loading": "מתחבר..."
       },
       "google": "המשך עם Google",
-      "compte_existant": "כבר יש לך חשבון?"
+            "passkey" : "המשך עם פסקי"
     }
   }
 }

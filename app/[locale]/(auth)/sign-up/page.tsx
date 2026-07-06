@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { authClient } from "@/lib/auth/auth-client"
-
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -124,7 +124,7 @@ export default function SignUp() {
             type="button"
             className="w-full bg-white text-border border-3 border-border"
           >
-            {t("compte_existant")}
+           <Link href='/sign-in'>{t("compte_existant")}</Link>
           </Button>
         </div>
       </form>

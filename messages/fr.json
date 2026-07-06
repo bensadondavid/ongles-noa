@@ -20,7 +20,7 @@
         "loading": "Création..."
       },
       "google": "Continuer avec Google",
-      "passkey": "Connexion avec passkey"
+      "compte_existant" : "Vous avez déjà un compte ?"
     },
     "signIn": {
       "title": "Connexion",
@@ -37,7 +37,7 @@
         "loading": "Connexion..."
       },
       "google": "Continuer avec Google",
-      "compte_existant" : "Vous avez déjà un compte ?"
+      "passkey" : "Se connecter avec une passkey"
     }
   }
 }
