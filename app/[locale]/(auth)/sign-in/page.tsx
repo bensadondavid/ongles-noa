@@ -3,13 +3,12 @@
 import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { authClient } from "@/lib/auth/auth-client"
-
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Separator } from "@/components/ui/separator"
 import { FcGoogle } from "react-icons/fc"
-import { Fingerprint } from "lucide-react"
 
 export default function SignIn() {
   const t = useTranslations("auth.signIn")
@@ -22,12 +21,15 @@ export default function SignIn() {
     e.preventDefault()
     setLoading(true)
 
-    await authClient.signIn.email({
+   const { error } = await authClient.signIn.email({
       email,
       password,
       callbackURL: "/account",
     })
-
+    if(error){
+      return toast.error(t('error'))
+    }
+    toast.success(t('success'))
     setLoading(false)
   }
 
@@ -35,17 +37,6 @@ export default function SignIn() {
     await authClient.signIn.social({
       provider: "google",
       callbackURL: "/account",
-    })
-  }
-
-  async function signInWithPasskey() {
-    await authClient.signIn.passkey({
-      autoFill: false,
-      fetchOptions: {
-        onSuccess() {
-          window.location.href = "/account"
-        },
-      },
     })
   }
 
@@ -58,49 +49,42 @@ export default function SignIn() {
 
         <FieldGroup>
           <Field>
-            <FieldLabel className="text-accent" htmlFor="email">{t("email.label")}</FieldLabel>
+            <FieldLabel className="text-white font-bold" htmlFor="email">{t("email.label")}</FieldLabel>
             <Input
               id="email"
               type="email"
-              placeholder={t("email.placeholder")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email webauthn"
-              className="bg-white text-border border-3 border-border"
+              className="bg-white text-border border-3 border-border rounded-full"
               required
             />
           </Field>
 
           <Field>
-            <FieldLabel className="text-accent" htmlFor="password">{t("password.label")}</FieldLabel>
+            <FieldLabel className="text-white font-bold" htmlFor="password">{t("password.label")}</FieldLabel>
             <Input
               id="password"
               type="password"
-              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
               required
-              className="bg-white text-border border-3 border-border"
+              className="bg-white text-border border-3 border-border rounded-full"
             />
           </Field>
         </FieldGroup>
 
-        <Button type="submit" className="w-full bg-white text-border border-3 border-border" disabled={loading}>
+        <Button type="submit" className="w-full bg-white text-border border-3 border-border rounded-full" disabled={loading}>
           {loading ? t("submit.loading") : t("submit.default")}
         </Button>
 
-        <Separator />
+        <Separator className="bg-white" />
 
         <div className="space-y-3">
-          <Button type="button" className="w-full bg-white text-border border-3 border-border" onClick={signInWithGoogle}>
+          <Button type="button" className="w-full rounded-full bg-white text-border border-3 border-border" onClick={signInWithGoogle}>
             <FcGoogle className="size-5" />
             {t("google")}
-          </Button>
-
-          <Button type="button" className="w-full bg-white text-border border-3 border-border" onClick={signInWithPasskey}>
-            <Fingerprint className="size-5" />
-            {t("passkey")}
           </Button>
         </div>
       </form>

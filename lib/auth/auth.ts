@@ -3,7 +3,6 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "../data/prisma";
 import { resend } from "../mail/resend";
 import { twoFactor } from "better-auth/plugins";
-import { passkey } from "@better-auth/passkey";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL!,
@@ -43,6 +42,30 @@ export const auth = betterAuth({
       });
       if (error) {
         throw new Error(error.message);
+      }
+    },
+    onExistingUserSignUp: async ({ user }) => {
+      const { error } = await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL!,
+        to: user.email,
+        subject: "Tentative de création de compte",
+        html: `
+      <p>Bonjour ${user.name ?? ""},</p>
+      <p>
+        Quelqu'un vient d'essayer de créer un compte avec votre adresse email.
+        Si c'était vous, vous avez déjà un compte : connectez-vous plutôt.
+      </p>
+      <p><a href="${process.env.BETTER_AUTH_URL}/sign-in">Se connecter</a></p>
+      <p>
+        Si ce n'était pas vous, ignorez cet email. Votre compte n'a pas été modifié.
+      </p>
+    `,
+      });
+
+      // NE PAS throw : un échec d'envoi ne doit pas transformer
+      // la réponse synthétique en 500 (fuite d'énumération).
+      if (error) {
+        console.error("[onExistingUserSignUp] échec envoi email:", error);
       }
     },
   },
@@ -87,7 +110,6 @@ export const auth = betterAuth({
   },
 
   plugins: [
-    passkey(),
     twoFactor({
       issuer: "noa_app", // Le nom de l'app
       otpOptions: {

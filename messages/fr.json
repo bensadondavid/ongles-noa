@@ -2,7 +2,6 @@
   "auth": {
     "signUp": {
       "title": "Créer un compte",
-      "subtitle": "Inscris-toi avec ton email, Google ou une passkey.",
       "name": {
         "label": "Nom",
         "placeholder": "David"
@@ -13,18 +12,22 @@
       },
       "password": {
         "label": "Mot de passe",
-        "description": "Minimum 8 caractères."
+        "nombre_caracteres": "Minimum 8 caractères.",
+        "maj" : "Au moins une majuscule",
+        "caractere_special": "Au moins un caractère spécial"
       },
       "submit": {
         "default": "Créer mon compte",
         "loading": "Création..."
       },
       "google": "Continuer avec Google",
-      "compte_existant" : "Vous avez déjà un compte ?"
+      "compte_existant": "Vous avez déjà un compte ?",
+      "success": "Compte créé avec succès, un e-mail vous a été envoyé",
+      "errors":  "La création a échoué, veuillez réessayer.",
+      "passwordProblem" : "Le mot de passe ne remplit pas les critères"
     },
     "signIn": {
       "title": "Connexion",
-      "subtitle": "Connecte-toi avec ton email, Google ou une passkey.",
       "email": {
         "label": "Email",
         "placeholder": "david@email.com"
@@ -37,7 +40,14 @@
         "loading": "Connexion..."
       },
       "google": "Continuer avec Google",
-      "passkey" : "Se connecter avec une passkey"
+      "passkey": "Se connecter avec une passkey",
+      "success": "Connexion réussie",
+      "errors": "La connexion a échoué, veuillez réessayer."
+    }
+  },
+  "account":{
+    "home":{
+      "rdv": "Prendre\nrendez-vous"    
     }
   }
 }
