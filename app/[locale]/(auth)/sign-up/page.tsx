@@ -47,7 +47,7 @@ export default function SignUp() {
       name,
       email,
       password,
-      callbackURL: "/account",
+      callbackURL: "/",
     });
     if (error) {
       if (password.length < 8) {

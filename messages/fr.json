@@ -42,12 +42,35 @@
       "google": "Continuer avec Google",
       "passkey": "Se connecter avec une passkey",
       "success": "Connexion réussie",
-      "errors": "La connexion a échoué, veuillez réessayer."
+      "error": "La connexion a échoué, veuillez réessayer.",
+      "wrong_id": "Identifiant et/ou mot de passe invalide."
     }
   },
-  "account":{
-    "home":{
-      "rdv": "Prendre\nrendez-vous"    
+  "home":{
+    "rdv": "Prendre\nrendez-vous",
+    "sign-in" : "Se connecter",
+    "sign-up" : "S'inscrire"      
+    },
+    "prestations": {
+      "title" : "prestations",
+      "subtitle" : "liste",
+      "presta_1" : "Manucure et soins des ongles",
+      "presta_2": "Dépose de gel",
+      "presta_3" : "Dépose de faux ongles",
+      "presta_4" : "Manucure russe et gainage",
+      "presta_5" : "Manucure russe et semi permanent",
+      "presta_6" : "Capsules gel X",
+      "presta_7" : "Pédicure et semi permanent ",
+      "next" : "Suivant"
+    },
+    "option":{
+      "option_1": "Réparation d’un ongle cassé",
+      "option_2" : "Pose d’un faux ongle",
+      "option_3" : "French",
+      "option_4" : "Baby boomer",
+      "option_5" : "Effet chrome",
+      "option_6" : "Stickers, pailletés, strass",
+      "option_7" : "Nail art simple par ongle",
+      "option_8" : "Nail art élaboré par ongle"
     }
-  }
 }

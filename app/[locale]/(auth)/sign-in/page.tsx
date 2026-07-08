@@ -24,9 +24,14 @@ export default function SignIn() {
    const { error } = await authClient.signIn.email({
       email,
       password,
-      callbackURL: "/account",
+      callbackURL: "/",
     })
     if(error){
+      if(error.status == 401){
+        setLoading(false)
+        return toast.error(t('wrong_id'))
+      }
+      setLoading(false)
       return toast.error(t('error'))
     }
     toast.success(t('success'))
@@ -36,7 +41,7 @@ export default function SignIn() {
   async function signInWithGoogle() {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: "/account",
+      callbackURL: "/",
     })
   }
 
