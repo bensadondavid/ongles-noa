@@ -24,21 +24,21 @@ export default function Home() {
         width={200}
         height={200}
         alt="img-1"
-        className="absolute right-0 top-0"
+        className="absolute right-0 top-0 md:hidden"
       />
       <Image
         src={"/fil-2.png"}
         width={180}
         height={200}
         alt="img-1"
-        className="absolute -left-8 bottom-0 z-10"
+        className="absolute -left-8 bottom-0 z-10 md:hidden"
       />
       <Image
         src={"/fil-3.png"}
         width={180}
         height={200}
         alt="img-1"
-        className="absolute right-0 bottom-0 z-10"
+        className="absolute right-0 bottom-0 z-10 md:hidden"
       />
       <div dir="ltr" className="flex flex-row h-fit pt-5">
         <button

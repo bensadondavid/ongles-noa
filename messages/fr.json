@@ -54,16 +54,18 @@
     "prestations": {
       "title" : "prestations",
       "subtitle" : "liste",
-      "presta_1" : "Manucure et soins des ongles",
-      "presta_2": "Dépose de gel",
-      "presta_3" : "Dépose de faux ongles",
-      "presta_4" : "Manucure russe et gainage",
-      "presta_5" : "Manucure russe et semi permanent",
+      "presta_1": "Dépose de gel",
+      "presta_2" : "Dépose de faux ongles",
+      "presta_3" : "Manucure et soins des ongles",
+      "presta_4" : "Manucure russe et semi permanent",
+      "presta_5" : "Manucure russe et gainage",
       "presta_6" : "Capsules gel X",
       "presta_7" : "Pédicure et semi permanent ",
       "next" : "Suivant"
     },
-    "option":{
+    "options":{
+      "title" : "options",
+      "subtitle" : "liste",
       "option_1": "Réparation d’un ongle cassé",
       "option_2" : "Pose d’un faux ongle",
       "option_3" : "French",

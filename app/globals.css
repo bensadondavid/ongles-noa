@@ -6,6 +6,7 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-text: var(--text);
   --color-foreground: var(--foreground);
   --font-primary: var(--font-nixie-one);
   --font-second: var(--font-moontime);
@@ -50,6 +51,7 @@
 
 :root {
   --background: #C2B9B2;
+  --text: #8D8279;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);

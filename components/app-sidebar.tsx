@@ -28,7 +28,7 @@ export function AppSidebar() {
         <p className="font-third text-xl leading-none text-white">{user}</p>
       </SidebarHeader>
 
-      <SidebarSeparator className="mx-4 bg-border/60" />
+      <SidebarSeparator className="bg-border/60 m-0" />
 
       <SidebarContent className="px-3 py-4">
         <SidebarGroup>
