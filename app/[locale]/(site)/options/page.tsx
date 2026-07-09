@@ -40,7 +40,7 @@ export default function Options() {
             )
         })}
       </div>
-        <Link href={'/date'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">Suivant</Link>
+        <Link href={'/reservation'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">{t('next')}</Link>
     </div>
   )
 }

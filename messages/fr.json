@@ -73,6 +73,12 @@
       "option_5" : "Effet chrome",
       "option_6" : "Stickers, pailletés, strass",
       "option_7" : "Nail art simple par ongle",
-      "option_8" : "Nail art élaboré par ongle"
+      "option_8" : "Nail art élaboré par ongle",
+      "next" : "Suivant"
+    },
+    "reservation": {
+      "title": "créneaux",
+      "subtitle": "Dispos",
+      "next" : "Suivant"
     }
 }
