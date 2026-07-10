@@ -63,16 +63,16 @@ export default function Home() {
         <p className="font-second text-[150px] text-white">Bensadon</p>
       </div>
       {user ? (
-        <Link href="/prestations" className="flex text-center items-center justify-center bg-white w-[180px] h-[60px] border-4 rounded-full font-third text-border capitalize whitespace-pre-line">
+        <Link href="/prestations" className="z-10 flex text-center items-center justify-center bg-white w-[180px] h-[60px] border-4 rounded-full font-third text-border capitalize whitespace-pre-line">
           {t("rdv")}
         </Link>
       ) : (
         <div className="flex flex-col gap-1">
-          <Link href="/sign-in" className="flex items-center justify-center bg-white w-[180px] h-[40px] border-4 rounded-full font-third text-border capitalize whitespace-pre-line">
+          <Link href="/sign-in" className="z-10 flex items-center justify-center bg-white w-[180px] h-[40px] border-4 rounded-full font-third text-border capitalize whitespace-pre-line">
             {t("sign-in")}
           </Link>
 
-          <Link href="/sign-up" className="flex items-center justify-center bg-white w-[180px] h-[40px] border-4 rounded-full font-third text-border capitalize whitespace-pre-line">
+          <Link href="/sign-up" className="z-10 flex items-center justify-center bg-white w-[180px] h-[40px] border-4 rounded-full font-third text-border capitalize whitespace-pre-line">
             {t("sign-up")}
           </Link>
         </div>

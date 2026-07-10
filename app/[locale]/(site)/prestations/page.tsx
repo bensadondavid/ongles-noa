@@ -1,15 +1,14 @@
 'use client'
 
 import { useBookingStore } from "@/store/booking-store"
-import { useTranslations, useLocale } from "next-intl"
+import { useTranslations } from "next-intl"
 import Link from "next/link"
 
 export default function Prestations() {
 
   const t = useTranslations('prestations')
-  const locale = useLocale()
-  const presta = useBookingStore((state)=>state.prestation)
-  const setPresta = useBookingStore((state=>state.setPrestation))
+  const togglePrestation = useBookingStore((state)=>state.togglePrestation)
+  const selectedPrestations = useBookingStore((state) => state.prestations)
 
   const prestations = [
     {name: t('presta_1'),price: 20},
@@ -28,12 +27,15 @@ export default function Prestations() {
         <h3 className="font-second text-[50px] -translate-y-12">{t('subtitle')}</h3>
       </div>
       <div className="flex flex-col items-center justify-center gap-2 w-9/10 -translate-y-5">
-        {prestations.map((p)=>(
-            <button onClick={()=>setPresta(p)} key={p.name} className={`text-sm text-text flex flex-col justify-center items-center rounded-full bg-white/70 w-full h-[50px] ${presta?.name === p.name ? "border-2 border-border" : ""}`}>
+        {prestations.map((p)=>{
+          const isSelected = selectedPrestations.some((selected) => selected.name === p.name)
+          return(
+            <button onClick={()=>togglePrestation(p)} key={p.name} className={`text-sm text-text flex flex-col justify-center items-center rounded-full bg-white/70 w-full h-[50px] ${isSelected ? "border-2 border-border" : ""}`}>
               <p>{p.name}</p> 
               <p className="">{p.price} ₪</p>
             </button>
-        ))}
+            )
+          })}
       </div>
         <Link href={'/options'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">Suivant</Link>
     </div>

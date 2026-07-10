@@ -1,14 +1,13 @@
 'use client'
 
 import { useBookingStore } from "@/store/booking-store"
-import { useTranslations, useLocale } from "next-intl"
+import { useTranslations } from "next-intl"
 import Link from "next/link"
 
 
 export default function Options() {
 
   const t = useTranslations('options')
-  const locale = useLocale()
   const opts = useBookingStore((state)=>state.options)
   const toggleOption = useBookingStore((state)=>state.toggleOption)
 

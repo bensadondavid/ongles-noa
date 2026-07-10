@@ -80,5 +80,15 @@
       "title": "créneaux",
       "subtitle": "Dispos",
       "next" : "Suivant"
+    },
+    "confirmation": {
+      "title" : "confirmation",
+      "date" : "date",
+      "hour" : "heure",
+      "prestation" : "prestation",
+      "options" : "options",
+      "price": "prix", 
+      "conditions_btn" : "J’accepte les conditions d’anulations:",
+      "conditions" : "Pour toute annulation sous les 48h ou retard de plus de 15 mn, 50% du prix de la prestation sera facturée "
     }
 }
