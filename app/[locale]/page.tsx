@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { authClient } from "@/lib/auth/auth-client";
 import Link from "next/link";
+import { useBookingStore } from "@/store/booking-store";
 
 export default function Home() {
   const pathname = usePathname();
@@ -15,7 +16,18 @@ export default function Home() {
   };
   const session = authClient.useSession();
   const user = session.data?.user;
-  console.log(user);
+
+  const setPrestations = useBookingStore((state)=>state.setPrestations)
+  const setOptions = useBookingStore((state=>state.setOptions))
+  const setDate = useBookingStore((state)=>state.setDate)
+  const setTime = useBookingStore((state)=>state.setTime)
+
+  const resetStore = ()=>{
+    setTime(null)
+    setDate(null)
+    setOptions([])
+    setPrestations([])
+  }
 
   return (
     <div className="h-screen w-full bg-transparent flex flex-col justify-around items-center relative pb-20 overflow-hidden">
@@ -44,6 +56,7 @@ export default function Home() {
         <button
           onClick={() => {
             changeLocale("fr");
+            resetStore();
           }}
           className="bg-white border-4 border-r-2 px-2 py-1 rounded-l-full text-xl z-10"
         >
@@ -52,6 +65,7 @@ export default function Home() {
         <button
           onClick={() => {
             changeLocale("he");
+            resetStore();
           }}
           className="bg-white border-4 px-2 py-1 border-l-2 rounded-r-full text-xl z-10"
         >

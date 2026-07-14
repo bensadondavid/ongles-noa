@@ -1,8 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../lib/data/prisma"
@@ -12,20 +10,23 @@ datasource db {
   provider = "postgresql"
 }
 
+// ─────────────────────────────────────────────
+// AUTH (Better Auth)
+// ─────────────────────────────────────────────
+
 model User {
-  id               String      @id
+  id               String        @id
   name             String
   email            String
-  emailVerified    Boolean     @default(false)
+  emailVerified    Boolean       @default(false)
   image            String?
-  createdAt        DateTime    @default(now())
-  updatedAt        DateTime    @updatedAt
-  twoFactorEnabled Boolean?    @default(false)
-  role             String      @default("CLIENT")
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  twoFactorEnabled Boolean?      @default(false)
+  role             String        @default("CLIENT")
   sessions         Session[]
   accounts         Account[]
-  twofactors       TwoFactor[]
-
+  appointments     Appointment[]
 
   @@unique([email])
   @@map("user")
@@ -79,17 +80,120 @@ model Verification {
   @@map("verification")
 }
 
-model TwoFactor {
-  id                      String    @id
-  secret                  String
-  backupCodes             String
-  userId                  String
-  user                    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  verified                Boolean?  @default(true)
-  failedVerificationCount Int?      @default(0)
-  lockedUntil             DateTime?
+model Service {
+  id           String  @id @default(cuid())
+  nameFr       String
+  nameHe       String
+  durationMin  Int
+  priceCents   Int
+  depositCents Int     @default(0)
+  active       Boolean @default(true)
 
-  @@index([secret])
-  @@index([userId])
-  @@map("twoFactor")
+  items AppointmentItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServiceOption {
+  id          String @id @default(cuid())
+  serviceId   String
+  nameFr      String
+  nameHe      String
+  durationMin Int?   @default(0)
+  extraCents  Int    @default(0)
+
+  active Boolean             @default(true)
+  option AppointmentOption[]
+
+  @@index([serviceId, active])
+}
+
+model AvailabilityRule {
+  id       String @id @default(cuid())
+  weekday  Int
+  startMin Int
+  endMin   Int
+
+  @@unique([weekday, startMin])
+  @@index([weekday])
+}
+
+model TimeOff {
+  id      String   @id @default(cuid())
+  startAt DateTime
+  endAt   DateTime
+  reason  String?
+
+  createdAt DateTime @default(now())
+
+  @@index([startAt, endAt])
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  NO_SHOW
+}
+
+model Appointment {
+  id      String   @id @default(cuid())
+  userId  String
+  startAt DateTime
+  endAt   DateTime
+
+  status       AppointmentStatus @default(PENDING)
+  expiresAt    DateTime?
+  durationMin  Int
+
+  customerName  String
+  customerEmail String
+  customerPhone String
+  
+  cancelledAt     DateTime?
+
+  user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prestations AppointmentItem[]
+  options     AppointmentOption[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([startAt, endAt])
+  @@index([status, expiresAt])
+  @@index([userId, startAt])
+  @@index([customerEmail])
+}
+
+model AppointmentItem {
+  id             String @id @default(cuid())
+  appointmentId  String
+  serviceId      String
+  nameFrSnapshot String
+  nameHeSnapshot String
+  durationMin    Int
+  priceCents     Int
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  service     Service     @relation(fields: [serviceId], references: [id])
+
+  @@index([appointmentId])
+  @@index([serviceId])
+}
+
+model AppointmentOption {
+  id            String @id @default(cuid())
+  appointmentId String
+  optionId      String
+
+  nameFrSnapshot String
+  nameHeSnapshot String
+  priceCents     Int
+
+  appointment Appointment   @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  option      ServiceOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+
+  @@unique([appointmentId, optionId])
+  @@index([optionId])
 }

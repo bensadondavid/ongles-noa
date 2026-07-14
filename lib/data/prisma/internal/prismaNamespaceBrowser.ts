@@ -55,7 +55,13 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  TwoFactor: 'TwoFactor'
+  Service: 'Service',
+  ServiceOption: 'ServiceOption',
+  AvailabilityRule: 'AvailabilityRule',
+  TimeOff: 'TimeOff',
+  Appointment: 'Appointment',
+  AppointmentItem: 'AppointmentItem',
+  AppointmentOption: 'AppointmentOption'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -134,17 +140,97 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
-export const TwoFactorScalarFieldEnum = {
+export const ServiceScalarFieldEnum = {
   id: 'id',
-  secret: 'secret',
-  backupCodes: 'backupCodes',
-  userId: 'userId',
-  verified: 'verified',
-  failedVerificationCount: 'failedVerificationCount',
-  lockedUntil: 'lockedUntil'
+  nameFr: 'nameFr',
+  nameHe: 'nameHe',
+  durationMin: 'durationMin',
+  priceCents: 'priceCents',
+  depositCents: 'depositCents',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type TwoFactorScalarFieldEnum = (typeof TwoFactorScalarFieldEnum)[keyof typeof TwoFactorScalarFieldEnum]
+export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
+
+
+export const ServiceOptionScalarFieldEnum = {
+  id: 'id',
+  serviceId: 'serviceId',
+  nameFr: 'nameFr',
+  nameHe: 'nameHe',
+  durationMin: 'durationMin',
+  extraCents: 'extraCents',
+  active: 'active'
+} as const
+
+export type ServiceOptionScalarFieldEnum = (typeof ServiceOptionScalarFieldEnum)[keyof typeof ServiceOptionScalarFieldEnum]
+
+
+export const AvailabilityRuleScalarFieldEnum = {
+  id: 'id',
+  weekday: 'weekday',
+  startMin: 'startMin',
+  endMin: 'endMin'
+} as const
+
+export type AvailabilityRuleScalarFieldEnum = (typeof AvailabilityRuleScalarFieldEnum)[keyof typeof AvailabilityRuleScalarFieldEnum]
+
+
+export const TimeOffScalarFieldEnum = {
+  id: 'id',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type TimeOffScalarFieldEnum = (typeof TimeOffScalarFieldEnum)[keyof typeof TimeOffScalarFieldEnum]
+
+
+export const AppointmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  startAt: 'startAt',
+  endAt: 'endAt',
+  status: 'status',
+  expiresAt: 'expiresAt',
+  durationMin: 'durationMin',
+  customerName: 'customerName',
+  customerEmail: 'customerEmail',
+  customerPhone: 'customerPhone',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
+
+
+export const AppointmentItemScalarFieldEnum = {
+  id: 'id',
+  appointmentId: 'appointmentId',
+  serviceId: 'serviceId',
+  nameFrSnapshot: 'nameFrSnapshot',
+  nameHeSnapshot: 'nameHeSnapshot',
+  durationMin: 'durationMin',
+  priceCents: 'priceCents'
+} as const
+
+export type AppointmentItemScalarFieldEnum = (typeof AppointmentItemScalarFieldEnum)[keyof typeof AppointmentItemScalarFieldEnum]
+
+
+export const AppointmentOptionScalarFieldEnum = {
+  id: 'id',
+  appointmentId: 'appointmentId',
+  optionId: 'optionId',
+  nameFrSnapshot: 'nameFrSnapshot',
+  nameHeSnapshot: 'nameHeSnapshot',
+  priceCents: 'priceCents'
+} as const
+
+export type AppointmentOptionScalarFieldEnum = (typeof AppointmentOptionScalarFieldEnum)[keyof typeof AppointmentOptionScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,21 +1,32 @@
 "use client";
 
 import { useBookingStore } from "@/store/booking-store";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Calendar } from "@/components/ui/calendar";
 import { addMonths, endOfMonth, startOfMonth } from "date-fns";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function Reservations() {
   const t = useTranslations("reservation");
-  const locale = useLocale();
   const dateStore = useBookingStore((state) => state.date);
   const timeStore = useBookingStore((state) => state.time);
   const setDateStore = useBookingStore((state) => state.setDate);
   const setTimeStore = useBookingStore((state) => state.setTime);
   const selectedDate = dateStore ? new Date(dateStore) : undefined;
 
-  const hours = ["9:00", "11:00", "13:00", "15:00", "17:00", "19:00"]
+  const hours: string[] = ["9:00", "11:00", "13:00", "15:00", "17:00"]
+
+  const verifyResa = (e: React.MouseEvent<HTMLAnchorElement>)=>{
+    if(!dateStore){
+      e.preventDefault()
+      return toast.error(t('date'), {style: { background: "#fff", color: "#000", border: "2px solid #C9A96E",}} )
+    }
+    if(!timeStore){
+      e.preventDefault()
+      return toast.error(t('time'), {style: { background: "#fff", color: "#000", border: "2px solid #C9A96E",}})
+    }
+  }
 
   return (
     <div className="flex flex-col items-center pt-10 pb-4">
@@ -57,7 +68,10 @@ export default function Reservations() {
             <button onClick={()=>setTimeStore(h)} className={`border-none rounded-full p-2 ${timeStore === h ? 'bg-background text-white' : "bg-white text-border"}`} key={h}>{h}</button>
           ))}
       </div>
-      <Link href={'/confirmation'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">Suivant</Link>
+      <div className="flex flex-row gap-2 items-center justify-center">
+        <Link href={'/options'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">{t('previous')}</Link>
+        <Link onClick={verifyResa} href={'/confirmation'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">{t('next')}</Link>
+      </div>
     </div>
   );
 }

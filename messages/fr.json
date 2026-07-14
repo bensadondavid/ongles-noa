@@ -61,7 +61,9 @@
       "presta_5" : "Manucure russe et gainage",
       "presta_6" : "Capsules gel X",
       "presta_7" : "Pédicure et semi permanent ",
-      "next" : "Suivant"
+      "next" : "Suivant",
+      "select" : "Veullez sélectionner au moins une prestation",
+      "depose" : "Uniquement les déposes d'un travail exterieur sont facturées"
     },
     "options":{
       "title" : "options",
@@ -74,21 +76,27 @@
       "option_6" : "Stickers, pailletés, strass",
       "option_7" : "Nail art simple par ongle",
       "option_8" : "Nail art élaboré par ongle",
-      "next" : "Suivant"
+      "next" : "Suivant",
+      "previous" : "Précedent"
     },
     "reservation": {
       "title": "créneaux",
       "subtitle": "Dispos",
-      "next" : "Suivant"
+      "next" : "Suivant",
+      "previous" : "Précedent",
+      "time": "Veuillez choisir un créneau horaire",
+      "date": "Veuillez choisir une date"
     },
     "confirmation": {
       "title" : "confirmation",
       "date" : "date",
       "hour" : "heure",
-      "prestation" : "prestation",
+      "prestations" : "prestations",
       "options" : "options",
       "price": "prix", 
       "conditions_btn" : "J’accepte les conditions d’anulations:",
-      "conditions" : "Pour toute annulation sous les 48h ou retard de plus de 15 mn, 50% du prix de la prestation sera facturée "
+      "conditions" : "Pour toute annulation sous les 48h ou retard de plus de 15 mn, 50% du prix de la prestation sera facturée ",
+      "next" : "Suivant",
+      "previous" : "Précedent"
     }
 }

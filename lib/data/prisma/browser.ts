@@ -38,7 +38,37 @@ export type Account = Prisma.AccountModel
  */
 export type Verification = Prisma.VerificationModel
 /**
- * Model TwoFactor
+ * Model Service
  * 
  */
-export type TwoFactor = Prisma.TwoFactorModel
+export type Service = Prisma.ServiceModel
+/**
+ * Model ServiceOption
+ * 
+ */
+export type ServiceOption = Prisma.ServiceOptionModel
+/**
+ * Model AvailabilityRule
+ * 
+ */
+export type AvailabilityRule = Prisma.AvailabilityRuleModel
+/**
+ * Model TimeOff
+ * 
+ */
+export type TimeOff = Prisma.TimeOffModel
+/**
+ * Model Appointment
+ * 
+ */
+export type Appointment = Prisma.AppointmentModel
+/**
+ * Model AppointmentItem
+ * 
+ */
+export type AppointmentItem = Prisma.AppointmentItemModel
+/**
+ * Model AppointmentOption
+ * 
+ */
+export type AppointmentOption = Prisma.AppointmentOptionModel

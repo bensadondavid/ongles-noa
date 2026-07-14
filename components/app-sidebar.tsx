@@ -34,6 +34,11 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="gap-1.5">
+               <SidebarMenuItem>
+                <NavLink href="/" icon={User}>
+                  Accueil
+                </NavLink>
+              </SidebarMenuItem>
               <SidebarMenuItem>
                 <NavLink href="/profile" icon={User}>
                   Mes infos perso

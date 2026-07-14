@@ -108,28 +108,6 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7, // 7 jours
     updateAge: 60 * 60 * 24, // 1 jour
   },
-
-  plugins: [
-    twoFactor({
-      issuer: "noa_app", // Le nom de l'app
-      otpOptions: {
-        async sendOTP({ user, otp }) {
-          const { error } = await resend.emails.send({
-            from: process.env.RESEND_FROM_EMAIL!,
-            to: user.email,
-            subject: "Votre code de sécurité",
-            html: `
-            <p>Votre code de sécurité :</p>
-            <strong>${otp}</strong>
-          `,
-          });
-          if (error) {
-            throw new Error(error.message);
-          }
-        },
-      },
-    }),
-  ],
 });
 
 // pnpm dlx auth@latest generate --config ./lib/data/auth.ts

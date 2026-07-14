@@ -3,6 +3,7 @@
 import { useBookingStore } from "@/store/booking-store"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
+import { toast } from "sonner"
 
 export default function Prestations() {
 
@@ -10,6 +11,7 @@ export default function Prestations() {
   const togglePrestation = useBookingStore((state)=>state.togglePrestation)
   const selectedPrestations = useBookingStore((state) => state.prestations)
 
+  
   const prestations = [
     {name: t('presta_1'),price: 20},
     {name: t('presta_2'),price: 40},
@@ -18,7 +20,15 @@ export default function Prestations() {
     {name: t('presta_5'),price: 110},
     {name: t('presta_6'),price: 180},
     {name: t('presta_7'),price: 130},
-]
+  ]
+
+  const verifyLengthPresta = (e: React.MouseEvent<HTMLAnchorElement>)=>{
+    if(selectedPrestations.length === 0){
+      e.preventDefault()
+      return toast.error(t('select'), {style: { background: "#fff", color: "#000", border: "2px solid #C9A96E",}})
+      }
+    }
+
 
   return (
     <div className="flex flex-col items-center pt-10">
@@ -36,8 +46,9 @@ export default function Prestations() {
             </button>
             )
           })}
+      <p className="text-sm text-white font-bold text-center">{t('depose')}</p>
       </div>
-        <Link href={'/options'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">Suivant</Link>
+        <Link onClick={verifyLengthPresta} href={'/options'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] mb-4">{t('next')}</Link>
     </div>
   )
 }
