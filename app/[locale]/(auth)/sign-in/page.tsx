@@ -61,7 +61,7 @@ export default function SignIn() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email webauthn"
-              className="bg-white text-border border-3 border-border rounded-full"
+              className="bg-white text-border border-3 border-border rounded-full py-4"
               required
             />
           </Field>
@@ -75,19 +75,19 @@ export default function SignIn() {
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
               required
-              className="bg-white text-border border-3 border-border rounded-full"
+              className="bg-white text-border border-3 border-border rounded-full h-[40px]"
             />
           </Field>
         </FieldGroup>
 
-        <Button type="submit" className="w-full bg-white text-border border-3 border-border rounded-full" disabled={loading}>
+        <Button type="submit" className="w-full bg-white text-border border-3 border-border rounded-full h-[40px]" disabled={loading}>
           {loading ? t("submit.loading") : t("submit.default")}
         </Button>
 
         <Separator className="bg-white" />
 
         <div className="space-y-3">
-          <Button type="button" className="w-full rounded-full bg-white text-border border-3 border-border" onClick={signInWithGoogle}>
+          <Button type="button" className="w-full h-[40px] rounded-full bg-white text-border border-3 border-border" onClick={signInWithGoogle}>
             <FcGoogle className="size-5" />
             {t("google")}
           </Button>

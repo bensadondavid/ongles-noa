@@ -86,7 +86,7 @@ export default function SignUp() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               autoComplete="name"
-              className="bg-white rounded-full text-border border-3 border-border"
+              className="bg-white rounded-full text-border border-3 border-border h-[40px]"
               required
             />
           </Field>
@@ -101,7 +101,7 @@ export default function SignUp() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email webauthn"
-              className="bg-white rounded-full text-border border-3 border-border"
+              className="bg-white rounded-full text-border border-3 border-border h-[40px]"
               required
             />
           </Field>
@@ -116,7 +116,7 @@ export default function SignUp() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="new-password"
-              className="bg-white rounded-full text-border border-3 border-border"
+              className="bg-white rounded-full text-border border-3 border-border h-[40px]"
               required
             />
             <div className="flex flex-col gap-1.5 mt-1">
@@ -141,7 +141,7 @@ export default function SignUp() {
 
         <Button
           type="submit"
-          className="w-full rounded-full bg-white text-border border-3 border-border"
+          className="w-full rounded-full bg-white text-border border-3 border-border h-[40px]"
           disabled={loading}
         >
           {loading ? t("submit.loading") : t("submit.default")}
@@ -152,7 +152,7 @@ export default function SignUp() {
         <div className="space-y-3">
           <Button
             type="button"
-            className="w-full rounded-full bg-white text-border border-3 border-border"
+            className="w-full rounded-full bg-white text-border border-3 border-border h-[40px]"
             onClick={signInWithGoogle}
           >
             <FcGoogle className="size-5" />
@@ -161,7 +161,7 @@ export default function SignUp() {
 
           <Button
             asChild
-            className="w-full rounded-full bg-white text-border border-3 border-border"
+            className="w-full rounded-full bg-white text-border border-3 border-border h-[40px]"
           >
             <Link href="/sign-in">{t("compte_existant")}</Link>
           </Button>
