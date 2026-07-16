@@ -392,9 +392,7 @@ export const ModelName = {
   ServiceOption: 'ServiceOption',
   AvailabilityRule: 'AvailabilityRule',
   TimeOff: 'TimeOff',
-  Appointment: 'Appointment',
-  AppointmentItem: 'AppointmentItem',
-  AppointmentOption: 'AppointmentOption'
+  Appointment: 'Appointment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -410,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "service" | "serviceOption" | "availabilityRule" | "timeOff" | "appointment" | "appointmentItem" | "appointmentOption"
+    modelProps: "user" | "session" | "account" | "verification" | "service" | "serviceOption" | "availabilityRule" | "timeOff" | "appointment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1080,154 +1078,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    AppointmentItem: {
-      payload: Prisma.$AppointmentItemPayload<ExtArgs>
-      fields: Prisma.AppointmentItemFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.AppointmentItemFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.AppointmentItemFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload>
-        }
-        findFirst: {
-          args: Prisma.AppointmentItemFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.AppointmentItemFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload>
-        }
-        findMany: {
-          args: Prisma.AppointmentItemFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload>[]
-        }
-        create: {
-          args: Prisma.AppointmentItemCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload>
-        }
-        createMany: {
-          args: Prisma.AppointmentItemCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.AppointmentItemCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload>[]
-        }
-        delete: {
-          args: Prisma.AppointmentItemDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload>
-        }
-        update: {
-          args: Prisma.AppointmentItemUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload>
-        }
-        deleteMany: {
-          args: Prisma.AppointmentItemDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.AppointmentItemUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.AppointmentItemUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload>[]
-        }
-        upsert: {
-          args: Prisma.AppointmentItemUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentItemPayload>
-        }
-        aggregate: {
-          args: Prisma.AppointmentItemAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAppointmentItem>
-        }
-        groupBy: {
-          args: Prisma.AppointmentItemGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AppointmentItemGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.AppointmentItemCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AppointmentItemCountAggregateOutputType> | number
-        }
-      }
-    }
-    AppointmentOption: {
-      payload: Prisma.$AppointmentOptionPayload<ExtArgs>
-      fields: Prisma.AppointmentOptionFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.AppointmentOptionFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.AppointmentOptionFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload>
-        }
-        findFirst: {
-          args: Prisma.AppointmentOptionFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.AppointmentOptionFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload>
-        }
-        findMany: {
-          args: Prisma.AppointmentOptionFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload>[]
-        }
-        create: {
-          args: Prisma.AppointmentOptionCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload>
-        }
-        createMany: {
-          args: Prisma.AppointmentOptionCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.AppointmentOptionCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload>[]
-        }
-        delete: {
-          args: Prisma.AppointmentOptionDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload>
-        }
-        update: {
-          args: Prisma.AppointmentOptionUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload>
-        }
-        deleteMany: {
-          args: Prisma.AppointmentOptionDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.AppointmentOptionUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.AppointmentOptionUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload>[]
-        }
-        upsert: {
-          args: Prisma.AppointmentOptionUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppointmentOptionPayload>
-        }
-        aggregate: {
-          args: Prisma.AppointmentOptionAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAppointmentOption>
-        }
-        groupBy: {
-          args: Prisma.AppointmentOptionGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AppointmentOptionGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.AppointmentOptionCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AppointmentOptionCountAggregateOutputType> | number
-        }
-      }
-    }
   }
 } & {
   other: {
@@ -1389,36 +1239,13 @@ export const AppointmentScalarFieldEnum = {
   customerEmail: 'customerEmail',
   customerPhone: 'customerPhone',
   cancelledAt: 'cancelledAt',
+  appointmentItem: 'appointmentItem',
+  appointmentOption: 'appointmentOption',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
-
-
-export const AppointmentItemScalarFieldEnum = {
-  id: 'id',
-  appointmentId: 'appointmentId',
-  serviceId: 'serviceId',
-  nameFrSnapshot: 'nameFrSnapshot',
-  nameHeSnapshot: 'nameHeSnapshot',
-  durationMin: 'durationMin',
-  priceCents: 'priceCents'
-} as const
-
-export type AppointmentItemScalarFieldEnum = (typeof AppointmentItemScalarFieldEnum)[keyof typeof AppointmentItemScalarFieldEnum]
-
-
-export const AppointmentOptionScalarFieldEnum = {
-  id: 'id',
-  appointmentId: 'appointmentId',
-  optionId: 'optionId',
-  nameFrSnapshot: 'nameFrSnapshot',
-  nameHeSnapshot: 'nameHeSnapshot',
-  priceCents: 'priceCents'
-} as const
-
-export type AppointmentOptionScalarFieldEnum = (typeof AppointmentOptionScalarFieldEnum)[keyof typeof AppointmentOptionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1427,6 +1254,21 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1443,6 +1285,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -1511,6 +1362,20 @@ export type EnumAppointmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'AppointmentStatus[]'
  */
 export type ListEnumAppointmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AppointmentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -1646,8 +1511,6 @@ export type GlobalOmitConfig = {
   availabilityRule?: Prisma.AvailabilityRuleOmit
   timeOff?: Prisma.TimeOffOmit
   appointment?: Prisma.AppointmentOmit
-  appointmentItem?: Prisma.AppointmentItemOmit
-  appointmentOption?: Prisma.AppointmentOptionOmit
 }
 
 /* Types for Logging */

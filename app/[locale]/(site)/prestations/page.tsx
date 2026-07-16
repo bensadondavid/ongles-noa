@@ -40,7 +40,7 @@ export default function Prestations() {
         {prestations.map((p)=>{
           const isSelected = selectedPrestations.some((selected) => selected.name === p.name)
           return(
-            <button onClick={()=>togglePrestation(p)} key={p.name} className={`text-sm text-text flex flex-col justify-center items-center rounded-full bg-white/70 w-full h-[50px] ${isSelected ? "border-2 border-border" : ""}`}>
+            <button onClick={()=>togglePrestation(p)} key={p.name} className={`text-md text-text flex flex-col justify-center items-center rounded-full bg-white/70 w-full h-[50px] ${isSelected ? "border-2 border-border" : ""}`}>
               <p>{p.name}</p> 
               <p className="">{p.price} ₪</p>
             </button>

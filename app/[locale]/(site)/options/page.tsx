@@ -32,7 +32,7 @@ export default function Options() {
         {options.map((o)=>{
           const isSelected = opts.some((opt) => opt.name === o.name)
           return(
-            <button onClick={()=>toggleOption(o)} key={o.name} className={`text-sm text-text flex flex-col justify-center items-center rounded-full bg-white/70 w-full h-[50px] ${isSelected ? "border-2 border-border" : ""}`}>
+            <button onClick={()=>toggleOption(o)} key={o.name} className={`text-md text-text flex flex-col justify-center items-center rounded-full bg-white/70 w-full h-[50px] ${isSelected ? "border-2 border-border" : ""}`}>
               <p>{o.name}</p> 
               <p className="">{o.price} ₪</p>
             </button>

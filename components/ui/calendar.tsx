@@ -81,7 +81,7 @@ function Calendar({
         caption_label: cn(
           "font-medium select-none",
           captionLayout === "label"
-            ? "text-sm"
+            ? "text-xl font-bold"
             : "flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground",
           defaultClassNames.caption_label
         ),
@@ -91,7 +91,7 @@ function Calendar({
         ),
         weekdays: cn("flex", defaultClassNames.weekdays),
         weekday: cn(
-          "flex-1 rounded-(--cell-radius) text-[0.8rem] font-bold text-white select-none",
+          "flex-1 rounded-(--cell-radius) text-[0.8rem] font-bold text-md text-white select-none",
           defaultClassNames.weekday
         ),
         week: cn("mt-2 flex w-full", defaultClassNames.week),
@@ -128,7 +128,7 @@ function Calendar({
           defaultClassNames.outside
         ),
         disabled: cn(
-          "text-white opacity-25",
+          "text-white opacity-60",
           defaultClassNames.disabled
         ),
         hidden: cn("invisible", defaultClassNames.hidden),
@@ -211,7 +211,7 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
-        "relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 leading-none font-bold text-white group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-r-(--cell-radius) data-[range-end=true]:bg-white data-[range-end=true]:text-border data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-white data-[range-middle=true]:text-border data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:rounded-l-(--cell-radius) data-[range-start=true]:bg-white data-[range-start=true]:text-border data-[selected-single=true]:bg-white data-[selected-single=true]:text-border dark:hover:text-white [&>span]:text-xs [&>span]:opacity-70",
+        "relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 text-md leading-none font-bold text-white group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-r-(--cell-radius) data-[range-end=true]:bg-white data-[range-end=true]:text-border data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-white data-[range-middle=true]:text-border data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:rounded-l-(--cell-radius) data-[range-start=true]:bg-white data-[range-start=true]:text-border data-[selected-single=true]:bg-white data-[selected-single=true]:text-border dark:hover:text-white [&>span]:text-xs [&>span]:opacity-70",
         defaultClassNames.day,
         className
       )}

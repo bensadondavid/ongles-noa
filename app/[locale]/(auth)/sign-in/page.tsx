@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Separator } from "@/components/ui/separator"
 import { FcGoogle } from "react-icons/fc"
+import Link from "next/link"
 
 export default function SignIn() {
   const t = useTranslations("auth.signIn")
@@ -61,7 +62,7 @@ export default function SignIn() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email webauthn"
-              className="bg-white text-border border-3 border-border rounded-full py-4"
+              className="bg-white text-border border-3 border-border rounded-full py-4 text-2xl"
               required
             />
           </Field>
@@ -78,16 +79,17 @@ export default function SignIn() {
               className="bg-white text-border border-3 border-border rounded-full h-[40px]"
             />
           </Field>
+            <Link href="/api/forgot-password">Mot de passe oublié ?</Link>
         </FieldGroup>
 
-        <Button type="submit" className="w-full bg-white text-border border-3 border-border rounded-full h-[40px]" disabled={loading}>
+        <Button type="submit" className="w-full bg-white text-border border-3 border-border rounded-full h-[40px] text-md" disabled={loading}>
           {loading ? t("submit.loading") : t("submit.default")}
         </Button>
 
         <Separator className="bg-white" />
 
         <div className="space-y-3">
-          <Button type="button" className="w-full h-[40px] rounded-full bg-white text-border border-3 border-border" onClick={signInWithGoogle}>
+          <Button type="button" className="w-full h-[40px] rounded-full bg-white text-border border-3 border-border text-md" onClick={signInWithGoogle}>
             <FcGoogle className="size-5" />
             {t("google")}
           </Button>

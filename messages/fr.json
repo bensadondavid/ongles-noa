@@ -85,7 +85,8 @@
       "next" : "Suivant",
       "previous" : "Précedent",
       "time": "Veuillez choisir un créneau horaire",
-      "date": "Veuillez choisir une date"
+      "date": "Veuillez choisir une date",
+      "error": "Une erreur est survenue, veuillez réessayer"
     },
     "confirmation": {
       "title" : "confirmation",

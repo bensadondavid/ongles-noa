@@ -141,7 +141,7 @@ export default function SignUp() {
 
         <Button
           type="submit"
-          className="w-full rounded-full bg-white text-border border-3 border-border h-[40px]"
+          className="w-full rounded-full bg-white text-border text-md border-3 border-border h-[40px]"
           disabled={loading}
         >
           {loading ? t("submit.loading") : t("submit.default")}
@@ -152,7 +152,7 @@ export default function SignUp() {
         <div className="space-y-3">
           <Button
             type="button"
-            className="w-full rounded-full bg-white text-border border-3 border-border h-[40px]"
+            className="w-full rounded-full bg-white text-border border-3 border-border text-md h-[40px]"
             onClick={signInWithGoogle}
           >
             <FcGoogle className="size-5" />
@@ -163,7 +163,7 @@ export default function SignUp() {
             asChild
             className="w-full rounded-full bg-white text-border border-3 border-border h-[40px]"
           >
-            <Link href="/sign-in">{t("compte_existant")}</Link>
+            <Link href="/sign-in" className="text-md">{t("compte_existant")}</Link>
           </Button>
         </div>
       </form>
