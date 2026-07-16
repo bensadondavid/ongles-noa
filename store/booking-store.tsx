@@ -1,12 +1,12 @@
 import { create } from "zustand"
 import { persist } from 'zustand/middleware'
 
-type BookingPrestation = {
+export type BookingPrestation = {
   name: string
   price: number
 }
 
-type BookingOption = {
+export type BookingOption = {
   name: string
   price: number
 }

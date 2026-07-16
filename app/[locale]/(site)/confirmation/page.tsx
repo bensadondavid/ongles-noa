@@ -18,7 +18,6 @@ export default function Confirmation() {
   const options = useBookingStore((state) => state.options);
   const message = useBookingStore((state) => state.message);
   const setMessage = useBookingStore((state) => state.setMessage);
-  const store = useBookingStore()
 
   const router = useRouter()
 
@@ -27,7 +26,7 @@ export default function Confirmation() {
     const response = await fetch('/api/confirmation', {
       method: 'POST', 
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(store)
+      body: JSON.stringify({ date, time, prestations, options, message,})
     })
     if(!response.ok){
       return toast.error(t('error'))

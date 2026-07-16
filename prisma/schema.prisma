@@ -139,14 +139,14 @@ enum AppointmentStatus {
 }
 
 model Appointment {
-  id      String   @id @default(cuid())
-  userId  String
-  startAt DateTime
-  endAt   DateTime
+  id       String   @id @default(cuid())
+  userId   String
+  startsAt DateTime
+  endsAt   DateTime
+  message  String?
 
-  status      AppointmentStatus @default(PENDING)
-  expiresAt   DateTime?
-  durationMin Int
+  status    AppointmentStatus @default(PENDING)
+  expiresAt DateTime?
 
   customerName  String
   customerEmail String
@@ -161,9 +161,9 @@ model Appointment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([startAt, endAt])
+  @@index([startsAt, endsAt])
   @@index([status, expiresAt])
-  @@index([userId, startAt])
+  @@index([userId, startsAt])
   @@index([customerEmail])
 }
 
