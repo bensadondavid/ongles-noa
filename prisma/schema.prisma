@@ -20,6 +20,7 @@ model User {
   email            String
   emailVerified    Boolean       @default(false)
   image            String?
+  phone            String?
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
   twoFactorEnabled Boolean?      @default(false)
@@ -143,15 +144,15 @@ model Appointment {
   startAt DateTime
   endAt   DateTime
 
-  status       AppointmentStatus @default(PENDING)
-  expiresAt    DateTime?
-  durationMin  Int
+  status      AppointmentStatus @default(PENDING)
+  expiresAt   DateTime?
+  durationMin Int
 
   customerName  String
   customerEmail String
   customerPhone String
-  
-  cancelledAt     DateTime?
+
+  cancelledAt DateTime?
 
   user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   prestations AppointmentItem[]

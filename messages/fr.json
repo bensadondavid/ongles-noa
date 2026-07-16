@@ -97,6 +97,19 @@
       "conditions_btn" : "J’accepte les conditions d’anulations:",
       "conditions" : "Pour toute annulation sous les 48h ou retard de plus de 15 mn, 50% du prix de la prestation sera facturée ",
       "next" : "Suivant",
-      "previous" : "Précedent"
-    }
+      "previous" : "Précedent",
+      "message" : "Message",
+      "error": "Une erreur est survenue, veuillez réessayer"
+    },
+     "infos": {
+        "title" : "Mes infos",
+        "name": "Nom",
+        "mail" : "E-mail",
+        "phone" : "Téléphone"
+  },
+  "sidebar": {
+    "home" : "Accueil",
+    "infos" : "Mes informations",
+    "rdv" : "Mes rendez-vous"
+  }
 }

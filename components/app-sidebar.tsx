@@ -16,11 +16,13 @@ import {
 } from "@/components/ui/sidebar";
 import { NavLink } from "@/components/ui/nav-link";
 import { authClient } from "@/lib/auth/auth-client";
+import { useTranslations } from "next-intl";
 
 export function AppSidebar() {
 
   const {data: session } = authClient.useSession()
   const user = session?.user.name
+  const t = useTranslations('sidebar')
 
   return (
     <Sidebar>
@@ -36,17 +38,17 @@ export function AppSidebar() {
             <SidebarMenu className="gap-1.5">
                <SidebarMenuItem>
                 <NavLink href="/" icon={User}>
-                  Accueil
+                  {t('home')}
                 </NavLink>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <NavLink href="/profile" icon={User}>
-                  Mes infos perso
+                  {t('infos')}
                 </NavLink>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <NavLink href="/appointments" icon={Calendar}>
-                  Mes RDV
+                  {t('rdv')}
                 </NavLink>
               </SidebarMenuItem>
             </SidebarMenu>

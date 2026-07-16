@@ -5,6 +5,8 @@ import { useBookingStore } from "@/store/booking-store";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { format } from "date-fns";
+import { useRouter } from '@/i18n/navigation';
+import { toast } from "sonner";
 
 export default function Confirmation() {
   const t = useTranslations("confirmation");
@@ -14,10 +16,32 @@ export default function Confirmation() {
   const newDate = date ? format(new Date(date), "dd.MM.yyyy") : "";
   const prestations = useBookingStore((state) => state.prestations);
   const options = useBookingStore((state) => state.options);
+  const message = useBookingStore((state) => state.message);
+  const setMessage = useBookingStore((state) => state.setMessage);
+  const store = useBookingStore()
 
+  const router = useRouter()
+
+  const handleSubmit = async()=>{
+    try{
+    const response = await fetch('/api/confirmation', {
+      method: 'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(store)
+    })
+    if(!response.ok){
+      return toast.error(t('error'))
+    }
+    router.push('/confirmed')
+    }
+    catch(error){
+      console.log(error)
+      return toast.error(t('error'))
+    }
+  }
 
   return (
-    <div className="flex min-h-[calc(100vh-5rem)] w-full flex-col items-center overflow-y-auto px-4 pt-6 pb-10 text-white">
+    <div className="overflow-hidden flex min-h-[calc(100vh-5rem)] w-full flex-col items-center overflow-y-auto px-4 pt-8 pb-10 text-white">
       <h1 className="mt-4 mb-8 text-center font-third text-[48px] leading-none text-shadow-[4px_6px_8px_rgba(0,0,0,0.35)] sm:text-[58px]">
         {t("title")}
       </h1>
@@ -42,7 +66,7 @@ export default function Confirmation() {
             </span>
           </div>
 
-         {prestations.length > 0 && (
+          {prestations.length > 0 && (
             <div className="border-b border-white/20 pb-4">
               <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-white/70">
                 {t("prestations")}
@@ -82,6 +106,31 @@ export default function Confirmation() {
         </div>
       </section>
 
+      <div className="mt-4 w-full max-w-xl rounded-3xl border border-white/25 bg-border p-5 shadow-[0_18px_50px_rgba(0,0,0,0.18)] sm:p-6">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <label
+            htmlFor="message"
+            className="text-sm font-bold uppercase tracking-[0.18em] text-white/70"
+          >
+            {t("message")}
+          </label>
+
+          <span className="text-xs text-white/50">
+            {message?.length ?? 0}/300
+          </span>
+        </div>
+
+        <textarea
+          id="message"
+          name="message"
+          maxLength={300}
+          rows={4}
+          value={message ?? ""}
+          onChange={(e) => setMessage(e.target.value)}
+          className="w-full resize-none rounded-2xl border border-white/20 bg-white/95 px-4 py-3 font-primary font-bold text-sm leading-6 text-border outline-none transition placeholder:text-border/40 focus:border-white focus:ring-2 focus:ring-white/25"
+        />
+      </div>
+
       <label className="mt-6 flex w-full max-w-xl cursor-pointer items-start gap-3 rounded-2xl border border-white/25 bg-border p-4 text-white shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
         <input
           type="checkbox"
@@ -98,8 +147,20 @@ export default function Confirmation() {
         </span>
       </label>
       <div className="flex flex-row gap-2 items-center justify-center mt-5">
-        <Link href={'/reservation'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">{t('previous')}</Link>
-        <Link href={'/rdv'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">{t('next')}</Link>
+        <Link
+          href={"/reservation"}
+          className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1"
+        >
+          {t("previous")}
+        </Link>
+        <button
+          type="button"
+          onClick={handleSubmit}
+          disabled={!conditionsAccepted}
+          className={`text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1 ${conditionsAccepted ? "bg-white/70 cursor-pointer" : "bg-white/30 cursor-not-allowed opacity-50"} `}
+        >
+          {t("next")}
+        </button>
       </div>
     </div>
   );

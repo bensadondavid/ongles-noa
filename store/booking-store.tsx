@@ -22,6 +22,8 @@ type BookingStore = {
   setDate: (date: string | null) => void
   time: string | null, 
   setTime: (time: string | null) => void
+  message : string | null
+  setMessage: (message: string | null)=>void
 }
 
 export const useBookingStore = create<BookingStore>()(
@@ -35,6 +37,8 @@ export const useBookingStore = create<BookingStore>()(
             setDate: (date)=>set({ date }),
             time: null, 
             setTime: (time)=>set({ time }),
+            message: null,
+            setMessage: (message)=>set({ message }),
             togglePrestation: (prestation) =>
               set((state) => {
                 const exists = state.prestations.some((p) => p.name === prestation.name)
