@@ -112,5 +112,18 @@
     "home" : "Accueil",
     "infos" : "Mes informations",
     "rdv" : "Mes rendez-vous"
+  },
+  "appointments": {
+    "title" : "Mes RDV",
+    "date": "date",
+    "prestations": "prestations",
+    "options": "options",
+    "delete" : "Erreur lors de l'annulation du rdv"
+  },
+  "confirmed": {
+    "title": "Rendez-vous confirmé",
+    "description": "Votre rendez-vous a bien été enregistré. Vous pouvez retrouver tous vos rendez-vous depuis votre espace personnel.",
+    "appointments": "Voir mes rendez-vous",
+    "home": "Retour à l’accueil"
   }
 }

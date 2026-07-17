@@ -55,8 +55,6 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  Service: 'Service',
-  ServiceOption: 'ServiceOption',
   AvailabilityRule: 'AvailabilityRule',
   TimeOff: 'TimeOff',
   Appointment: 'Appointment'
@@ -137,34 +135,6 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
-
-
-export const ServiceScalarFieldEnum = {
-  id: 'id',
-  nameFr: 'nameFr',
-  nameHe: 'nameHe',
-  durationMin: 'durationMin',
-  priceCents: 'priceCents',
-  depositCents: 'depositCents',
-  active: 'active',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
-
-
-export const ServiceOptionScalarFieldEnum = {
-  id: 'id',
-  serviceId: 'serviceId',
-  nameFr: 'nameFr',
-  nameHe: 'nameHe',
-  durationMin: 'durationMin',
-  extraCents: 'extraCents',
-  active: 'active'
-} as const
-
-export type ServiceOptionScalarFieldEnum = (typeof ServiceOptionScalarFieldEnum)[keyof typeof ServiceOptionScalarFieldEnum]
 
 
 export const AvailabilityRuleScalarFieldEnum = {

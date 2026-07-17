@@ -17,7 +17,7 @@ export default function Reservations() {
   const setTimeStore = useBookingStore((state) => state.setTime);
   const prestation = useBookingStore((state) => state.prestations);
   const selectedDate = dateStore ? new Date(dateStore) : undefined;
-  const prestLength = prestation.length
+  const prestaLength = prestation.length
 
   const [hours, setHours] = useState<string[]>([])
 
@@ -30,7 +30,7 @@ export default function Reservations() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ dateStore, prestLength }),
+      body: JSON.stringify({ dateStore, prestaLength }),
     })
     if (!response.ok) {
       return toast.error("error")
@@ -38,7 +38,7 @@ export default function Reservations() {
     const data = await response.json()
     setHours(data.availableHours)  }
     getAvailableHours()
-}, [dateStore, prestLength])
+}, [dateStore, prestaLength])
 
 
   const verifyResa = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -84,6 +84,7 @@ export default function Reservations() {
         onSelect={(date) => {
           if (!date) return
           setDateStore(date.toISOString())
+          setTimeStore("")
         }}
         disabled={[
           {before: new Date(), after: endOfMonth(addMonths(new Date(), 1))},

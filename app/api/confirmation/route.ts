@@ -35,10 +35,37 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const dateOnly = date.split("T")[0];
-    const startDateTime = DateTime.fromISO(`${dateOnly}T${time}`, {
+    const selectedDate = DateTime.fromISO(date, {
+
+  zone: "Asia/Jerusalem",
+
+});
+
+const [hour, minute = "0"] = time.split(":");
+
+const startDateTime = DateTime.fromObject(
+
+  {
+
+    year: selectedDate.year,
+
+    month: selectedDate.month,
+
+    day: selectedDate.day,
+
+    hour: Number(hour),
+
+    minute: Number(minute),
+
+  },
+
+  {
+
     zone: "Asia/Jerusalem",
-    });
+
+  }
+
+);
 
     if (!startDateTime.isValid) {
       return NextResponse.json(
@@ -55,6 +82,7 @@ export async function POST(req: NextRequest) {
       startsAt.getTime() + durationMin * 60 * 1000
     );
 
+
     const conflictingAppointment = await prisma.appointment.findFirst({
       where: {
         startsAt: {
@@ -63,6 +91,9 @@ export async function POST(req: NextRequest) {
         endsAt: {
           gt: startsAt,
         },
+        status:{
+          not: 'CANCELLED'
+        }
       },
     });
 
@@ -77,7 +108,7 @@ export async function POST(req: NextRequest) {
       data: {
         userId: user.id,
         appointmentItem: prestations,
-        appointmentOption: options,
+        appointmentOption: options.length > 0 ? options : null,
         startsAt,
         endsAt,
         message,

@@ -388,8 +388,6 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  Service: 'Service',
-  ServiceOption: 'ServiceOption',
   AvailabilityRule: 'AvailabilityRule',
   TimeOff: 'TimeOff',
   Appointment: 'Appointment'
@@ -408,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "service" | "serviceOption" | "availabilityRule" | "timeOff" | "appointment"
+    modelProps: "user" | "session" | "account" | "verification" | "availabilityRule" | "timeOff" | "appointment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -705,154 +703,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.VerificationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.VerificationCountAggregateOutputType> | number
-        }
-      }
-    }
-    Service: {
-      payload: Prisma.$ServicePayload<ExtArgs>
-      fields: Prisma.ServiceFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ServiceFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ServiceFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload>
-        }
-        findFirst: {
-          args: Prisma.ServiceFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ServiceFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload>
-        }
-        findMany: {
-          args: Prisma.ServiceFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload>[]
-        }
-        create: {
-          args: Prisma.ServiceCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload>
-        }
-        createMany: {
-          args: Prisma.ServiceCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ServiceCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload>[]
-        }
-        delete: {
-          args: Prisma.ServiceDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload>
-        }
-        update: {
-          args: Prisma.ServiceUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload>
-        }
-        deleteMany: {
-          args: Prisma.ServiceDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ServiceUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ServiceUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload>[]
-        }
-        upsert: {
-          args: Prisma.ServiceUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServicePayload>
-        }
-        aggregate: {
-          args: Prisma.ServiceAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateService>
-        }
-        groupBy: {
-          args: Prisma.ServiceGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ServiceGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ServiceCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ServiceCountAggregateOutputType> | number
-        }
-      }
-    }
-    ServiceOption: {
-      payload: Prisma.$ServiceOptionPayload<ExtArgs>
-      fields: Prisma.ServiceOptionFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ServiceOptionFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ServiceOptionFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload>
-        }
-        findFirst: {
-          args: Prisma.ServiceOptionFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ServiceOptionFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload>
-        }
-        findMany: {
-          args: Prisma.ServiceOptionFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload>[]
-        }
-        create: {
-          args: Prisma.ServiceOptionCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload>
-        }
-        createMany: {
-          args: Prisma.ServiceOptionCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ServiceOptionCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload>[]
-        }
-        delete: {
-          args: Prisma.ServiceOptionDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload>
-        }
-        update: {
-          args: Prisma.ServiceOptionUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload>
-        }
-        deleteMany: {
-          args: Prisma.ServiceOptionDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ServiceOptionUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ServiceOptionUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload>[]
-        }
-        upsert: {
-          args: Prisma.ServiceOptionUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceOptionPayload>
-        }
-        aggregate: {
-          args: Prisma.ServiceOptionAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceOption>
-        }
-        groupBy: {
-          args: Prisma.ServiceOptionGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ServiceOptionGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ServiceOptionCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ServiceOptionCountAggregateOutputType> | number
         }
       }
     }
@@ -1178,34 +1028,6 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
-export const ServiceScalarFieldEnum = {
-  id: 'id',
-  nameFr: 'nameFr',
-  nameHe: 'nameHe',
-  durationMin: 'durationMin',
-  priceCents: 'priceCents',
-  depositCents: 'depositCents',
-  active: 'active',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
-
-
-export const ServiceOptionScalarFieldEnum = {
-  id: 'id',
-  serviceId: 'serviceId',
-  nameFr: 'nameFr',
-  nameHe: 'nameHe',
-  durationMin: 'durationMin',
-  extraCents: 'extraCents',
-  active: 'active'
-} as const
-
-export type ServiceOptionScalarFieldEnum = (typeof ServiceOptionScalarFieldEnum)[keyof typeof ServiceOptionScalarFieldEnum]
-
-
 export const AvailabilityRuleScalarFieldEnum = {
   id: 'id',
   weekday: 'weekday',
@@ -1506,8 +1328,6 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
-  service?: Prisma.ServiceOmit
-  serviceOption?: Prisma.ServiceOptionOmit
   availabilityRule?: Prisma.AvailabilityRuleOmit
   timeOff?: Prisma.TimeOffOmit
   appointment?: Prisma.AppointmentOmit

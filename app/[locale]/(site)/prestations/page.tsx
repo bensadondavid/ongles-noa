@@ -10,7 +10,6 @@ export default function Prestations() {
   const t = useTranslations('prestations')
   const togglePrestation = useBookingStore((state)=>state.togglePrestation)
   const selectedPrestations = useBookingStore((state) => state.prestations)
-
   
   const prestations = [
     {name: t('presta_1'),price: 20},

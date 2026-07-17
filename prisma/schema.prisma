@@ -81,32 +81,6 @@ model Verification {
   @@map("verification")
 }
 
-model Service {
-  id           String  @id @default(cuid())
-  nameFr       String
-  nameHe       String
-  durationMin  Int
-  priceCents   Int
-  depositCents Int     @default(0)
-  active       Boolean @default(true)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model ServiceOption {
-  id          String @id @default(cuid())
-  serviceId   String
-  nameFr      String
-  nameHe      String
-  durationMin Int?   @default(0)
-  extraCents  Int    @default(0)
-
-  active Boolean @default(true)
-
-  @@index([serviceId, active])
-}
-
 model AvailabilityRule {
   id       String @id @default(cuid())
   weekday  Int

@@ -1,18 +1,15 @@
 import { prisma } from '../../../../lib/data/prisma';
+import Appointment from '@/components/pages/Appointment';
 
-export default async function Appointment() {
+export default async function Appointments() {
 
-  const appointments = await prisma.appointment.findFirst({
+  const appointments = await prisma.appointment.findMany({
     where: {
       status: 'PENDING' 
     },
-    
   })
 
   return (
-
-    <div>
-        {appointments?.startsAt.getHours()}
-    </div>
+    <Appointment appointments={appointments} />
   )
 }
