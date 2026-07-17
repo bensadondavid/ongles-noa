@@ -41,18 +41,13 @@ export default function Appointment({
     }
   };
 
-  const [isRdv, setIsRdv] = useState<boolean>();
-  if (appointments.length > 0) {
-    setIsRdv(true);
-  }
-
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-4 pb-12 bg-transparent">
       <h1 className="mt-10 mb-8 text-center font-third text-[48px] leading-none sm:text-[58px] text-white">
         {t("title")}
       </h1>
 
-      {isRdv ? (
+      {appointments.length >0 ? (
         <div className="flex w-full flex-col gap-5">
           {appointments.map((a) => (
             <article
