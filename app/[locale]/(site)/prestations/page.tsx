@@ -47,7 +47,7 @@ export default function Prestations() {
           })}
       <p className="text-sm text-white font-bold text-center">{t('depose')}</p>
       </div>
-        <Link onClick={verifyLengthPresta} href={'/options'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] mb-4">{t('next')}</Link>
+        <Link onClick={verifyLengthPresta} href={'/options'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[45px]"><span className="inline-block translate-y-1">{t('next')}</span></Link>
     </div>
   )
 }

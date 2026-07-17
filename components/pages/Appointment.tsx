@@ -6,7 +6,17 @@ import { Separator } from "../ui/separator";
 import { Trash } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
-import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 type AppointmentItem = {
   name: string;
@@ -73,12 +83,38 @@ export default function Appointment({
                     })}
                   </p>
 
-                  <button
-                    onClick={() => handleDelete(a.id)}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#b89f93]/40 bg-white/40 text-[#7d6258] transition hover:bg-white/70 hover:text-[#5f4941]"
-                  >
-                    <Trash size={18} />
-                  </button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <button className="flex h-9 w-9 items-center justify-center rounded-full border border-[#b89f93]/40 bg-white/40 text-[#7d6258] transition hover:bg-white/70 hover:text-[#5f4941]">
+                        <Trash size={18} />
+                      </button>
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent className="border border-[#cdbbb2]/50 bg-[#f1e7e2]">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-[#4f3b34]">
+                          {t("cancel_title")}
+                        </AlertDialogTitle>
+
+                        <AlertDialogDescription className="text-[#6f574e]">
+                          {t("cancel_description")}
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="border-[#b89f93]/40 bg-white/50 text-[#5f4941] hover:bg-white/80">
+                          {t("cancel_back")}
+                        </AlertDialogCancel>
+
+                        <AlertDialogAction
+                          onClick={() => handleDelete(a.id)}
+                          className="bg-[#7d6258] text-white hover:bg-[#6b5148]"
+                        >
+                          {t("cancel_confirm")}{" "}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
 
@@ -119,12 +155,11 @@ export default function Appointment({
           </div>
 
           <p className="text-xl font-semibold text-[#4f3b34]">
-            Aucun rendez-vous pour le moment
+            {t("empty_title")}{" "}
           </p>
 
           <p className="mt-2 max-w-sm text-sm leading-6 text-[#6f574e]">
-            Vos prochains rendez-vous apparaîtront ici dès qu'ils seront
-            réservés.
+            {t("empty_description")}
           </p>
         </div>
       )}

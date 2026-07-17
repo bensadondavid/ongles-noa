@@ -118,7 +118,13 @@
     "date": "date",
     "prestations": "prestations",
     "options": "options",
-    "delete" : "Erreur lors de l'annulation du rdv"
+    "delete" : "Erreur lors de l'annulation du rdv",
+    "cancel_title": "Annuler ce rendez-vous ?",
+    "cancel_description": "Êtes-vous sûr de vouloir annuler ce rendez-vous ? Cette action est irréversible.",
+    "cancel_back": "Retour",
+    "cancel_confirm": "Confirmer l'annulation",
+    "empty_title": "Aucun rendez-vous pour le moment",
+    "empty_description": "Vos prochains rendez-vous apparaîtront ici dès qu'ils seront réservés."
   },
   "confirmed": {
     "title": "Rendez-vous confirmé",

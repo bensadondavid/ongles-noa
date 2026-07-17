@@ -40,8 +40,8 @@ export default function Options() {
         })}
       </div>
       <div className="flex flex-row gap-2 items-center justify-center">
-        <Link href={'/prestations'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">{t('previous')}</Link>
-        <Link href={'/reservation'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1">{t('next')}</Link>
+        <Link href={'/prestations'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[50px] py-1"><span className="inline-block translate-y-2">{t('previous')}</span></Link>
+        <Link href={'/reservation'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[50px] py-1"><span className="inline-block translate-y-1">{t('next')}</span></Link>
       </div>
     </div>
   )

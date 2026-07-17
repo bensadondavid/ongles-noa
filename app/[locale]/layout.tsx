@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { blackgold, moontime } from "@/lib/fonts/fonts";
+import { blackgold, moontime, abramo } from "@/lib/fonts/fonts";
 import { Nixie_One } from "next/font/google";
 import { Toaster } from "sonner";
 import {
@@ -38,7 +38,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={locale === "he" ? "rtl" : "ltr"}
-      className={`${blackgold.variable} ${moontime.variable} ${nixieOne.variable} h-full antialiased`}
+      className={`${blackgold.variable} ${moontime.variable} ${nixieOne.variable} ${abramo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-primary">
         <NextIntlClientProvider messages={messages}>

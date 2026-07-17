@@ -145,17 +145,17 @@ export default function Confirmation() {
       <div className="flex flex-row gap-2 items-center justify-center mt-5">
         <Link
           href={"/reservation"}
-          className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1"
+          className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[50px] py-1"
         >
-          {t("previous")}
+          <span className="inline-block translate-y-2">{t("previous")}</span>
         </Link>
         <button
           type="button"
           onClick={handleSubmit}
           disabled={!conditionsAccepted}
-          className={`text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[40px] py-1 ${conditionsAccepted ? "bg-white/70 cursor-pointer" : "bg-white/30 cursor-not-allowed opacity-50"} `}
+          className={`text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[50px] py-1 ${conditionsAccepted ? "bg-white/70 cursor-pointer" : "bg-white/30 cursor-not-allowed opacity-50"} `}
         >
-          {t("next")}
+          <span className="inline-block translate-y-2">{t("next")}</span>
         </button>
       </div>
     </div>

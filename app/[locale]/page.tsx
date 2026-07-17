@@ -73,8 +73,8 @@ export default function Home() {
         </button>
       </div>
       <div className="flex flex-col items-center">
-        <p className="font-third text-[90px] text-white translate-y-25">Noa</p>
-        <p className="font-second text-[150px] text-white">Bensadon</p>
+        <p className="font-third text-[90px] text-white translate-y-20">Noa</p>
+        <p className="font-second text-[150px] -translate-x-4 text-white">Bensadon</p>
       </div>
       {user ? (
         <Link href="/prestations" className="z-10 flex text-center items-center justify-center bg-white w-[180px] h-[60px] border-4 rounded-full font-third text-border capitalize whitespace-pre-line">
