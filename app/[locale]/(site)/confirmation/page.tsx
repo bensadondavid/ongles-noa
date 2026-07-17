@@ -129,18 +129,17 @@ export default function Confirmation() {
         />
       </div>
 
-      <label className="relative mt-1 flex size-5 shrink-0 cursor-pointer items-center justify-center">
+      <label className="mt-5 flex w-full max-w-xl cursor-pointer items-start gap-3 px-2">
         <input
           type="checkbox"
           checked={conditionsAccepted}
           onChange={(event) => setConditionsAccepted(event.target.checked)}
-          className="peer absolute inset-0 opacity-0"
+          className="mt-1 size-5 shrink-0 cursor-pointer accent-[#6f574e]"
         />
 
-        <span className="flex size-5 items-center justify-center rounded border-2 border-white bg-transparent transition peer-checked:bg-white">
-          <span className="hidden text-sm font-bold text-border peer-checked:block">
-            ✓
-          </span>
+        <span className="text-sm leading-6 text-white">
+          <span className="font-bold">{t("conditions_btn")}</span>{" "}
+          {t("conditions")}
         </span>
       </label>
       <div className="flex flex-row gap-2 items-center justify-center mt-5">
