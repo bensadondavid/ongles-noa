@@ -47,7 +47,7 @@ export default function Appointment({
         {t("title")}
       </h1>
 
-      {appointments.length >0 ? (
+      {appointments.length > 0 ? (
         <div className="flex w-full flex-col gap-5">
           {appointments.map((a) => (
             <article

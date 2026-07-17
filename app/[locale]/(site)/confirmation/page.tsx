@@ -5,7 +5,7 @@ import { useBookingStore } from "@/store/booking-store";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { format } from "date-fns";
-import { useRouter } from '@/i18n/navigation';
+import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 
 export default function Confirmation() {
@@ -19,25 +19,24 @@ export default function Confirmation() {
   const message = useBookingStore((state) => state.message);
   const setMessage = useBookingStore((state) => state.setMessage);
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const handleSubmit = async()=>{
-    try{
-    const response = await fetch('/api/confirmation', {
-      method: 'POST', 
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ date, time, prestations, options, message,})
-    })
-    if(!response.ok){
-      return toast.error(t('error'))
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("/api/confirmation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date, time, prestations, options, message }),
+      });
+      if (!response.ok) {
+        return toast.error(t("error"));
+      }
+      router.push("/confirmed");
+    } catch (error) {
+      console.log(error);
+      return toast.error(t("error"));
     }
-    router.push('/confirmed')
-    }
-    catch(error){
-      console.log(error)
-      return toast.error(t('error'))
-    }
-  }
+  };
 
   return (
     <div className="overflow-hidden flex min-h-[calc(100vh-5rem)] w-full flex-col items-center overflow-y-auto px-4 pt-8 pb-10 text-white">
@@ -130,18 +129,17 @@ export default function Confirmation() {
         />
       </div>
 
-      <label className="mt-6 flex w-full max-w-xl cursor-pointer items-start gap-3 rounded-2xl border border-white/25 bg-border p-4 text-white shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
+      <label className="relative mt-1 flex size-5 shrink-0 cursor-pointer items-center justify-center">
         <input
           type="checkbox"
           checked={conditionsAccepted}
           onChange={(event) => setConditionsAccepted(event.target.checked)}
-          className="mt-1 size-5 shrink-0 cursor-pointer accent-white"
+          className="peer absolute inset-0 opacity-0"
         />
 
-        <span className="space-y-1">
-          <span className="block font-bold">{t("conditions_btn")}</span>
-          <span className="block text-sm leading-6 text-white/75">
-            {t("conditions")}
+        <span className="flex size-5 items-center justify-center rounded border-2 border-white bg-transparent transition peer-checked:bg-white">
+          <span className="hidden text-sm font-bold text-border peer-checked:block">
+            ✓
           </span>
         </span>
       </label>
