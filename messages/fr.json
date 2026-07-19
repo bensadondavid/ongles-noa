@@ -77,13 +77,13 @@
       "option_7" : "Nail art simple par ongle",
       "option_8" : "Nail art élaboré par ongle",
       "next" : "Suivant",
-      "previous" : "Précedent"
+      "previous" : "Precedent"
     },
     "reservation": {
       "title": "créneaux",
       "subtitle": "Dispos",
       "next" : "Suivant",
-      "previous" : "Précedent",
+      "previous" : "Precedent",
       "time": "Veuillez choisir un créneau horaire",
       "date": "Veuillez choisir une date",
       "error": "Une erreur est survenue, veuillez réessayer"
@@ -98,7 +98,7 @@
       "conditions_btn" : "J’accepte les conditions d’anulations:",
       "conditions" : "Pour toute annulation sous les 48h ou retard de plus de 15 mn, 50% du prix de la prestation sera facturée ",
       "next" : "Suivant",
-      "previous" : "Précedent",
+      "previous" : "Precedent",
       "message" : "Message",
       "error": "Une erreur est survenue, veuillez réessayer"
     },
