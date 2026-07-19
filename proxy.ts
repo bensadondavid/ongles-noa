@@ -15,7 +15,8 @@ function isPublicPathname(pathname: string) {
   return (
     pathnameWithoutLocale === "/" ||
     pathnameWithoutLocale === "/sign-in" ||
-    pathnameWithoutLocale === "/sign-up"
+    pathnameWithoutLocale === "/sign-up" ||
+    pathnameWithoutLocale === "/forgot-password"
   );
 }
 

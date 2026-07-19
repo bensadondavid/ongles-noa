@@ -17,11 +17,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { BookingOption, BookingPrestation } from "@/store/booking-store";
 
-type AppointmentItem = {
-  name: string;
-  price: number;
-};
+
 
 export default function Appointment({
   appointments,
@@ -126,10 +124,12 @@ export default function Appointment({
                     {t("prestations")}
                   </p>
 
-                  <p className="mt-2 text-base font-medium text-[#4f3b34]">
+                  <div className="mt-2 text-base font-medium text-[#4f3b34]">
                     {Array.isArray(a.appointmentItem) &&
-                      (a.appointmentItem[0] as AppointmentItem)?.name}
-                  </p>
+                    (a.appointmentItem as BookingPrestation[]).map((item, index) => (
+                      <p key={index}>{item.name}</p>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="rounded-2xl border border-[#cdbbb2]/40 bg-white/40 p-4">
@@ -137,12 +137,14 @@ export default function Appointment({
                     {t("options")}
                   </p>
 
-                  <p className="mt-2 text-base text-[#6f574e]">
+                  <div className="mt-2 text-base text-[#6f574e]">
                     {Array.isArray(a.appointmentOption) &&
                     a.appointmentOption.length > 0
-                      ? (a.appointmentOption[0] as AppointmentItem)?.name
+                      ? (a.appointmentOption as BookingOption[]).map((item, index)=>(
+                        <p key={index}>{item.name}</p>
+                      ))
                       : "—"}
-                  </p>
+                  </div>
                 </div>
               </div>
             </article>

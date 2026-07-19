@@ -97,13 +97,6 @@ export async function POST(req: NextRequest) {
 
       return true;
     });
-    console.log("appointments", appointments);
-
-    console.log("occupiedHours", [...occupiedHours]);
-
-    console.log("requiredSlots", requiredSlots);
-
-    console.log("availableHours", availableHours);
 
     return NextResponse.json({ availableHours });
   } catch (error) {

@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth/auth'
 import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { redirect } from '@/i18n/navigation'
+import { getLocale } from 'next-intl/server'
 
 export const verifSession = async ()=>{
 
@@ -8,7 +9,11 @@ export const verifSession = async ()=>{
         headers: await headers()
     })
     if(!session){
-        redirect('/login')
+        const locale = await getLocale()
+        redirect({
+            href: '/sign-in',
+            locale
+        })
     }
-    return session
+    return session!
 }

@@ -13,7 +13,7 @@
       "password": {
         "label": "Mot de passe",
         "nombre_caracteres": "Minimum 8 caractères.",
-        "maj" : "Au moins une majuscule",
+        "maj": "Au moins une majuscule",
         "caractere_special": "Au moins un caractère spécial"
       },
       "submit": {
@@ -23,8 +23,8 @@
       "google": "Continuer avec Google",
       "compte_existant": "Vous avez déjà un compte ?",
       "success": "Compte créé avec succès, un e-mail vous a été envoyé",
-      "errors":  "La création a échoué, veuillez réessayer.",
-      "passwordProblem" : "Le mot de passe ne remplit pas les critères"
+      "errors": "La création a échoué, veuillez réessayer.",
+      "passwordProblem": "Le mot de passe ne remplit pas les critères"
     },
     "signIn": {
       "title": "Connexion",
@@ -43,82 +43,110 @@
       "passkey": "Se connecter avec une passkey",
       "success": "Connexion réussie",
       "error": "La connexion a échoué, veuillez réessayer.",
-      "wrong_id": "Identifiant et/ou mot de passe invalide."
+      "wrong_id": "Identifiant et/ou mot de passe invalide.",
+      "forgotPassword": "Mot de passe oublié ?"
+    },
+    "forgotPassword": {
+      "backToSignIn": "Retour à la connexion",
+      "request": {
+        "title": "Mot de passe oublié",
+        "description": "Saisissez votre adresse e-mail et nous vous enverrons un lien de réinitialisation.",
+        "email": "Adresse e-mail",
+        "placeholder": "david@email.com",
+        "submit": "Envoyer le lien",
+        "loading": "Envoi en cours...",
+        "success": "Si un compte correspond à cette adresse, vous recevrez un e-mail dans quelques instants.",
+        "error": "L’envoi a échoué. Veuillez réessayer."
+      },
+      "reset": {
+        "title": "Nouveau mot de passe",
+        "description": "Choisissez un nouveau mot de passe d’au moins 8 caractères.",
+        "password": "Nouveau mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "submit": "Modifier mon mot de passe",
+        "loading": "Modification...",
+        "success": "Votre mot de passe a bien été modifié.",
+        "passwordLength": "Le mot de passe doit contenir au moins 8 caractères.",
+        "passwordMismatch": "Les mots de passe ne correspondent pas.",
+        "invalidToken": "Ce lien est invalide ou a expiré.",
+        "newLink": "Demander un nouveau lien",
+        "error": "La modification a échoué. Demandez un nouveau lien et réessayez."
+      }
     }
   },
-  "home":{
+  "home": {
     "rdv": "Prendre\nrendez-vous",
-    "sign-in" : "Se connecter",
-    "sign-up" : "S'inscrire"      
-    },
-    "prestations": {
-      "title" : "prestations",
-      "subtitle" : "liste",
-      "presta_1": "Dépose de gel",
-      "presta_2" : "Dépose de faux ongles",
-      "presta_3" : "Manucure et soins des ongles",
-      "presta_4" : "Manucure russe et semi permanent",
-      "presta_5" : "Manucure russe et gainage",
-      "presta_6" : "Capsules gel X",
-      "presta_7" : "Pédicure et semi permanent ",
-      "next" : "Suivant",
-      "select" : "Veullez sélectionner au moins une prestation",
-      "depose" : "Uniquement les déposes d'un travail exterieur sont facturées"
-    },
-    "options":{
-      "title" : "options",
-      "subtitle" : "liste",
-      "option_1": "Réparation d’un ongle cassé",
-      "option_2" : "Pose d’un faux ongle",
-      "option_3" : "French",
-      "option_4" : "Baby boomer",
-      "option_5" : "Effet chrome",
-      "option_6" : "Stickers, pailletés, strass",
-      "option_7" : "Nail art simple par ongle",
-      "option_8" : "Nail art élaboré par ongle",
-      "next" : "Suivant",
-      "previous" : "Precedent"
-    },
-    "reservation": {
-      "title": "créneaux",
-      "subtitle": "Dispos",
-      "next" : "Suivant",
-      "previous" : "Precedent",
-      "time": "Veuillez choisir un créneau horaire",
-      "date": "Veuillez choisir une date",
-      "error": "Une erreur est survenue, veuillez réessayer"
-    },
-    "confirmation": {
-      "title" : "confirmation",
-      "date" : "date",
-      "hour" : "heure",
-      "prestations" : "prestations",
-      "options" : "options",
-      "price": "prix", 
-      "conditions_btn" : "J’accepte les conditions d’anulations:",
-      "conditions" : "Pour toute annulation sous les 48h ou retard de plus de 15 mn, 50% du prix de la prestation sera facturée ",
-      "next" : "Suivant",
-      "previous" : "Precedent",
-      "message" : "Message",
-      "error": "Une erreur est survenue, veuillez réessayer"
-    },
-     "infos": {
-        "title" : "Mes infos",
-        "name": "Nom",
-        "mail" : "E-mail",
-        "phone" : "Téléphone"
+    "sign-in": "Se connecter",
+    "sign-up": "S'inscrire"
+  },
+  "prestations": {
+    "title": "prestations",
+    "subtitle": "liste",
+    "presta_1": "Dépose de gel",
+    "presta_2": "Dépose de faux ongles",
+    "presta_3": "Manucure et soins des ongles",
+    "presta_4": "Manucure russe et semi permanent",
+    "presta_5": "Manucure russe et gainage",
+    "presta_6": "Capsules gel X",
+    "presta_7": "Pédicure et semi permanent ",
+    "next": "Suivant",
+    "select": "Veullez sélectionner au moins une prestation",
+    "depose": "Uniquement les déposes d'un travail exterieur sont facturées"
+  },
+  "options": {
+    "title": "options",
+    "subtitle": "liste",
+    "option_1": "Réparation d’un ongle cassé",
+    "option_2": "Pose d’un faux ongle",
+    "option_3": "French",
+    "option_4": "Baby boomer",
+    "option_5": "Effet chrome",
+    "option_6": "Stickers, pailletés, strass",
+    "option_7": "Nail art simple par ongle",
+    "option_8": "Nail art élaboré par ongle",
+    "next": "Suivant",
+    "previous": "Precedent"
+  },
+  "reservation": {
+    "title": "créneaux",
+    "subtitle": "Dispos",
+    "next": "Suivant",
+    "previous": "Precedent",
+    "time": "Veuillez choisir un créneau horaire",
+    "date": "Veuillez choisir une date",
+    "error": "Une erreur est survenue, veuillez réessayer"
+  },
+  "confirmation": {
+    "title": "confirmation",
+    "date": "date",
+    "hour": "heure",
+    "prestations": "prestations",
+    "options": "options",
+    "price": "prix",
+    "conditions_btn": "J’accepte les conditions d’anulations:",
+    "conditions": "Pour toute annulation sous les 48h ou retard de plus de 15 mn, 50% du prix de la prestation sera facturée ",
+    "next": "Suivant",
+    "previous": "Precedent",
+    "message": "Message",
+    "error": "Une erreur est survenue, veuillez réessayer"
+  },
+  "infos": {
+    "title": "Mes infos",
+    "name": "Nom",
+    "mail": "E-mail",
+    "phone": "Téléphone"
   },
   "sidebar": {
-    "home" : "Accueil",
-    "infos" : "Mes informations",
-    "rdv" : "Mes rendez-vous"
+    "home": "Accueil",
+    "infos": "Mes informations",
+    "rdv": "Mes rendez-vous"
   },
   "appointments": {
-    "title" : "Mes RDV",
+    "title": "Mes RDV",
     "date": "date",
     "prestations": "prestations",
     "options": "options",
-    "delete" : "Erreur lors de l'annulation du rdv",
+    "delete": "Erreur lors de l'annulation du rdv",
     "cancel_title": "Annuler ce rendez-vous ?",
     "cancel_description": "Êtes-vous sûr de vouloir annuler ce rendez-vous ? Cette action est irréversible.",
     "cancel_back": "Retour",
