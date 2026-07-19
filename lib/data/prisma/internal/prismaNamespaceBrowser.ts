@@ -139,7 +139,7 @@ export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[k
 
 export const AvailabilityRuleScalarFieldEnum = {
   id: 'id',
-  weekday: 'weekday',
+  date: 'date',
   startMin: 'startMin',
   endMin: 'endMin'
 } as const

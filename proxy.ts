@@ -42,6 +42,18 @@ function getLocaleFromPathname(pathname: string) {
 export function proxy(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
+  // /dashboard n'est pas localisé : on le sort du middleware next-intl
+  // (sinon il redirige vers /fr/dashboard, qui n'existe pas).
+  if (pathname === "/dashboard" || pathname.startsWith("/dashboard/")) {
+    const sessionCookie = getSessionCookie(req);
+
+    if (!sessionCookie) {
+      return NextResponse.redirect(new URL("/fr/sign-in", req.url));
+    }
+
+    return NextResponse.next();
+  }
+
   if (isProtectedPathname(pathname)) {
     const sessionCookie = getSessionCookie(req);
 

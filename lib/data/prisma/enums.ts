@@ -9,6 +9,14 @@
 * 🟢 You can import this file directly.
 */
 
+export const ROLE = {
+  CLIENT: 'CLIENT',
+  ADMIN: 'ADMIN'
+} as const
+
+export type ROLE = (typeof ROLE)[keyof typeof ROLE]
+
+
 export const AppointmentStatus = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',

@@ -27,34 +27,32 @@ export type AggregateAvailabilityRule = {
 }
 
 export type AvailabilityRuleAvgAggregateOutputType = {
-  weekday: number | null
   startMin: number | null
   endMin: number | null
 }
 
 export type AvailabilityRuleSumAggregateOutputType = {
-  weekday: number | null
   startMin: number | null
   endMin: number | null
 }
 
 export type AvailabilityRuleMinAggregateOutputType = {
   id: string | null
-  weekday: number | null
+  date: Date | null
   startMin: number | null
   endMin: number | null
 }
 
 export type AvailabilityRuleMaxAggregateOutputType = {
   id: string | null
-  weekday: number | null
+  date: Date | null
   startMin: number | null
   endMin: number | null
 }
 
 export type AvailabilityRuleCountAggregateOutputType = {
   id: number
-  weekday: number
+  date: number
   startMin: number
   endMin: number
   _all: number
@@ -62,34 +60,32 @@ export type AvailabilityRuleCountAggregateOutputType = {
 
 
 export type AvailabilityRuleAvgAggregateInputType = {
-  weekday?: true
   startMin?: true
   endMin?: true
 }
 
 export type AvailabilityRuleSumAggregateInputType = {
-  weekday?: true
   startMin?: true
   endMin?: true
 }
 
 export type AvailabilityRuleMinAggregateInputType = {
   id?: true
-  weekday?: true
+  date?: true
   startMin?: true
   endMin?: true
 }
 
 export type AvailabilityRuleMaxAggregateInputType = {
   id?: true
-  weekday?: true
+  date?: true
   startMin?: true
   endMin?: true
 }
 
 export type AvailabilityRuleCountAggregateInputType = {
   id?: true
-  weekday?: true
+  date?: true
   startMin?: true
   endMin?: true
   _all?: true
@@ -183,7 +179,7 @@ export type AvailabilityRuleGroupByArgs<ExtArgs extends runtime.Types.Extensions
 
 export type AvailabilityRuleGroupByOutputType = {
   id: string
-  weekday: number
+  date: Date
   startMin: number
   endMin: number
   _count: AvailabilityRuleCountAggregateOutputType | null
@@ -213,32 +209,31 @@ export type AvailabilityRuleWhereInput = {
   OR?: Prisma.AvailabilityRuleWhereInput[]
   NOT?: Prisma.AvailabilityRuleWhereInput | Prisma.AvailabilityRuleWhereInput[]
   id?: Prisma.StringFilter<"AvailabilityRule"> | string
-  weekday?: Prisma.IntFilter<"AvailabilityRule"> | number
+  date?: Prisma.DateTimeFilter<"AvailabilityRule"> | Date | string
   startMin?: Prisma.IntFilter<"AvailabilityRule"> | number
   endMin?: Prisma.IntFilter<"AvailabilityRule"> | number
 }
 
 export type AvailabilityRuleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  weekday?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   startMin?: Prisma.SortOrder
   endMin?: Prisma.SortOrder
 }
 
 export type AvailabilityRuleWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  weekday_startMin?: Prisma.AvailabilityRuleWeekdayStartMinCompoundUniqueInput
   AND?: Prisma.AvailabilityRuleWhereInput | Prisma.AvailabilityRuleWhereInput[]
   OR?: Prisma.AvailabilityRuleWhereInput[]
   NOT?: Prisma.AvailabilityRuleWhereInput | Prisma.AvailabilityRuleWhereInput[]
-  weekday?: Prisma.IntFilter<"AvailabilityRule"> | number
+  date?: Prisma.DateTimeFilter<"AvailabilityRule"> | Date | string
   startMin?: Prisma.IntFilter<"AvailabilityRule"> | number
   endMin?: Prisma.IntFilter<"AvailabilityRule"> | number
-}, "id" | "weekday_startMin">
+}, "id">
 
 export type AvailabilityRuleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  weekday?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   startMin?: Prisma.SortOrder
   endMin?: Prisma.SortOrder
   _count?: Prisma.AvailabilityRuleCountOrderByAggregateInput
@@ -253,94 +248,87 @@ export type AvailabilityRuleScalarWhereWithAggregatesInput = {
   OR?: Prisma.AvailabilityRuleScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AvailabilityRuleScalarWhereWithAggregatesInput | Prisma.AvailabilityRuleScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"AvailabilityRule"> | string
-  weekday?: Prisma.IntWithAggregatesFilter<"AvailabilityRule"> | number
+  date?: Prisma.DateTimeWithAggregatesFilter<"AvailabilityRule"> | Date | string
   startMin?: Prisma.IntWithAggregatesFilter<"AvailabilityRule"> | number
   endMin?: Prisma.IntWithAggregatesFilter<"AvailabilityRule"> | number
 }
 
 export type AvailabilityRuleCreateInput = {
   id?: string
-  weekday: number
+  date: Date | string
   startMin: number
   endMin: number
 }
 
 export type AvailabilityRuleUncheckedCreateInput = {
   id?: string
-  weekday: number
+  date: Date | string
   startMin: number
   endMin: number
 }
 
 export type AvailabilityRuleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  weekday?: Prisma.IntFieldUpdateOperationsInput | number
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startMin?: Prisma.IntFieldUpdateOperationsInput | number
   endMin?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type AvailabilityRuleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  weekday?: Prisma.IntFieldUpdateOperationsInput | number
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startMin?: Prisma.IntFieldUpdateOperationsInput | number
   endMin?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type AvailabilityRuleCreateManyInput = {
   id?: string
-  weekday: number
+  date: Date | string
   startMin: number
   endMin: number
 }
 
 export type AvailabilityRuleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  weekday?: Prisma.IntFieldUpdateOperationsInput | number
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startMin?: Prisma.IntFieldUpdateOperationsInput | number
   endMin?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type AvailabilityRuleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  weekday?: Prisma.IntFieldUpdateOperationsInput | number
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startMin?: Prisma.IntFieldUpdateOperationsInput | number
   endMin?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type AvailabilityRuleWeekdayStartMinCompoundUniqueInput = {
-  weekday: number
-  startMin: number
-}
-
 export type AvailabilityRuleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  weekday?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   startMin?: Prisma.SortOrder
   endMin?: Prisma.SortOrder
 }
 
 export type AvailabilityRuleAvgOrderByAggregateInput = {
-  weekday?: Prisma.SortOrder
   startMin?: Prisma.SortOrder
   endMin?: Prisma.SortOrder
 }
 
 export type AvailabilityRuleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  weekday?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   startMin?: Prisma.SortOrder
   endMin?: Prisma.SortOrder
 }
 
 export type AvailabilityRuleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  weekday?: Prisma.SortOrder
+  date?: Prisma.SortOrder
   startMin?: Prisma.SortOrder
   endMin?: Prisma.SortOrder
 }
 
 export type AvailabilityRuleSumOrderByAggregateInput = {
-  weekday?: Prisma.SortOrder
   startMin?: Prisma.SortOrder
   endMin?: Prisma.SortOrder
 }
@@ -357,40 +345,40 @@ export type IntFieldUpdateOperationsInput = {
 
 export type AvailabilityRuleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  weekday?: boolean
+  date?: boolean
   startMin?: boolean
   endMin?: boolean
 }, ExtArgs["result"]["availabilityRule"]>
 
 export type AvailabilityRuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  weekday?: boolean
+  date?: boolean
   startMin?: boolean
   endMin?: boolean
 }, ExtArgs["result"]["availabilityRule"]>
 
 export type AvailabilityRuleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  weekday?: boolean
+  date?: boolean
   startMin?: boolean
   endMin?: boolean
 }, ExtArgs["result"]["availabilityRule"]>
 
 export type AvailabilityRuleSelectScalar = {
   id?: boolean
-  weekday?: boolean
+  date?: boolean
   startMin?: boolean
   endMin?: boolean
 }
 
-export type AvailabilityRuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "weekday" | "startMin" | "endMin", ExtArgs["result"]["availabilityRule"]>
+export type AvailabilityRuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "startMin" | "endMin", ExtArgs["result"]["availabilityRule"]>
 
 export type $AvailabilityRulePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AvailabilityRule"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    weekday: number
+    date: Date
     startMin: number
     endMin: number
   }, ExtArgs["result"]["availabilityRule"]>
@@ -817,7 +805,7 @@ export interface Prisma__AvailabilityRuleClient<T, Null = never, ExtArgs extends
  */
 export interface AvailabilityRuleFieldRefs {
   readonly id: Prisma.FieldRef<"AvailabilityRule", 'String'>
-  readonly weekday: Prisma.FieldRef<"AvailabilityRule", 'Int'>
+  readonly date: Prisma.FieldRef<"AvailabilityRule", 'DateTime'>
   readonly startMin: Prisma.FieldRef<"AvailabilityRule", 'Int'>
   readonly endMin: Prisma.FieldRef<"AvailabilityRule", 'Int'>
 }

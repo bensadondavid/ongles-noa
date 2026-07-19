@@ -1,19 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { startOfDay, endOfDay } from "date-fns";
 import { fromZonedTime, toZonedTime } from "date-fns-tz";
+import { startOfDay, endOfDay } from "date-fns";
 import { prisma } from "@/lib/data/prisma";
 import { auth } from "@/lib/auth/auth";
 
-const hours = ["9:00", "11:00", "13:00", "15:00", "17:00"];
+const SLOT_MIN = 120;
+const TIME_ZONE = "Asia/Jerusalem";
 
 export async function POST(req: NextRequest) {
-
-  const session = await auth.api.getSession({
-        headers: req.headers
-      })
-      if(!session){
-        return NextResponse.json({error: 'Invalid Session'}, {status: 401})
-      }
+  const session = await auth.api.getSession({ headers: req.headers });
+  if (!session) {
+    return NextResponse.json({ error: "Invalid Session" }, { status: 401 });
+  }
 
   try {
     const body = await req.json();
@@ -24,103 +22,86 @@ export async function POST(req: NextRequest) {
     }
 
     const selectedDate = new Date(dateStore);
-
     if (Number.isNaN(selectedDate.getTime())) {
       return NextResponse.json({ error: "Date invalide" }, { status: 400 });
     }
 
-    const timeZone = "Asia/Jerusalem";
+    // Date calendaire en heure d'Israël (pour reconstruire les instants candidats)
+    const israelDate = toZonedTime(selectedDate, TIME_ZONE);
+    const year = israelDate.getFullYear();
+    const month = israelDate.getMonth();
+    const day = israelDate.getDate();
 
-    const israelDate = toZonedTime(selectedDate, timeZone);
+    const dayStart = fromZonedTime(startOfDay(israelDate), TIME_ZONE);
+    const dayEnd = fromZonedTime(endOfDay(israelDate), TIME_ZONE);
 
-    const dayStart = fromZonedTime(
-      startOfDay(israelDate),
-      timeZone
-    );
-
-    const dayEnd = fromZonedTime(
-      endOfDay(israelDate),
-      timeZone
-    );
+    const availabilityRules = await prisma.availabilityRule.findMany({
+      where: { date: { gte: dayStart, lte: dayEnd } },
+      orderBy: { startMin: "asc" },
+    });
 
     const appointments = await prisma.appointment.findMany({
       where: {
-        status: {
-          not: "CANCELLED",
-        },
-        startsAt: {
-          gte: dayStart,
-          lte: dayEnd,
-        },
+        status: { in: ["PENDING", 'CONFIRMED'] },
+        startsAt: { gte: dayStart, lte: dayEnd },
       },
-      select: {
-        startsAt: true,
-        endsAt: true,
-      },
-      orderBy: {
-        startsAt: "asc",
-      },
+      select: { startsAt: true, endsAt: true },
+      orderBy: { startsAt: "asc" },
     });
 
     const requiredSlots = Math.max(Number(prestaLength) || 1, 1);
+    const duration = requiredSlots * SLOT_MIN;
 
-    const occupiedHours = new Set<string>();
+    // Instant "maintenant" en Israël pour filtrer les créneaux déjà passés
+    const nowUtc = new Date();
+    const nowIsrael = toZonedTime(nowUtc, TIME_ZONE);
+    const isToday =
+      nowIsrael.getFullYear() === year &&
+      nowIsrael.getMonth() === month &&
+      nowIsrael.getDate() === day;
+    const nowMin = nowIsrael.getHours() * 60 + nowIsrael.getMinutes();
 
-    appointments.forEach((appointment) => {
-
-      const startHour = appointment.startsAt.toLocaleTimeString("fr-FR", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-          timeZone: "Asia/Jerusalem",
-        });
-
-        const endHour = appointment.endsAt.toLocaleTimeString("fr-FR", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-          timeZone: "Asia/Jerusalem",
-        });
-
-      const startIndex = hours.findIndex(
-        (hour) => hour.padStart(5, "0") === startHour,
+    // Convertit un "minutes depuis minuit" (heure locale Israël) en instant réel
+    const minToInstant = (min: number) =>
+      fromZonedTime(
+        new Date(year, month, day, Math.floor(min / 60), min % 60),
+        TIME_ZONE,
       );
 
-      const endIndex = hours.findIndex(
-        (hour) => hour.padStart(5, "0") === endHour,
-      );
+    const availableHours: string[] = [];
 
-      if (startIndex === -1) {
-        return;
-      }
+    for (const rule of availabilityRules) {
+      for (let start = rule.startMin; start <= rule.endMin; start += SLOT_MIN) {
+        // 1. Créneaux passés (aujourd'hui uniquement)
+        if (isToday && start <= nowMin) continue;
 
-      const occupiedUntil = endIndex === -1 ? hours.length : endIndex;
+        // 2. La presta entière doit tenir dans UNE règle continue.
+        //    Dernier slot démarre à (start + duration - SLOT_MIN), doit rester <= endMin.
+        const lastSlotStart = start + duration - SLOT_MIN;
+        const fitsInThisRule =
+          start >= rule.startMin && lastSlotStart <= rule.endMin;
+        if (!fitsInThisRule) continue;
 
-      for (let i = startIndex; i < occupiedUntil; i++) {
-        occupiedHours.add(hours[i].padStart(5, "0"));
-      }
-    });
+        // 3. Conflit avec un rendez-vous existant — comparaison d'instants (DST-safe)
+        const candidateStart = minToInstant(start);
+        const candidateEnd = minToInstant(start + duration);
 
-    const availableHours = hours.filter((hour, index) => {
-      if (index + requiredSlots > hours.length) {
-        return false;
-      }
+        const hasConflict = appointments.some(
+          (appt) =>
+            candidateStart < appt.endsAt && candidateEnd > appt.startsAt,
+        );
 
-      for (let i = 0; i < requiredSlots; i++) {
-        const slot = hours[index + i].padStart(5, "0");
-
-        if (occupiedHours.has(slot)) {
-          return false;
+        if (!hasConflict) {
+          const h = String(Math.floor(start / 60)).padStart(2, "0");
+          const m = String(start % 60).padStart(2, "0");
+          availableHours.push(`${h}:${m}`);
         }
       }
-
-      return true;
-    });
+    }
 
     return NextResponse.json({ availableHours });
   } catch (error) {
     console.error("search-time error:", error);
-
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

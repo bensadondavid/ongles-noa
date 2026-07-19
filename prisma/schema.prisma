@@ -14,6 +14,11 @@ datasource db {
 // AUTH (Better Auth)
 // ─────────────────────────────────────────────
 
+enum ROLE {
+  CLIENT
+  ADMIN
+}
+
 model User {
   id               String        @id
   name             String
@@ -82,13 +87,12 @@ model Verification {
 }
 
 model AvailabilityRule {
-  id       String @id @default(cuid())
-  weekday  Int
+  id       String   @id @default(cuid())
+  date     DateTime
   startMin Int
   endMin   Int
 
-  @@unique([weekday, startMin])
-  @@index([weekday])
+  @@index([date])
 }
 
 model TimeOff {
