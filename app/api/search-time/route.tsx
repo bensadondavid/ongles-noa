@@ -1,17 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { startOfDay, endOfDay } from "date-fns";
+import { fromZonedTime, toZonedTime } from "date-fns-tz";
 import { prisma } from "@/lib/data/prisma";
+import { auth } from "@/lib/auth/auth";
 
 const hours = ["9:00", "11:00", "13:00", "15:00", "17:00"];
 
 export async function POST(req: NextRequest) {
+
+  const session = await auth.api.getSession({
+        headers: req.headers
+      })
+      if(!session){
+        return NextResponse.json({error: 'Invalid Session'}, {status: 401})
+      }
+
   try {
     const body = await req.json();
     const { dateStore, prestaLength } = body;
-
-    console.log("body reçu :", body);
-
-    console.log("prestaLength reçu :", prestaLength);
 
     if (!dateStore) {
       return NextResponse.json({ error: "Date manquante" }, { status: 400 });
@@ -23,14 +29,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Date invalide" }, { status: 400 });
     }
 
+    const timeZone = "Asia/Jerusalem";
+
+    const israelDate = toZonedTime(selectedDate, timeZone);
+
+    const dayStart = fromZonedTime(
+      startOfDay(israelDate),
+      timeZone
+    );
+
+    const dayEnd = fromZonedTime(
+      endOfDay(israelDate),
+      timeZone
+    );
+
     const appointments = await prisma.appointment.findMany({
       where: {
         status: {
           not: "CANCELLED",
         },
         startsAt: {
-          gte: startOfDay(selectedDate),
-          lte: endOfDay(selectedDate),
+          gte: dayStart,
+          lte: dayEnd,
         },
       },
       select: {
@@ -47,21 +67,20 @@ export async function POST(req: NextRequest) {
     const occupiedHours = new Set<string>();
 
     appointments.forEach((appointment) => {
+
       const startHour = appointment.startsAt.toLocaleTimeString("fr-FR", {
-        hour: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+          timeZone: "Asia/Jerusalem",
+        });
 
-        minute: "2-digit",
-
-        hour12: false,
-      });
-
-      const endHour = appointment.endsAt.toLocaleTimeString("fr-FR", {
-        hour: "2-digit",
-
-        minute: "2-digit",
-
-        hour12: false,
-      });
+        const endHour = appointment.endsAt.toLocaleTimeString("fr-FR", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+          timeZone: "Asia/Jerusalem",
+        });
 
       const startIndex = hours.findIndex(
         (hour) => hour.padStart(5, "0") === startHour,

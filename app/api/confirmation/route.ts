@@ -4,6 +4,7 @@ import { DateTime } from "luxon";
 import { auth } from "@/lib/auth/auth";
 
 export async function POST(req: NextRequest) {
+
   try {
     const session = await auth.api.getSession({
       headers: req.headers,
@@ -32,39 +33,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { error: "Aucune prestation sélectionnée" },
         { status: 400 }
-      );
+     );
     }
-
     const selectedDate = DateTime.fromISO(date, {
-
   zone: "Asia/Jerusalem",
-
 });
 
 const [hour, minute = "0"] = time.split(":");
-
 const startDateTime = DateTime.fromObject(
-
   {
-
     year: selectedDate.year,
-
     month: selectedDate.month,
-
     day: selectedDate.day,
-
     hour: Number(hour),
-
     minute: Number(minute),
-
   },
-
   {
-
     zone: "Asia/Jerusalem",
-
   }
-
 );
 
     if (!startDateTime.isValid) {
@@ -83,40 +69,42 @@ const startDateTime = DateTime.fromObject(
     );
 
 
-    const conflictingAppointment = await prisma.appointment.findFirst({
-      where: {
-        startsAt: {
-          lt: endsAt,
-        },
-        endsAt: {
-          gt: startsAt,
-        },
-        status:{
-          not: 'CANCELLED'
+   const newAppointment = await prisma.$transaction(
+      async (tx) => {
+        const conflictingAppointment = await tx.appointment.findFirst({
+          where: {
+            startsAt: {
+              lt: endsAt,
+            },
+            endsAt: {
+              gt: startsAt,
+            },
+            status: {
+              not: "CANCELLED",
+            },
+          },
+        });
+        if (conflictingAppointment) {
+          throw new Error("SLOT_ALREADY_BOOKED");
         }
+        return tx.appointment.create({
+          data: {
+            userId: user.id,
+            appointmentItem: prestations,
+            appointmentOption: options.length > 0 ? options : null,
+            startsAt,
+            endsAt,
+            message,
+            customerName: user.name,
+            customerEmail: user.email,
+            customerPhone: user.phone || "",
+          },
+        });
       },
-    });
-
-    if (conflictingAppointment) {
-      return NextResponse.json(
-        { error: "Ce créneau n'est plus disponible" },
-        { status: 409 }
-      ); 
-    }
-
-    const newAppointment = await prisma.appointment.create({
-      data: {
-        userId: user.id,
-        appointmentItem: prestations,
-        appointmentOption: options.length > 0 ? options : null,
-        startsAt,
-        endsAt,
-        message,
-        customerName: user.name,
-        customerEmail: user.email,
-        customerPhone: user.phone || "",
-      },
-    });
+      {
+        isolationLevel: "Serializable",
+      }
+    );
 
     return NextResponse.json(
       {
@@ -126,11 +114,19 @@ const startDateTime = DateTime.fromObject(
       { status: 201 }
     );
   } catch (error) {
-    console.error(error);
-
-    return NextResponse.json(
-      { error: "Erreur serveur" },
-      { status: 500 }
-    );
-  }
+      if (
+        error instanceof Error &&
+        error.message === "SLOT_ALREADY_BOOKED"
+      ) {
+        return NextResponse.json(
+          { error: "Ce créneau vient d'être réservé" },
+          { status: 409 }
+        );
+      }
+      console.error(error);
+      return NextResponse.json(
+        { error: "Erreur serveur" },
+        { status: 500 }
+      );
+    }
 }

@@ -9,14 +9,23 @@ import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
-function isPublicPathname(pathname: string) {
+const protectedPathnames = [
+  "/appointments",
+  "/confirmation",
+  "/confirmed",
+  "/options",
+  "/prestations",
+  "/profile",
+  "/reservation",
+];
+
+function isProtectedPathname(pathname: string) {
   const pathnameWithoutLocale = pathname.replace(/^\/(fr|he)(?=\/|$)/, "") || "/";
 
-  return (
-    pathnameWithoutLocale === "/" ||
-    pathnameWithoutLocale === "/sign-in" ||
-    pathnameWithoutLocale === "/sign-up" ||
-    pathnameWithoutLocale === "/forgot-password"
+  return protectedPathnames.some(
+    (prefix) =>
+      pathnameWithoutLocale === prefix ||
+      pathnameWithoutLocale.startsWith(`${prefix}/`)
   );
 }
 
@@ -33,7 +42,7 @@ function getLocaleFromPathname(pathname: string) {
 export function proxy(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
-  if (!isPublicPathname(pathname)) {
+  if (isProtectedPathname(pathname)) {
     const sessionCookie = getSessionCookie(req);
 
     if (!sessionCookie) {

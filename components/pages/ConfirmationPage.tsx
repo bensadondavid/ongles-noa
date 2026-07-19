@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useBookingStore } from "@/store/booking-store";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -18,23 +18,30 @@ export default function ConfirmationPage() {
   const options = useBookingStore((state) => state.options);
   const message = useBookingStore((state) => state.message);
   const setMessage = useBookingStore((state) => state.setMessage);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const router = useRouter();
 
   const handleSubmit = async () => {
     try {
+      setIsLoading(true)
       const response = await fetch("/api/confirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ date, time, prestations, options, message }),
       });
       if (!response.ok) {
+        setIsLoading(false)
         return toast.error(t("error"));
       }
       router.push("/confirmed");
     } catch (error) {
+      setIsLoading(false)
       console.log(error);
       return toast.error(t("error"));
+    }
+    finally{
+      setIsLoading(false)
     }
   };
 
@@ -152,7 +159,7 @@ export default function ConfirmationPage() {
         <button
           type="button"
           onClick={handleSubmit}
-          disabled={!conditionsAccepted}
+          disabled={!conditionsAccepted || isLoading}
           className={`text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[50px] py-1 ${conditionsAccepted ? "bg-white/70 cursor-pointer" : "bg-white/30 cursor-not-allowed opacity-50"} `}
         >
           <span className="inline-block translate-y-2">{t("next")}</span>

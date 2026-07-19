@@ -1,4 +1,7 @@
 {
+  "metadata":{
+    "description": "Réservez votre rendez-vous en ligne avec Noa Bensadon et profitez de prestations ongulaires professionnelles et soignées."
+  },
   "auth": {
     "signUp": {
       "title": "Créer un compte",
@@ -158,6 +161,20 @@
     "title": "Rendez-vous confirmé",
     "description": "Votre rendez-vous a bien été enregistré. Vous pouvez retrouver tous vos rendez-vous depuis votre espace personnel.",
     "appointments": "Voir mes rendez-vous",
+    "home": "Retour à l’accueil"
+  },
+  "loading": {
+    "message": "Chargement..."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "La page que vous recherchez n’existe pas ou a été déplacée.",
+    "home": "Retour à l’accueil"
+  },
+  "error": {
+    "title": "Une erreur est survenue",
+    "description": "Quelque chose s’est mal passé. Veuillez réessayer.",
+    "retry": "Réessayer",
     "home": "Retour à l’accueil"
   }
 }

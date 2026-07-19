@@ -4,7 +4,7 @@ import { useBookingStore } from "@/store/booking-store";
 import { useTranslations } from "next-intl";
 import { Calendar } from "@/components/ui/calendar";
 import { addMonths, endOfMonth, startOfMonth } from "date-fns";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { useState } from "react";

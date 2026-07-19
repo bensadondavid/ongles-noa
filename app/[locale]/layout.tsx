@@ -11,11 +11,24 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Noa Bensadon",
-  description: "",
-};
+
+export async function generateMetadata({
+    params,
+  }: {
+    params: Promise<{ locale: string }>;
+  }): Promise<Metadata> {
+    const { locale } = await params;
+    const t = await getTranslations({
+      locale,
+      namespace: "metadata",
+    });
+    return {
+      title: "Noa Bensadon",
+      description: t("description"),
+    };
+  }
 
 export const nixieOne = Nixie_One({
   subsets: ["latin"],

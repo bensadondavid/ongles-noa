@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { authClient } from "@/lib/auth/auth-client";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useBookingStore } from "@/store/booking-store";
 
 export default function Home() {
