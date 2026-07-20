@@ -19,23 +19,30 @@ export default function Reservations() {
   const prestaLength = prestation.length;
 
   const [hours, setHours] = useState<string[]>([]);
+  const [isLoadingHours, setIsLoadingHours] = useState(false);
 
   useEffect(() => {
     if (!dateStore) return;
 
     const getAvailableHours = async () => {
-      const response = await fetch("/api/search-time", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ dateStore, prestaLength }),
-      });
-      if (!response.ok) {
-        return toast.error("error");
+      setIsLoadingHours(true);
+      try {
+        const response = await fetch("/api/search-time", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ dateStore, prestaLength }),
+        });
+        if (!response.ok) {
+          toast.error("error");
+          return;
+        }
+        const data = await response.json();
+        setHours(data.availableHours);
+      } finally {
+        setIsLoadingHours(false);
       }
-      const data = await response.json();
-      setHours(data.availableHours);
     };
     getAvailableHours();
   }, [dateStore, prestaLength]);
@@ -99,17 +106,32 @@ export default function Reservations() {
           [&_.rdp-day_button[data-today=true]]:border-text
         "
       />
-      <div className="grid grid-cols-2 gap-2 bg-border w-4/5 mt-4 rounded-xl p-4 mb-5">
-        {hours.map((h) => (
-          <button
-            onClick={() => setTimeStore(h)}
-            className={`border-none rounded-full p-2 ${timeStore === h ? "bg-background text-white" : "bg-white text-border"}`}
-            key={h}
-          >
-            {h}
-          </button>
-        ))}
-      </div>
+
+      {isLoadingHours ? (
+        <div className="w-4/5 mt-4 mb-5 rounded-xl bg-border p-4 flex justify-center">
+          <div className="size-6 animate-spin rounded-full border-2 border-white border-t-transparent" />
+        </div>
+      ) : hours.length === 0 ? (
+        <div className="w-4/5 mt-4 mb-5 rounded-xl bg-border p-4">
+          <p className="text-center text-white">{t("creneau")}</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-2 bg-border w-4/5 mt-4 rounded-xl p-4 mb-5">
+          {hours.map((h) => (
+            <button
+              key={h}
+              onClick={() => setTimeStore(h)}
+              className={`border-none rounded-full p-2 ${
+                timeStore === h
+                  ? "bg-background text-white"
+                  : "bg-white text-border"
+              }`}
+            >
+              {h}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="flex flex-row gap-2 items-center justify-center">
         <Link
           href={"/options"}

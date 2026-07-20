@@ -117,7 +117,8 @@
     "previous": "Precedent",
     "time": "Veuillez choisir un créneau horaire",
     "date": "Veuillez choisir une date",
-    "error": "Une erreur est survenue, veuillez réessayer"
+    "error": "Une erreur est survenue, veuillez réessayer",
+    "creneau": "Aucun créneau disponible"
   },
   "confirmation": {
     "title": "confirmation",
