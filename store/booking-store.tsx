@@ -1,5 +1,4 @@
 import { create } from "zustand"
-import { persist } from 'zustand/middleware'
 
 export type BookingPrestation = {
   name: string
@@ -24,10 +23,10 @@ type BookingStore = {
   setTime: (time: string | null) => void
   message : string | null
   setMessage: (message: string | null)=>void
+  resetBooking: () => void
 }
 
 export const useBookingStore = create<BookingStore>()(
-    persist(
         (set) => ({
             prestations: [],
             setPrestations: (prestations) => set({ prestations }),
@@ -39,6 +38,14 @@ export const useBookingStore = create<BookingStore>()(
             setTime: (time)=>set({ time }),
             message: null,
             setMessage: (message)=>set({ message }),
+            resetBooking: () =>
+              set({
+                prestations: [],
+                options: [],
+                date: null,
+                time: null,
+                message: null,
+              }),
             togglePrestation: (prestation) =>
               set((state) => {
                 const exists = state.prestations.some((p) => p.name === prestation.name)
@@ -63,7 +70,5 @@ export const useBookingStore = create<BookingStore>()(
                   options: [...state.options, option],
                 }
               })
-            }),
-            {name: 'booking-storage'}
+            })
         )
-    )

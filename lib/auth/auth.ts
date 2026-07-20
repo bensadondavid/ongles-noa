@@ -2,6 +2,8 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "../data/prisma";
 import { resend } from "../mail/resend";
+import { getResetPasswordEmail } from "../mail/templates/reset-password-email";
+import { getVerificationEmail } from "../mail/templates/verification-email";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL!,
@@ -32,21 +34,17 @@ export const auth = betterAuth({
     requireEmailVerification: true,
     minPasswordLength: 8,
     maxPasswordLength: 120,
-    sendResetPassword: async ({ user, url }) => {
-      const { error } = await resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL!,
-        to: user.email,
-        subject: "Réinitialisez votre mot de passe",
-        html: `
-        <a href="${url}">
-        Réinitialiser mon mot de passe
-        </a>
-      `,
-      });
-      if (error) {
-        throw new Error(error.message);
-      }
-    },
+   sendResetPassword: async ({ user, url }) => {
+    const { error } = await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL!,
+      to: user.email,
+      subject: "Réinitialisez votre mot de passe",
+      html: getResetPasswordEmail(url),
+    });
+    if (error) {
+      throw new Error(error.message);
+    }
+  },
     onExistingUserSignUp: async ({ user }) => {
       const { error } = await resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL!,
@@ -81,12 +79,9 @@ export const auth = betterAuth({
         from: process.env.RESEND_FROM_EMAIL!,
         to: user.email,
         subject: "Vérifiez votre email",
-        html: `
-        <a href="${url}">
-          Vérifier mon email
-        </a>
-      `,
+        html: getVerificationEmail(url),
       });
+
       if (error) {
         throw new Error(error.message);
       }

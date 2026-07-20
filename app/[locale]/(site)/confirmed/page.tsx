@@ -1,9 +1,16 @@
 import { Link } from "@/i18n/navigation";
+import { useBookingStore } from "@/store/booking-store";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 
 export default function ConfirmedPage() {
   const t = useTranslations("confirmed");
+  const reset = useBookingStore((state)=>state.resetBooking)
+
+  useEffect(()=>{
+    reset()
+  }, [reset])
 
   return (
     <main className="flex min-h-[70vh] items-center justify-center px-4 py-12">

@@ -43,7 +43,7 @@
         "loading": "Connexion..."
       },
       "google": "Continuer avec Google",
-      "passkey": "Se connecter avec une passkey",
+      "create-account":"Créer un compte",
       "success": "Connexion réussie",
       "error": "La connexion a échoué, veuillez réessayer.",
       "wrong_id": "Identifiant et/ou mot de passe invalide.",

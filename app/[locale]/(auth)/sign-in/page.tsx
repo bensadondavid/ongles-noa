@@ -64,7 +64,7 @@ export default function SignIn() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email webauthn"
-              className="bg-white text-border border-3 border-border rounded-full py-4 text-2xl"
+              className="bg-white text-border border-3 border-border rounded-full py-4 text-md"
               required
             />
           </Field>
@@ -110,6 +110,13 @@ export default function SignIn() {
             <FcGoogle className="size-5" />
             {t("google")}
           </Button>
+          
+          <Link
+            href="/sign-up"
+            className="flex w-full h-[40px] items-center justify-center rounded-full bg-white text-border border-3 border-border text-md"
+          >
+            {t("create-account")}
+          </Link>
         </div>
       </form>
     </div>
