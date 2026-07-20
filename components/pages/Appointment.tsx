@@ -84,7 +84,7 @@ export default function Appointment({
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <button className="flex h-9 w-9 items-center justify-center rounded-full border border-[#b89f93]/40 bg-white/40 text-[#7d6258] transition hover:bg-white/70 hover:text-[#5f4941]">
-                        <Trash size={18} />
+                        <Trash size={18} aria-label="cancel-rdv" />
                       </button>
                     </AlertDialogTrigger>
 

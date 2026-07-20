@@ -3,28 +3,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { DateTime } from "luxon";
 import { auth } from "@/lib/auth/auth";
 import { z } from "zod";
+import { isSlotAvailable } from "@/lib/booking/is-slot-available";
 
 const prestationSchema = z.object({
   name: z.string().min(1),
 });
-
 const optionSchema = z.object({
   name: z.string().min(1),
 });
-
 const confirmationSchema = z.object({
   date: z.string().min(1, "Date manquante"),
-
   time: z
     .string()
     .regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Heure invalide"),
-
   prestations: z
     .array(prestationSchema)
     .min(1, "Aucune prestation sélectionnée"),
-
   options: z.array(optionSchema),
-
   message: z
     .string()
     .trim()
@@ -32,6 +27,7 @@ const confirmationSchema = z.object({
     .nullable()
     .optional()
 });
+
 
 export async function POST(req: NextRequest) {
 
@@ -61,7 +57,20 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
-      const { date, time, prestations, options, message } = result.data;
+    const { date, time, prestations, options, message } = result.data;
+
+    const slotAvailable = await isSlotAvailable({
+      date,
+      time,
+      prestationCount: prestations.length,
+    });
+
+    if (!slotAvailable) {
+      return NextResponse.json(
+        { error: "Ce créneau n'est pas disponible" },
+        { status: 409 }
+      );
+    }
 
     const selectedDate = DateTime.fromISO(date, {
   zone: "Asia/Jerusalem",
@@ -119,7 +128,7 @@ const startDateTime = DateTime.fromObject(
           data: {
             userId: user.id,
             appointmentItem: prestations,
-            appointmentOptions: options.length > 0 ? options : null,
+            appointmentOption: options ,
             startsAt,
             endsAt,
             message,

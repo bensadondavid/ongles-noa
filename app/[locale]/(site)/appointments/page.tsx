@@ -16,6 +16,9 @@ export default async function Appointments() {
       },
       userId : session.user.id
     },
+    orderBy:{
+      startsAt: "asc"
+    }
   })
 
   return (

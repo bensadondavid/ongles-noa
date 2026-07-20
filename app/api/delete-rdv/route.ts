@@ -36,13 +36,19 @@ export async function DELETE(req: NextRequest) {
         { status: 404 }
       );
     }
-
+    if (appointment.startsAt <= new Date()) {
+      return NextResponse.json(
+        { error: "Impossible d'annuler un rendez-vous après son commencement" },
+        { status: 400 }
+      );
+    }
     await prisma.appointment.update({
       where: {
         id,
       },
       data: {
         status: "CANCELLED",
+        cancelledAt: new Date()
       },
     });
 

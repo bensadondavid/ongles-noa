@@ -64,6 +64,10 @@ export default function DashboardAvailability() {
   const isOpen = dayRules.length > 0;
 
   const addPlage = async () => {
+    if (startTime >= endTime) {
+      toast.error("L'heure de fin doit être après l'heure de début");
+      return;
+    }
     setSaving(true);
     try {
       const res = await fetch("/api/dashboard/availability", {

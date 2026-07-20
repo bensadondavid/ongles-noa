@@ -75,11 +75,8 @@ export async function POST(req: NextRequest) {
         // 1. Créneaux passés (aujourd'hui uniquement)
         if (isToday && start <= nowMin) continue;
 
-        // 2. La presta entière doit tenir dans UNE règle continue.
-        //    Dernier slot démarre à (start + duration - SLOT_MIN), doit rester <= endMin.
-        const lastSlotStart = start + duration - SLOT_MIN;
         const fitsInThisRule =
-          start >= rule.startMin && lastSlotStart <= rule.endMin;
+          start >= rule.startMin &&  start + duration <= rule.endMin;
         if (!fitsInThisRule) continue;
 
         // 3. Conflit avec un rendez-vous existant — comparaison d'instants (DST-safe)
