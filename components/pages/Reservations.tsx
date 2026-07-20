@@ -100,7 +100,7 @@ export default function Reservations() {
           [&_.rdp-day_button[data-today=true]]:border-text
         "
       />
-      <div className="grid grid-cols-2 grid-rows-3 gap-2 bg-border w-4/5 mt-4 rounded-xl p-4 mb-5">
+      <div className="grid grid-cols-2 gap-2 bg-border w-4/5 mt-4 rounded-xl p-4 mb-5">
           {hours.map((h)=>(
             <button onClick={()=>setTimeStore(h)} className={`border-none rounded-full p-2 ${timeStore === h ? 'bg-background text-white' : "bg-white text-border"}`} key={h}>{h}</button>
           ))}

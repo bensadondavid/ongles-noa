@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
     const availableHours: string[] = [];
 
     for (const rule of availabilityRules) {
-      for (let start = rule.startMin; start <= rule.endMin; start += SLOT_MIN) {
+      for (let start = rule.startMin; start < rule.endMin; start += SLOT_MIN) {
         // 1. Créneaux passés (aujourd'hui uniquement)
         if (isToday && start <= nowMin) continue;
 

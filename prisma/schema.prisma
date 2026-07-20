@@ -29,7 +29,7 @@ model User {
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
   twoFactorEnabled Boolean?      @default(false)
-  role             String        @default("CLIENT")
+  role             ROLE          @default(CLIENT)
   sessions         Session[]
   accounts         Account[]
   appointments     Appointment[]
@@ -120,8 +120,7 @@ model Appointment {
   endsAt   DateTime
   message  String?
 
-  status    AppointmentStatus @default(PENDING)
-  expiresAt DateTime?
+  status AppointmentStatus @default(PENDING)
 
   customerName  String
   customerEmail String
@@ -138,7 +137,6 @@ model Appointment {
   updatedAt DateTime @updatedAt
 
   @@index([startsAt, endsAt])
-  @@index([status, expiresAt])
   @@index([userId, startsAt])
   @@index([customerEmail])
 }

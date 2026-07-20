@@ -31,7 +31,6 @@ export type AppointmentMinAggregateOutputType = {
   endsAt: Date | null
   message: string | null
   status: $Enums.AppointmentStatus | null
-  expiresAt: Date | null
   customerName: string | null
   customerEmail: string | null
   customerPhone: string | null
@@ -47,7 +46,6 @@ export type AppointmentMaxAggregateOutputType = {
   endsAt: Date | null
   message: string | null
   status: $Enums.AppointmentStatus | null
-  expiresAt: Date | null
   customerName: string | null
   customerEmail: string | null
   customerPhone: string | null
@@ -63,7 +61,6 @@ export type AppointmentCountAggregateOutputType = {
   endsAt: number
   message: number
   status: number
-  expiresAt: number
   customerName: number
   customerEmail: number
   customerPhone: number
@@ -83,7 +80,6 @@ export type AppointmentMinAggregateInputType = {
   endsAt?: true
   message?: true
   status?: true
-  expiresAt?: true
   customerName?: true
   customerEmail?: true
   customerPhone?: true
@@ -99,7 +95,6 @@ export type AppointmentMaxAggregateInputType = {
   endsAt?: true
   message?: true
   status?: true
-  expiresAt?: true
   customerName?: true
   customerEmail?: true
   customerPhone?: true
@@ -115,7 +110,6 @@ export type AppointmentCountAggregateInputType = {
   endsAt?: true
   message?: true
   status?: true
-  expiresAt?: true
   customerName?: true
   customerEmail?: true
   customerPhone?: true
@@ -206,7 +200,6 @@ export type AppointmentGroupByOutputType = {
   endsAt: Date
   message: string | null
   status: $Enums.AppointmentStatus
-  expiresAt: Date | null
   customerName: string
   customerEmail: string
   customerPhone: string
@@ -245,7 +238,6 @@ export type AppointmentWhereInput = {
   endsAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   message?: Prisma.StringNullableFilter<"Appointment"> | string | null
   status?: Prisma.EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-  expiresAt?: Prisma.DateTimeNullableFilter<"Appointment"> | Date | string | null
   customerName?: Prisma.StringFilter<"Appointment"> | string
   customerEmail?: Prisma.StringFilter<"Appointment"> | string
   customerPhone?: Prisma.StringFilter<"Appointment"> | string
@@ -264,7 +256,6 @@ export type AppointmentOrderByWithRelationInput = {
   endsAt?: Prisma.SortOrder
   message?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerEmail?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
@@ -286,7 +277,6 @@ export type AppointmentWhereUniqueInput = Prisma.AtLeast<{
   endsAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   message?: Prisma.StringNullableFilter<"Appointment"> | string | null
   status?: Prisma.EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-  expiresAt?: Prisma.DateTimeNullableFilter<"Appointment"> | Date | string | null
   customerName?: Prisma.StringFilter<"Appointment"> | string
   customerEmail?: Prisma.StringFilter<"Appointment"> | string
   customerPhone?: Prisma.StringFilter<"Appointment"> | string
@@ -305,7 +295,6 @@ export type AppointmentOrderByWithAggregationInput = {
   endsAt?: Prisma.SortOrder
   message?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerEmail?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
@@ -329,7 +318,6 @@ export type AppointmentScalarWhereWithAggregatesInput = {
   endsAt?: Prisma.DateTimeWithAggregatesFilter<"Appointment"> | Date | string
   message?: Prisma.StringNullableWithAggregatesFilter<"Appointment"> | string | null
   status?: Prisma.EnumAppointmentStatusWithAggregatesFilter<"Appointment"> | $Enums.AppointmentStatus
-  expiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Appointment"> | Date | string | null
   customerName?: Prisma.StringWithAggregatesFilter<"Appointment"> | string
   customerEmail?: Prisma.StringWithAggregatesFilter<"Appointment"> | string
   customerPhone?: Prisma.StringWithAggregatesFilter<"Appointment"> | string
@@ -346,7 +334,6 @@ export type AppointmentCreateInput = {
   endsAt: Date | string
   message?: string | null
   status?: $Enums.AppointmentStatus
-  expiresAt?: Date | string | null
   customerName: string
   customerEmail: string
   customerPhone: string
@@ -365,7 +352,6 @@ export type AppointmentUncheckedCreateInput = {
   endsAt: Date | string
   message?: string | null
   status?: $Enums.AppointmentStatus
-  expiresAt?: Date | string | null
   customerName: string
   customerEmail: string
   customerPhone: string
@@ -382,7 +368,6 @@ export type AppointmentUpdateInput = {
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -401,7 +386,6 @@ export type AppointmentUncheckedUpdateInput = {
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -419,7 +403,6 @@ export type AppointmentCreateManyInput = {
   endsAt: Date | string
   message?: string | null
   status?: $Enums.AppointmentStatus
-  expiresAt?: Date | string | null
   customerName: string
   customerEmail: string
   customerPhone: string
@@ -436,7 +419,6 @@ export type AppointmentUpdateManyMutationInput = {
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -454,7 +436,6 @@ export type AppointmentUncheckedUpdateManyInput = {
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -482,7 +463,6 @@ export type AppointmentCountOrderByAggregateInput = {
   endsAt?: Prisma.SortOrder
   message?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  expiresAt?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerEmail?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
@@ -500,7 +480,6 @@ export type AppointmentMaxOrderByAggregateInput = {
   endsAt?: Prisma.SortOrder
   message?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  expiresAt?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerEmail?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
@@ -516,7 +495,6 @@ export type AppointmentMinOrderByAggregateInput = {
   endsAt?: Prisma.SortOrder
   message?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  expiresAt?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
   customerEmail?: Prisma.SortOrder
   customerPhone?: Prisma.SortOrder
@@ -577,7 +555,6 @@ export type AppointmentCreateWithoutUserInput = {
   endsAt: Date | string
   message?: string | null
   status?: $Enums.AppointmentStatus
-  expiresAt?: Date | string | null
   customerName: string
   customerEmail: string
   customerPhone: string
@@ -594,7 +571,6 @@ export type AppointmentUncheckedCreateWithoutUserInput = {
   endsAt: Date | string
   message?: string | null
   status?: $Enums.AppointmentStatus
-  expiresAt?: Date | string | null
   customerName: string
   customerEmail: string
   customerPhone: string
@@ -641,7 +617,6 @@ export type AppointmentScalarWhereInput = {
   endsAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   message?: Prisma.StringNullableFilter<"Appointment"> | string | null
   status?: Prisma.EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-  expiresAt?: Prisma.DateTimeNullableFilter<"Appointment"> | Date | string | null
   customerName?: Prisma.StringFilter<"Appointment"> | string
   customerEmail?: Prisma.StringFilter<"Appointment"> | string
   customerPhone?: Prisma.StringFilter<"Appointment"> | string
@@ -658,7 +633,6 @@ export type AppointmentCreateManyUserInput = {
   endsAt: Date | string
   message?: string | null
   status?: $Enums.AppointmentStatus
-  expiresAt?: Date | string | null
   customerName: string
   customerEmail: string
   customerPhone: string
@@ -675,7 +649,6 @@ export type AppointmentUpdateWithoutUserInput = {
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -692,7 +665,6 @@ export type AppointmentUncheckedUpdateWithoutUserInput = {
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -709,7 +681,6 @@ export type AppointmentUncheckedUpdateManyWithoutUserInput = {
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
   customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
   customerPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -729,7 +700,6 @@ export type AppointmentSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   endsAt?: boolean
   message?: boolean
   status?: boolean
-  expiresAt?: boolean
   customerName?: boolean
   customerEmail?: boolean
   customerPhone?: boolean
@@ -748,7 +718,6 @@ export type AppointmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   endsAt?: boolean
   message?: boolean
   status?: boolean
-  expiresAt?: boolean
   customerName?: boolean
   customerEmail?: boolean
   customerPhone?: boolean
@@ -767,7 +736,6 @@ export type AppointmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   endsAt?: boolean
   message?: boolean
   status?: boolean
-  expiresAt?: boolean
   customerName?: boolean
   customerEmail?: boolean
   customerPhone?: boolean
@@ -786,7 +754,6 @@ export type AppointmentSelectScalar = {
   endsAt?: boolean
   message?: boolean
   status?: boolean
-  expiresAt?: boolean
   customerName?: boolean
   customerEmail?: boolean
   customerPhone?: boolean
@@ -797,7 +764,7 @@ export type AppointmentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type AppointmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "startsAt" | "endsAt" | "message" | "status" | "expiresAt" | "customerName" | "customerEmail" | "customerPhone" | "cancelledAt" | "appointmentItem" | "appointmentOption" | "createdAt" | "updatedAt", ExtArgs["result"]["appointment"]>
+export type AppointmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "startsAt" | "endsAt" | "message" | "status" | "customerName" | "customerEmail" | "customerPhone" | "cancelledAt" | "appointmentItem" | "appointmentOption" | "createdAt" | "updatedAt", ExtArgs["result"]["appointment"]>
 export type AppointmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -820,7 +787,6 @@ export type $AppointmentPayload<ExtArgs extends runtime.Types.Extensions.Interna
     endsAt: Date
     message: string | null
     status: $Enums.AppointmentStatus
-    expiresAt: Date | null
     customerName: string
     customerEmail: string
     customerPhone: string
@@ -1259,7 +1225,6 @@ export interface AppointmentFieldRefs {
   readonly endsAt: Prisma.FieldRef<"Appointment", 'DateTime'>
   readonly message: Prisma.FieldRef<"Appointment", 'String'>
   readonly status: Prisma.FieldRef<"Appointment", 'AppointmentStatus'>
-  readonly expiresAt: Prisma.FieldRef<"Appointment", 'DateTime'>
   readonly customerName: Prisma.FieldRef<"Appointment", 'String'>
   readonly customerEmail: Prisma.FieldRef<"Appointment", 'String'>
   readonly customerPhone: Prisma.FieldRef<"Appointment", 'String'>

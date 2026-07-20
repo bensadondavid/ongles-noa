@@ -2,6 +2,36 @@ import { prisma } from "@/lib/data/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { DateTime } from "luxon";
 import { auth } from "@/lib/auth/auth";
+import { z } from "zod";
+
+const prestationSchema = z.object({
+  name: z.string().min(1),
+});
+
+const optionSchema = z.object({
+  name: z.string().min(1),
+});
+
+const confirmationSchema = z.object({
+  date: z.string().min(1, "Date manquante"),
+
+  time: z
+    .string()
+    .regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Heure invalide"),
+
+  prestations: z
+    .array(prestationSchema)
+    .min(1, "Aucune prestation sélectionnée"),
+
+  options: z.array(optionSchema),
+
+  message: z
+    .string()
+    .trim()
+    .max(1000, "Message trop long")
+    .nullable()
+    .optional()
+});
 
 export async function POST(req: NextRequest) {
 
@@ -20,21 +50,19 @@ export async function POST(req: NextRequest) {
     const user = session.user;
 
     const body = await req.json();
-    const { date, time, prestations, options, message } = body;
 
-    if (!date || !time) {
-      return NextResponse.json(
-        { error: "Date ou heure manquante" },
-        { status: 400 }
-      );
-    }
+    const result = confirmationSchema.safeParse(body);
+      if (!result.success) {
+        return NextResponse.json(
+          {
+            error: "Données invalides",
+            details: result.error.flatten().fieldErrors,
+          },
+          { status: 400 }
+        );
+      }
+      const { date, time, prestations, options, message } = result.data;
 
-    if (!Array.isArray(prestations) || prestations.length === 0) {
-      return NextResponse.json(
-        { error: "Aucune prestation sélectionnée" },
-        { status: 400 }
-     );
-    }
     const selectedDate = DateTime.fromISO(date, {
   zone: "Asia/Jerusalem",
 });
@@ -91,13 +119,14 @@ const startDateTime = DateTime.fromObject(
           data: {
             userId: user.id,
             appointmentItem: prestations,
-            appointmentOption: options.length > 0 ? options : null,
+            appointmentOptions: options.length > 0 ? options : null,
             startsAt,
             endsAt,
             message,
             customerName: user.name,
             customerEmail: user.email,
             customerPhone: user.phone || "",
+            status: "CONFIRMED"
           },
         });
       },

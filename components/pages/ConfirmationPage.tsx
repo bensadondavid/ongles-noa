@@ -19,6 +19,7 @@ export default function ConfirmationPage() {
   const message = useBookingStore((state) => state.message);
   const setMessage = useBookingStore((state) => state.setMessage);
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const reset = useBookingStore((state)=>state.resetBooking)
 
   const router = useRouter();
 
@@ -34,6 +35,7 @@ export default function ConfirmationPage() {
         setIsLoading(false)
         return toast.error(t("error"));
       }
+      reset()
       router.push("/confirmed");
     } catch (error) {
       setIsLoading(false)
