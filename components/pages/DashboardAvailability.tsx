@@ -11,6 +11,29 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 type Rule = { id: string; date: string; startMin: number; endMin: number };
+type Appointment = {
+  id: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  status: "CONFIRMED";
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  appointmentItem: unknown;
+  appointmentOption: unknown;
+  message: string | null;
+};
+
+function itemNames(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item) =>
+    typeof item === "object" && item !== null && "name" in item &&
+    typeof item.name === "string"
+      ? [item.name]
+      : []
+  );
+}
 
 function minToTime(min: number) {
   const h = String(Math.floor(min / 60)).padStart(2, "0");
@@ -21,6 +44,7 @@ function minToTime(min: number) {
 export default function DashboardAvailability() {
   const [month, setMonth] = useState(() => new Date());
   const [rules, setRules] = useState<Rule[]>([]);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(() => new Date());
   const [startTime, setStartTime] = useState("09:00");
@@ -33,14 +57,20 @@ export default function DashboardAvailability() {
     const fetchMonth = async () => {
       setLoading(true);
       try {
-        const res = await fetch(
-          `/api/dashboard/availability?month=${format(month, "yyyy-MM")}`
-        );
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        setRules(data.rules);
+        const monthKey = format(month, "yyyy-MM");
+        const [availabilityRes, appointmentsRes] = await Promise.all([
+          fetch(`/api/dashboard/availability?month=${monthKey}`),
+          fetch(`/api/dashboard/appointments?month=${monthKey}`),
+        ]);
+        if (!availabilityRes.ok || !appointmentsRes.ok) throw new Error();
+        const [availabilityData, appointmentsData] = await Promise.all([
+          availabilityRes.json(),
+          appointmentsRes.json(),
+        ]);
+        setRules(availabilityData.rules);
+        setAppointments(appointmentsData.appointments);
       } catch {
-        toast.error("Impossible de charger les disponibilités");
+        toast.error("Impossible de charger le calendrier");
       } finally {
         setLoading(false);
       }
@@ -59,6 +89,16 @@ export default function DashboardAvailability() {
         .filter((r) => r.date === selectedKey)
         .sort((a, b) => a.startMin - b.startMin),
     [rules, selectedKey]
+  );
+
+  const appointmentDates = useMemo(
+    () => new Set(appointments.map((appointment) => appointment.date)),
+    [appointments]
+  );
+
+  const dayAppointments = useMemo(
+    () => appointments.filter((appointment) => appointment.date === selectedKey),
+    [appointments, selectedKey]
   );
 
   const isOpen = dayRules.length > 0;
@@ -126,9 +166,13 @@ export default function DashboardAvailability() {
         onMonthChange={setMonth}
         selected={selectedDate}
         onSelect={(date) => date && setSelectedDate(date)}
-        modifiers={{ open: (date) => openDates.has(format(date, "yyyy-MM-dd")) }}
+        modifiers={{
+          open: (date) => openDates.has(format(date, "yyyy-MM-dd")),
+          booked: (date) => appointmentDates.has(format(date, "yyyy-MM-dd")),
+        }}
         modifiersClassNames={{
           open: "after:absolute after:bottom-1 after:left-1/2 after:size-1.5 after:-translate-x-1/2 after:rounded-full after:bg-white",
+          booked: "before:absolute before:right-1 before:top-1 before:size-2 before:rounded-full before:bg-amber-300 before:ring-2 before:ring-border",
         }}
         className="rounded-3xl bg-border p-4 text-white font-bold [--cell-size:2.5rem]"
       />
@@ -212,6 +256,61 @@ export default function DashboardAvailability() {
                 Fermer toute la journée
               </Button>
             )}
+
+            <div className="mt-6 border-t border-white/15 pt-5">
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="font-primary text-base">Rendez-vous</h3>
+                <span className="rounded-full bg-amber-300 px-2.5 py-1 text-xs font-bold text-border">
+                  {dayAppointments.length}
+                </span>
+              </div>
+
+              {dayAppointments.length === 0 ? (
+                <p className="text-sm text-white/60">
+                  Aucun rendez-vous pour ce jour.
+                </p>
+              ) : (
+                <ul className="flex flex-col gap-3">
+                  {dayAppointments.map((appointment) => {
+                    const prestations = itemNames(appointment.appointmentItem);
+                    const options = itemNames(appointment.appointmentOption);
+
+                    return (
+                      <li
+                        key={appointment.id}
+                        className="rounded-xl border border-amber-300/30 bg-white/10 p-3"
+                      >
+                        <div className="flex flex-wrap items-start justify-between gap-2">
+                          <div>
+                            <p className="font-semibold">
+                              {appointment.startTime} – {appointment.endTime}
+                            </p>
+                            <p className="text-sm">{appointment.customerName}</p>
+                          </div>
+                          <span className="rounded-full bg-white/10 px-2 py-1 text-[11px]">
+                            Confirmé
+                          </span>
+                        </div>
+                        {prestations.length > 0 && (
+                          <p className="mt-2 text-sm text-white/80">
+                            {prestations.join(", ")}
+                            {options.length > 0 ? ` · ${options.join(", ")}` : ""}
+                          </p>
+                        )}
+                        <p className="mt-1 text-xs text-white/60">
+                          {appointment.customerPhone || appointment.customerEmail}
+                        </p>
+                        {appointment.message && (
+                          <p className="mt-2 rounded-lg bg-black/10 p-2 text-xs text-white/70">
+                            {appointment.message}
+                          </p>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
           </>
         )}
       </div>

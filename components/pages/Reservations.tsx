@@ -94,7 +94,7 @@ export default function Reservations() {
         }}
         disabled={[
           { before: new Date(), after: endOfMonth(addMonths(new Date(), 1)) },
-          { dayOfWeek: [5, 6] },
+          { dayOfWeek: [1, 3, 5, 6] },
         ]}
         className="
           rounded-3xl bg-border p-4 text-white font-bold
