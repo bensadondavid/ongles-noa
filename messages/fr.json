@@ -15,6 +15,8 @@
       },
       "password": {
         "label": "Mot de passe",
+        "confirmed_password": "Confirmation du mot de passe",
+        "same": "Les deux mots de passe correspondent",
         "nombre_caracteres": "Minimum 8 caractères.",
         "maj": "Au moins une majuscule",
         "caractere_special": "Au moins un caractère spécial"

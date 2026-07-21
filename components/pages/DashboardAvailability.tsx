@@ -158,7 +158,7 @@ export default function DashboardAvailability() {
 
   const deleteAppointment = async(id: string)=>{
     try{
-      const response = await fetch('/api/appointment', {
+      const response = await fetch('/api/dashboard/appointments', {
         method: "PUT",
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify({id})
@@ -177,7 +177,7 @@ export default function DashboardAvailability() {
   }
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-6 p-6 md:flex-row md:items-start">
+    <div className="mx-auto flex max-w-4xl flex-col gap-6 p-6 pt-15 md:flex-row md:items-start">
       <Calendar
         dir="ltr"
         mode="single"
@@ -298,9 +298,8 @@ export default function DashboardAvailability() {
                     return (
                       <li
                         key={appointment.id}
-                        className="relative rounded-xl border border-amber-300/30 bg-white/10 p-3"
+                        className="rounded-xl border border-amber-300/30 bg-white/10 p-3"
                       >
-                      <button className="absolute bottom-3 right-3" onClick={()=>deleteAppointment(appointment.id)}><Trash2/></button>
                         <div className="flex flex-wrap items-start justify-between gap-2">
                           <div>
                             <p className="font-semibold">
@@ -308,9 +307,12 @@ export default function DashboardAvailability() {
                             </p>
                             <p className="text-sm">{appointment.customerName}</p>
                           </div>
-                          <span className="rounded-full bg-white/10 px-2 py-1 text-[11px]">
-                            Confirmé
-                          </span>
+                          <div className="flex flex-row gap-2 items-center justify-center">
+                            <span className="rounded-full bg-white/10 px-2 py-1 text-[11px]">
+                              {appointment.status}
+                            </span>
+                            <button className="" onClick={()=>deleteAppointment(appointment.id)}><Trash2 size={23}/></button>
+                          </div>
                         </div>
                         {prestations.length > 0 && (
                           <p className="mt-2 text-sm text-white/80">

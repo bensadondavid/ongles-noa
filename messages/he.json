@@ -16,6 +16,8 @@
       },
       "password": {
         "label": "סיסמה",
+        "confirmed_password": "אימות סיסמה",
+        "same": "שתי הסיסמאות תואמות",
         "nombre_caracteres": "לפחות 8 תווים.",
         "maj": "לפחות אות גדולה אחת",
         "caractere_special": "לפחות תו מיוחד אחד"

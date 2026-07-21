@@ -24,8 +24,8 @@ import {
 } from "@/components/ui/tooltip"
 import { User } from "lucide-react"
 import { authClient } from "@/lib/auth/auth-client";
-import { useRouter } from "@/i18n/navigation";
 import { LogOut, LogIn } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -684,7 +684,7 @@ export function SignOutButton() {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push("/"); // ou "/login", où tu veux
+          router.push("/sign-in"); // ou "/login", où tu veux
           router.refresh(); // force le re-render serveur pour purger le user
         },
       },
