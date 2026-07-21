@@ -4,22 +4,44 @@ import { useBookingStore } from "@/store/booking-store"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { toast } from "sonner"
+import { useState } from "react"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export default function PrestationsPage() {
 
   const t = useTranslations('prestations')
   const togglePrestation = useBookingStore((state)=>state.togglePrestation)
   const selectedPrestations = useBookingStore((state) => state.prestations)
-  
+  const [deposeGelDialogOpen, setDeposeGelDialogOpen] = useState(false)
+
   const prestations = [
-    {name: t('presta_1'),price: 20},
-    {name: t('presta_2'),price: 40},
-    {name: t('presta_3'),price: 50},
-    {name: t('presta_4'),price: 100},
-    {name: t('presta_5'),price: 110},
-    {name: t('presta_6'),price: 180},
-    {name: t('presta_7'),price: 130},
+    {name: t('presta_1'),price: 30},
+    {name: t('presta_2'),price: 60},
+    {name: t('presta_3'),price: 120},
+    {name: t('presta_4'),price: 130},
+    {name: t('presta_5'),price: 230},
+    {name: t('presta_6'),price: 160},
   ]
+
+  const deposeGel = prestations[0]
+
+  const handleTogglePrestation = (p: { name: string; price: number }) => {
+    const isSelected = selectedPrestations.some((selected) => selected.name === p.name)
+    if (p.name === deposeGel.name && !isSelected) {
+      setDeposeGelDialogOpen(true)
+      return
+    }
+    togglePrestation(p)
+  }
 
   const verifyLengthPresta = (e: React.MouseEvent<HTMLAnchorElement>)=>{
     if(selectedPrestations.length === 0){
@@ -39,8 +61,8 @@ export default function PrestationsPage() {
         {prestations.map((p)=>{
           const isSelected = selectedPrestations.some((selected) => selected.name === p.name)
           return(
-            <button onClick={()=>togglePrestation(p)} key={p.name} className={`text-md text-text flex flex-col justify-center items-center rounded-full bg-white/70 w-full h-[50px] ${isSelected ? "border-2 border-border" : ""}`}>
-              <p>{p.name}</p> 
+            <button onClick={()=>handleTogglePrestation(p)} key={p.name} className={`text-md text-text flex flex-col justify-center items-center rounded-full bg-white/70 w-full h-[50px] ${isSelected ? "border-2 border-border" : ""}`}>
+              <p>{p.name}</p>
               <p className="">{p.price} ₪</p>
             </button>
             )
@@ -48,6 +70,21 @@ export default function PrestationsPage() {
       <p className="text-sm text-white font-bold text-center">{t('depose')}</p>
       </div>
         <Link onClick={verifyLengthPresta} href={'/options'} className="text-center font-second text-4xl text-text border-none rounded-full bg-white/70 w-[140px] h-[45px]"><span className="inline-block translate-y-1">{t('next')}</span></Link>
+
+      <AlertDialog open={deposeGelDialogOpen} onOpenChange={setDeposeGelDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('depose_confirm_title')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('depose_confirm_description')}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t('depose_confirm_cancel')}</AlertDialogCancel>
+            <AlertDialogAction onClick={() => togglePrestation(deposeGel)}>
+              {t('depose_confirm_ok')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

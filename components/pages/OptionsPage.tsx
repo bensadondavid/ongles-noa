@@ -12,13 +12,13 @@ export default function OptionsPage() {
   const toggleOption = useBookingStore((state)=>state.toggleOption)
 
   const options = [
-    {name: t('option_1'), price: 10},
-    {name: t('option_2'),price: 10},
-    {name: t('option_3'),price: 20},
-    {name: t('option_4'),price: 20},
-    {name: t('option_5'),price: 20},
-    {name: t('option_6'),price: 10},
-    {name: t('option_7'),price: 10},
+    {name: t('option_1'), price: 20},
+    {name: t('option_2'),price: 20},
+    {name: t('option_3'),price: 30},
+    {name: t('option_4'),price: 30},
+    {name: t('option_5'),price: 30},
+    {name: t('option_6'),price: 20},
+    {name: t('option_7'),price: 20},
     {name: t('option_8'),price: 30},
 ]
 
