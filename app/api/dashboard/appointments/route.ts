@@ -61,3 +61,36 @@ export async function GET(req: NextRequest) {
     }),
   });
 }
+
+
+export async function PUT(req: NextRequest){
+  const session = await requireAdmin(req);
+
+  if (!session) {
+    return NextResponse.json({ error: "Accès refusé" }, { status: 401 });
+  }
+
+  try{
+    const body = await req.json()
+    const { id } = body
+
+     if (!id) {
+      return NextResponse.json({ error: "ID manquant" }, { status: 400 });
+    }
+
+    const appointment = await prisma.appointment.update({
+      where:{
+        id
+      },
+      data: {
+        status: 'CANCELLED'
+      }
+    })
+     return NextResponse.json({ appointment }, { status: 200 }
+    );
+  }
+    catch(error){
+      console.log(error)
+      return NextResponse.json({ error: "Erreur lors de l'annulation du rendez-vous" }, { status: 500 });
+    }
+  }

@@ -156,6 +156,26 @@ export default function DashboardAvailability() {
     }
   };
 
+  const deleteAppointment = async(id: string)=>{
+    try{
+      const response = await fetch('/api/appointment', {
+        method: "PUT",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify({id})
+      })
+      if(!response.ok){
+        return toast.error("Erreur dans la suppression du rdv")
+      }
+      setAppointments((prev) =>
+        prev.filter((appointment) => appointment.id !== id)
+      );
+      toast.success('Rdv supprimé')
+    }
+    catch{
+      toast.error("Erreur dans la suppression du rdv");
+    }
+  }
+
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-6 p-6 md:flex-row md:items-start">
       <Calendar
@@ -278,8 +298,9 @@ export default function DashboardAvailability() {
                     return (
                       <li
                         key={appointment.id}
-                        className="rounded-xl border border-amber-300/30 bg-white/10 p-3"
+                        className="relative rounded-xl border border-amber-300/30 bg-white/10 p-3"
                       >
+                      <button className="absolute bottom-3 right-3" onClick={()=>deleteAppointment(appointment.id)}><Trash2/></button>
                         <div className="flex flex-wrap items-start justify-between gap-2">
                           <div>
                             <p className="font-semibold">
