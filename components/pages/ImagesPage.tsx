@@ -20,11 +20,11 @@ type ImageItem = { id: string; url: string; name: string };
 export default function ImagesPage() {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
   const [imageToDelete, setImageToDelete] = useState<ImageItem | null>(null);
 
-  const preview = useMemo(() => (file ? URL.createObjectURL(file) : null), [file]);
+  const previews = useMemo(() => files.map((f) => URL.createObjectURL(f)), [files]);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -45,20 +45,20 @@ export default function ImagesPage() {
 
   useEffect(() => {
     return () => {
-      if (preview) URL.revokeObjectURL(preview);
+      previews.forEach((url) => URL.revokeObjectURL(url));
     };
-  }, [preview]);
+  }, [previews]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(e.target.files?.[0] ?? null);
+    setFiles(e.target.files ? Array.from(e.target.files) : []);
   };
 
   const uploadImage = async () => {
-    if (!file) return;
+    if (files.length === 0) return;
     setUploading(true);
     try {
       const formData = new FormData();
-      formData.append("file", file);
+      files.forEach((file) => formData.append("file", file));
       const res = await fetch("/api/dashboard/add-image", {
         method: "POST",
         body: formData,
@@ -68,9 +68,9 @@ export default function ImagesPage() {
         toast.error(data.error ?? "Erreur lors de l'ajout");
         return;
       }
-      setImages((prev) => [data.image, ...prev]);
-      setFile(null);
-      toast.success("Image ajoutée");
+      setImages((prev) => [...data.images, ...prev]);
+      setFiles([]);
+      toast.success(data.images.length > 1 ? "Images ajoutées" : "Image ajoutée");
     } catch {
       toast.error("Erreur lors de l'ajout");
     } finally {
@@ -97,24 +97,35 @@ export default function ImagesPage() {
 
       <div className="flex flex-col items-center gap-3">
         <label className="flex h-40 w-55 cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-white/40 bg-border/40 text-white/70 hover:bg-border/60 overflow-hidden">
-          {preview ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={preview} alt="Aperçu" className="h-full w-full object-cover" />
+          {previews.length > 0 ? (
+            <div className="grid h-full w-full grid-cols-2 gap-0.5">
+              {previews.slice(0, 4).map((url) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img key={url} src={url} alt="Aperçu" className="h-full w-full object-cover" />
+              ))}
+            </div>
           ) : (
             <>
               <ImagePlus className="size-6" />
-              <span className="text-sm">Choisir une image</span>
+              <span className="text-sm">Choisir des images</span>
             </>
           )}
           <input
             type="file"
             accept="image/jpeg,image/png,image/webp,image/avif"
+            multiple
             onChange={handleFileChange}
             className="hidden"
           />
         </label>
 
-        <Button onClick={uploadImage} disabled={!file || uploading}>
+        {files.length > 0 && (
+          <p className="text-sm text-white/70">
+            {files.length} image{files.length > 1 ? "s" : ""} sélectionnée{files.length > 1 ? "s" : ""}
+          </p>
+        )}
+
+        <Button onClick={uploadImage} disabled={files.length === 0 || uploading}>
           {uploading ? "Envoi en cours..." : "Envoyer"}
         </Button>
       </div>

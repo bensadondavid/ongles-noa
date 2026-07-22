@@ -26,30 +26,36 @@ export async function POST(req: NextRequest) {
   }
 
   const formData = await req.formData();
-  const file = formData.get("file");
+  const files = formData.getAll("file");
 
-  if (!(file instanceof File)) {
+  if (files.length === 0 || !files.every((file) => file instanceof File)) {
     return NextResponse.json({ error: "Fichier manquant" }, { status: 400 });
   }
 
-  if (!ALLOWED_TYPES.includes(file.type)) {
-    return NextResponse.json({ error: "Format d'image non supporté" }, { status: 400 });
+  for (const file of files) {
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      return NextResponse.json({ error: "Format d'image non supporté" }, { status: 400 });
+    }
+
+    if (file.size > MAX_SIZE) {
+      return NextResponse.json({ error: "Image trop volumineuse (max 8 Mo)" }, { status: 400 });
+    }
   }
 
-  if (file.size > MAX_SIZE) {
-    return NextResponse.json({ error: "Image trop volumineuse (max 8 Mo)" }, { status: 400 });
-  }
+  const images = await Promise.all(
+    files.map(async (file) => {
+      const blob = await put(file.name, file, {
+        access: "public",
+        addRandomSuffix: true,
+      });
 
-  const blob = await put(file.name, file, {
-    access: "public",
-    addRandomSuffix: true,
-  });
+      return prisma.image.create({
+        data: { url: blob.url, name: file.name },
+      });
+    })
+  );
 
-  const image = await prisma.image.create({
-    data: { url: blob.url, name: file.name },
-  });
-
-  return NextResponse.json({ image });
+  return NextResponse.json({ images });
 }
 
 export async function DELETE(req: NextRequest) {
