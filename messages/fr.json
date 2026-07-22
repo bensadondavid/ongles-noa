@@ -147,7 +147,15 @@
   "sidebar": {
     "home": "Accueil",
     "infos": "Mes informations",
-    "rdv": "Mes rendez-vous"
+    "rdv": "Mes rendez-vous",
+    "galerie": "Galerie"
+  },
+  "gallery": {
+    "title": "galerie",
+    "subtitle": "photos",
+    "empty": "Aucune photo pour le moment.",
+    "loadMore": "Voir plus",
+    "loading": "Chargement..."
   },
   "appointments": {
     "title": "Mes RDV",

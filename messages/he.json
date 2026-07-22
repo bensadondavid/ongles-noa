@@ -148,7 +148,15 @@
   "sidebar": {
     "home": "דף הבית",
     "infos": "הפרטים שלי",
-    "rdv": "התורים שלי"
+    "rdv": "התורים שלי",
+    "galerie": "גלריה"
+  },
+  "gallery": {
+    "title": "גלריה",
+    "subtitle": "תמונות",
+    "empty": "אין תמונות כרגע.",
+    "loadMore": "עוד תמונות",
+    "loading": "טוען..."
   },
   "appointments": {
     "title": "התורים שלי",
