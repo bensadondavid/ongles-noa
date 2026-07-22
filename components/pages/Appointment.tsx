@@ -18,6 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { BookingOption, BookingPrestation } from "@/store/booking-store";
+import { AddToCalendar } from "../ui/add-to-calendar";
 
 
 
@@ -27,6 +28,7 @@ export default function Appointment({
   appointments: AppointmentType[];
 }) {
   const t = useTranslations("appointments");
+  const tCalendar = useTranslations("addToCalendar");
   const router = useRouter();
 
   const handleDelete = async (id: string) => {
@@ -80,6 +82,20 @@ export default function Appointment({
                       minute: "2-digit",
                     })}
                   </p>
+
+                  <AddToCalendar
+                    title={tCalendar("eventTitle")}
+                    description={
+                      Array.isArray(a.appointmentItem)
+                        ? (a.appointmentItem as BookingPrestation[])
+                            .map((item) => item.name)
+                            .join(", ")
+                        : undefined
+                    }
+                    location={tCalendar("location")}
+                    start={a.startsAt}
+                    end={a.endsAt}
+                  />
 
                   <AlertDialog>
                     <AlertDialogTrigger asChild>

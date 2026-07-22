@@ -91,7 +91,7 @@
     "presta_3": "Manucure russe et semi permanent",
     "presta_4": "Manucure russe et gainage",
     "presta_5": "Capsules gel X",
-    "presta_6": "Pédicure et semi permanent ",
+    "presta_6": "Gel semi permanent pieds",
     "next": "Suivant",
     "select": "Veuillez sélectionner au moins une prestation.",
     "depose": "Uniquement les déposes d'un travail extérieur sont facturées.",
@@ -167,6 +167,11 @@
     "description": "Votre rendez-vous a bien été enregistré. Vous pouvez retrouver tous vos rendez-vous depuis votre espace personnel.",
     "appointments": "Voir mes rendez-vous",
     "home": "Retour à l’accueil"
+  },
+  "addToCalendar": {
+    "button": "Ajouter au calendrier",
+    "eventTitle": "RDV Ongles",
+    "location": "Kadish Luz 1, Jerusalem"
   },
   "loading": {
     "message": "Chargement..."
