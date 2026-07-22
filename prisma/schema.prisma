@@ -140,3 +140,11 @@ model Appointment {
   @@index([userId, startsAt])
   @@index([customerEmail])
 }
+
+model Image {
+  id        String   @id @default(cuid())
+  url       String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

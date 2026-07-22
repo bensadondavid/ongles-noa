@@ -52,3 +52,8 @@ export type TimeOff = Prisma.TimeOffModel
  * 
  */
 export type Appointment = Prisma.AppointmentModel
+/**
+ * Model Image
+ * 
+ */
+export type Image = Prisma.ImageModel
