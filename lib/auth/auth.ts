@@ -3,7 +3,6 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "../data/prisma";
 import { resend } from "../mail/resend";
 import { getResetPasswordEmail } from "../mail/templates/reset-password-email";
-import { getVerificationEmail } from "../mail/templates/verification-email";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL!,
@@ -74,19 +73,23 @@ export const auth = betterAuth({
   emailVerification: {
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
-    sendVerificationEmail: async ({ user, url }) => {
-      const { error } = await resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL!,
-        to: user.email,
-        subject: "Vérifiez votre email",
-        html: getVerificationEmail(url),
-      });
+  },
 
-      if (error) {
-        throw new Error(error.message);
-      }
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          return {
+            data: {
+              ...user,
+              emailVerified: true,
+            },
+          };
+        },
+      },
     },
   },
+
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
