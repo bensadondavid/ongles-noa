@@ -4,6 +4,16 @@ import { useEffect, useMemo, useState } from "react";
 import { Trash2, ImagePlus } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 type ImageItem = { id: string; url: string; name: string };
 
@@ -12,6 +22,7 @@ export default function ImagesPage() {
   const [loading, setLoading] = useState(true);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [imageToDelete, setImageToDelete] = useState<ImageItem | null>(null);
 
   const preview = useMemo(() => (file ? URL.createObjectURL(file) : null), [file]);
 
@@ -120,17 +131,44 @@ export default function ImagesPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={image.url} alt={image.name} className="h-full w-full object-cover" />
                 <button
-                  onClick={() => deleteImage(image.id)}
+                  onClick={() => setImageToDelete(image)}
                   aria-label="Supprimer l'image"
-                  className="absolute top-2 right-2 rounded-full bg-black/60 p-1.5 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                  className="absolute top-2 right-2 rounded-full bg-black/60 p-1.5 text-white"
                 >
-                  <Trash2 className="size-4" />
+                  <Trash2 color="white" className="size-4" />
                 </button>
               </li>
             ))}
           </ul>
         )}
       </div>
+
+      <AlertDialog
+        open={imageToDelete !== null}
+        onOpenChange={(open) => {
+          if (!open) setImageToDelete(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Supprimer l&apos;image</AlertDialogTitle>
+            <AlertDialogDescription>
+              Cette action est irréversible. L&apos;image sera définitivement supprimée.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Annuler</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (imageToDelete) deleteImage(imageToDelete.id);
+                setImageToDelete(null);
+              }}
+            >
+              Supprimer
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

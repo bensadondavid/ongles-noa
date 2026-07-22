@@ -1,6 +1,6 @@
 'use client'
 
-import { Calendar, Images, User } from "lucide-react";
+import { Calendar, Images, User, MapPin } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -54,6 +54,11 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <NavLink href="/galerie" icon={Images}>
                   {t('galerie')}
+                </NavLink>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <NavLink href="/contact" icon={MapPin}>
+                  {t('contact')}
                 </NavLink>
               </SidebarMenuItem>
             </SidebarMenu>

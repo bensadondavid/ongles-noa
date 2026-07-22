@@ -148,7 +148,17 @@
     "home": "Accueil",
     "infos": "Mes informations",
     "rdv": "Mes rendez-vous",
-    "galerie": "Galerie"
+    "galerie": "Galerie",
+    "contact": "Contact"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Retrouvez-nous",
+    "address": "Adresse",
+    "addressValue": "Kadish Luz 1, étage 3, appartement 15, Jérusalem",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "instagram": "Instagram"
   },
   "gallery": {
     "title": "galerie",

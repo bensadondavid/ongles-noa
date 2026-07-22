@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/data/prisma";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 6;
 
 export async function GET(req: NextRequest) {
   const skip = Number(req.nextUrl.searchParams.get("skip") ?? 0);

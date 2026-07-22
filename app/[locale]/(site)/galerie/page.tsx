@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/data/prisma";
 import GalleryPage from "@/components/pages/GalleryPage";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 6;
 
 export default async function Galerie() {
   const images = await prisma.image.findMany({
