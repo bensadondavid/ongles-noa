@@ -20,6 +20,7 @@ const confirmationSchema = z.object({
     .array(prestationSchema)
     .min(1, "Aucune prestation sélectionnée"),
   options: z.array(optionSchema),
+  tel: z.string().min(8),
   message: z
     .string()
     .trim()
@@ -57,7 +58,7 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
-    const { date, time, prestations, options, message } = result.data;
+    const { date, time, prestations, options, message, tel } = result.data;
 
     const slotAvailable = await isSlotAvailable({
       date,
@@ -134,7 +135,7 @@ const startDateTime = DateTime.fromObject(
             message,
             customerName: user.name,
             customerEmail: user.email,
-            customerPhone: user.phone || "",
+            customerPhone: tel,
             status: "CONFIRMED"
           },
         });

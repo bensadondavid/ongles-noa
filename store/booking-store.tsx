@@ -23,6 +23,8 @@ type BookingStore = {
   setTime: (time: string | null) => void
   message : string | null
   setMessage: (message: string | null)=>void
+  phone : string | null
+  setPhone: (message: string | null)=>void
   resetBooking: () => void
 }
 
@@ -38,6 +40,8 @@ export const useBookingStore = create<BookingStore>()(
             setTime: (time)=>set({ time }),
             message: null,
             setMessage: (message)=>set({ message }),
+            phone: null,
+            setPhone: (phone)=>set({ phone }),
             resetBooking: () =>
               set({
                 prestations: [],

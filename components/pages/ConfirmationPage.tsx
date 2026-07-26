@@ -7,8 +7,11 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
+import { Input } from "../ui/input";
 
-export default function ConfirmationPage() {
+export default function ConfirmationPage({phone}: {phone: string}) {
+
+
   const t = useTranslations("confirmation");
   const [conditionsAccepted, setConditionsAccepted] = useState(false);
   const time = useBookingStore((state) => state.time);
@@ -18,6 +21,7 @@ export default function ConfirmationPage() {
   const options = useBookingStore((state) => state.options);
   const message = useBookingStore((state) => state.message);
   const setMessage = useBookingStore((state) => state.setMessage);
+  const [tel, setTel] = useState<string>(phone || "")
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const reset = useBookingStore((state)=>state.resetBooking)
 
@@ -26,10 +30,13 @@ export default function ConfirmationPage() {
   const handleSubmit = async () => {
     try {
       setIsLoading(true)
+      if(!tel){
+        return toast.error(t('error_tel'))
+      }
       const response = await fetch("/api/confirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date, time, prestations, options, message }),
+        body: JSON.stringify({ date, time, prestations, options, message, tel }),
       });
       if (!response.ok) {
         setIsLoading(false)
@@ -134,6 +141,30 @@ export default function ConfirmationPage() {
           rows={4}
           value={message ?? ""}
           onChange={(e) => setMessage(e.target.value)}
+          className="w-full resize-none rounded-2xl border border-white/20 bg-white/95 px-4 py-3 font-primary font-bold text-sm leading-6 text-border outline-none transition placeholder:text-border/40 focus:border-white focus:ring-2 focus:ring-white/25"
+        />
+      </div>
+
+      <div className="mt-4 w-full max-w-xl rounded-3xl border border-white/25 bg-border p-5 shadow-[0_18px_50px_rgba(0,0,0,0.18)] sm:p-6">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <label
+            htmlFor="phone"
+            className="text-sm font-bold uppercase tracking-[0.18em] text-white/70"
+          >
+            {t("tel")}
+          </label>
+
+          <span className="text-xs text-white/50">
+            {message?.length ?? 0}/300
+          </span>
+        </div>
+
+        <Input
+          type="tel"
+          id="phone"
+          name="phone"
+          value={tel}
+          onChange={(e) => setTel(e.target.value)}
           className="w-full resize-none rounded-2xl border border-white/20 bg-white/95 px-4 py-3 font-primary font-bold text-sm leading-6 text-border outline-none transition placeholder:text-border/40 focus:border-white focus:ring-2 focus:ring-white/25"
         />
       </div>

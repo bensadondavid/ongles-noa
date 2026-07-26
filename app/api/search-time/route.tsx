@@ -59,7 +59,9 @@ export async function POST(req: NextRequest) {
       nowIsrael.getFullYear() === year &&
       nowIsrael.getMonth() === month &&
       nowIsrael.getDate() === day;
-    const nowMin = nowIsrael.getHours() * 60 + nowIsrael.getMinutes();
+      if(isToday){
+        return NextResponse.json({ availableHours: [] });
+      }
 
     // Convertit un "minutes depuis minuit" (heure locale Israël) en instant réel
     const minToInstant = (min: number) =>
@@ -72,8 +74,6 @@ export async function POST(req: NextRequest) {
 
     for (const rule of availabilityRules) {
       for (let start = rule.startMin; start < rule.endMin; start += SLOT_MIN) {
-        // 1. Créneaux passés (aujourd'hui uniquement)
-        if (isToday && start <= nowMin) continue;
 
         const fitsInThisRule =
           start >= rule.startMin &&  start + duration <= rule.endMin;
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
 
         // 3. Conflit avec un rendez-vous existant — comparaison d'instants (DST-safe)
         const candidateStart = minToInstant(start);
-        const candidateEnd = minToInstant(start + duration);
+        const candidateEnd = minToInstant(start + duration); 
 
         const hasConflict = appointments.some(
           (appt) =>

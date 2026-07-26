@@ -136,7 +136,9 @@
     "next": "Suivant",
     "previous": "Precedent",
     "message": "Message",
-    "error": "Une erreur est survenue, veuillez réessayer"
+    "error": "Une erreur est survenue, veuillez réessayer",
+    "tel" : "Télephone",
+    "error_tel" : "Veuillez rentrer un numéro de téléphone"
   },
   "infos": {
     "title": "Mes infos",
