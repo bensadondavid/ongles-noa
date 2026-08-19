@@ -5,3 +5,4 @@ ignoredBuiltDependencies:
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - '@swc/core'
+  - protobufjs

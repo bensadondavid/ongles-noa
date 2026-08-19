@@ -215,6 +215,7 @@ function CalendarDayButton({
         className
       )}
       {...props}
+      disabled={props.disabled || modifiers.outside}
     />
   )
 }

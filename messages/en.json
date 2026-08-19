@@ -1,0 +1,210 @@
+{
+  "metadata": {
+    "description": "Book your appointment online with Noa Bensadon and enjoy professional, meticulous nail services."
+  },
+  "auth": {
+    "signUp": {
+      "title": "Create an account",
+      "name": {
+        "label": "Name",
+        "placeholder": "David"
+      },
+      "email": {
+        "label": "Email"
+      },
+      "password": {
+        "label": "Password",
+        "confirmed_password": "Confirm password",
+        "same": "The passwords match",
+        "nombre_caracteres": "At least 8 characters.",
+        "maj": "At least one uppercase letter",
+        "caractere_special": "At least one special character"
+      },
+      "submit": {
+        "default": "Create my account",
+        "loading": "Creating account..."
+      },
+      "google": "Continue with Google",
+      "compte_existant": "Already have an account?",
+      "success": "Account created successfully",
+      "errors": "Account creation failed. Please try again.",
+      "passwordProblem": "The password does not meet the requirements"
+    },
+    "signIn": {
+      "title": "Sign in",
+      "email": {
+        "label": "Email",
+        "placeholder": "david@email.com"
+      },
+      "password": {
+        "label": "Password"
+      },
+      "submit": {
+        "default": "Sign in",
+        "loading": "Signing in..."
+      },
+      "google": "Continue with Google",
+      "create-account": "Create an account",
+      "success": "Signed in successfully",
+      "error": "Sign-in failed. Please try again.",
+      "wrong_id": "Invalid email and/or password.",
+      "forgotPassword": "Forgot your password?"
+    },
+    "forgotPassword": {
+      "backToSignIn": "Back to sign in",
+      "request": {
+        "title": "Forgot your password?",
+        "description": "Enter your email address and we will send you a reset link.",
+        "email": "Email address",
+        "placeholder": "david@email.com",
+        "submit": "Send reset link",
+        "loading": "Sending...",
+        "success": "If an account matches this address, you will receive an email shortly.",
+        "error": "The link could not be sent. Please try again."
+      },
+      "reset": {
+        "title": "New password",
+        "description": "Choose a new password with at least 8 characters.",
+        "password": "New password",
+        "confirmPassword": "Confirm password",
+        "submit": "Change my password",
+        "loading": "Updating...",
+        "success": "Your password has been changed.",
+        "passwordLength": "The password must contain at least 8 characters.",
+        "passwordMismatch": "The passwords do not match.",
+        "invalidToken": "This link is invalid or has expired.",
+        "newLink": "Request a new link",
+        "error": "The update failed. Request a new link and try again."
+      }
+    }
+  },
+  "home": {
+    "rdv": "Book an\nappointment",
+    "sign-in": "Sign in",
+    "sign-up": "Sign up"
+  },
+  "prestations": {
+    "title": "services",
+    "subtitle": "list",
+    "presta_1": "Removal",
+    "presta_2": "Manicure and nail care",
+    "presta_3": "Russian manicure and gel polish",
+    "presta_4": "Russian manicure and builder gel",
+    "presta_5": "Gel-X extensions",
+    "presta_6": "Gel polish pedicure",
+    "next": "Next",
+    "select": "Please select at least one service.",
+    "depose": "Only the removal of work done elsewhere is charged.",
+    "depose_confirm_title": "Gel removal",
+    "depose_confirm_description": "Please select this service only if you want removal alone. Otherwise, removal is included with all other services.",
+    "depose_confirm_cancel": "Cancel",
+    "depose_confirm_ok": "Select anyway"
+  },
+  "options": {
+    "title": "options",
+    "subtitle": "list",
+    "option_1": "Broken nail repair",
+    "option_2": "Artificial nail extension",
+    "option_3": "French manicure",
+    "option_4": "Baby boomer",
+    "option_5": "Chrome effect",
+    "option_6": "Stickers, glitter and rhinestones",
+    "option_7": "Simple nail art per nail",
+    "option_8": "Detailed nail art per nail",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "reservation": {
+    "title": "time slots",
+    "subtitle": "availability",
+    "next": "Next",
+    "previous": "Previous",
+    "time": "Please choose a time slot",
+    "date": "Please choose a date",
+    "error": "Something went wrong. Please try again.",
+    "creneau": "No time slots available"
+  },
+  "confirmation": {
+    "title": "confirmation",
+    "date": "date",
+    "hour": "time",
+    "prestations": "services",
+    "options": "options",
+    "price": "price",
+    "conditions_btn": "I accept the cancellation policy:",
+    "conditions": "For cancellations made less than 48 hours before the appointment or arrivals more than 15 minutes late, 50% of the service price will be charged.",
+    "next": "Next",
+    "previous": "Previous",
+    "message": "Message",
+    "error": "Something went wrong. Please try again.",
+    "tel": "Phone number",
+    "error_tel": "Please enter a phone number"
+  },
+  "infos": {
+    "title": "My details",
+    "name": "Name",
+    "mail": "Email",
+    "phone": "Phone"
+  },
+  "sidebar": {
+    "home": "Home",
+    "infos": "My details",
+    "rdv": "My appointments",
+    "galerie": "Gallery",
+    "contact": "Contact"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Find us",
+    "address": "Address",
+    "addressValue": "1 Kadish Luz Street, 3rd floor, apartment 15, Jerusalem",
+    "phone": "Phone",
+    "email": "Email",
+    "instagram": "Instagram"
+  },
+  "gallery": {
+    "title": "gallery",
+    "subtitle": "photos",
+    "empty": "No photos yet.",
+    "loadMore": "View more",
+    "loading": "Loading..."
+  },
+  "appointments": {
+    "title": "My appointments",
+    "date": "date",
+    "prestations": "services",
+    "options": "options",
+    "delete": "An error occurred while cancelling the appointment",
+    "cancel_title": "Cancel this appointment?",
+    "cancel_description": "Are you sure you want to cancel this appointment? This action cannot be undone.",
+    "cancel_back": "Back",
+    "cancel_confirm": "Confirm cancellation",
+    "empty_title": "No appointments yet",
+    "empty_description": "Your upcoming appointments will appear here once they are booked."
+  },
+  "confirmed": {
+    "title": "Appointment confirmed",
+    "description": "Your appointment has been saved. You can find all your appointments in your personal area.",
+    "appointments": "View my appointments",
+    "home": "Back to home"
+  },
+  "addToCalendar": {
+    "button": "Add to calendar",
+    "eventTitle": "Nail appointment",
+    "location": "1 Kadish Luz Street, Jerusalem"
+  },
+  "loading": {
+    "message": "Loading..."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "home": "Back to home"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again.",
+    "retry": "Try again",
+    "home": "Back to home"
+  }
+}

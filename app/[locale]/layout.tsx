@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 
-export const nixieOne = Nixie_One({
+const nixieOne = Nixie_One({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-nixie-one",
@@ -50,12 +50,13 @@ export async function generateMetadata({
       languages: {
         fr: "/fr",
         he: "/he",
+        en: "/en",
       },
     },
 
     openGraph: {
       type: "website",
-      locale: locale === "he" ? "he_IL" : "fr_FR",
+      locale: locale === "he" ? "he_IL" : locale === "en" ? "en_US" : "fr_FR",
       url: `/${locale}`,
       siteName: title,
       title,

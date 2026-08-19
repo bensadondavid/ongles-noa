@@ -11,7 +11,7 @@ export default function Home() {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("home");
-  const changeLocale = (locale: "fr" | "he") => {
+  const changeLocale = (locale: "fr" | "he" | "en") => {
     router.replace(pathname, { locale }); // next-intl injecte la locale lui-même
   };
   const session = authClient.useSession();
@@ -61,6 +61,15 @@ export default function Home() {
           className="bg-white border-4 border-r-2 px-2 py-1 rounded-l-full text-xl z-10"
         >
           🇫🇷
+        </button>
+        <button
+          onClick={() => {
+            changeLocale("en");
+            resetStore();
+          }}
+          className="bg-white border-y-4 border-x-2 px-2 py-1 text-xl z-10"
+        >
+          🇬🇧
         </button>
         <button
           onClick={() => {

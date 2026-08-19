@@ -1,0 +1,68 @@
+import { inngest } from "@/lib/inngest/client";
+import { prisma } from "@/lib/data/prisma";
+import { sendAppointmentReminder } from "@/lib/twilio/whatsapp";
+
+const REMINDER_LEAD_TIME_MS = 24 * 60 * 60 * 1000;
+
+export const appointmentReminder = inngest.createFunction(
+  {
+    id: "appointment-whatsapp-reminder",
+    triggers: { event: "appointment/created" },
+  },
+  async ({ event, step }) => {
+    const appointmentId = event.data.appointmentId;
+
+    if (typeof appointmentId !== "string") {
+      throw new Error("appointmentId manquant dans l'événement");
+    }
+
+    const schedule = await step.run("load-reminder-schedule", async () => {
+      const appointment = await prisma.appointment.findUnique({
+        where: { id: appointmentId },
+        select: { startsAt: true, status: true },
+      });
+
+      if (!appointment || appointment.status === "CANCELLED") {
+        return null;
+      }
+
+      return {
+        reminderAt: new Date(
+          appointment.startsAt.getTime() - REMINDER_LEAD_TIME_MS,
+        ).toISOString(),
+      };
+    });
+
+    if (!schedule) {
+      return { skipped: true, reason: "appointment-missing-or-cancelled" };
+    }
+
+    if (new Date(schedule.reminderAt) > new Date()) {
+      await step.sleepUntil("wait-until-reminder", schedule.reminderAt);
+    }
+
+    return step.run("send-whatsapp-reminder", async () => {
+      const appointment = await prisma.appointment.findUnique({
+        where: { id: appointmentId },
+        select: {
+          startsAt: true,
+          status: true,
+          customerPhone: true,
+        },
+      });
+
+      if (!appointment || appointment.status === "CANCELLED") {
+        return { skipped: true, reason: "appointment-missing-or-cancelled" };
+      }
+
+      if (appointment.startsAt <= new Date()) {
+        return { skipped: true, reason: "appointment-already-started" };
+      }
+
+      return sendAppointmentReminder({
+        phone: appointment.customerPhone,
+        startsAt: appointment.startsAt,
+      });
+    });
+  },
+);

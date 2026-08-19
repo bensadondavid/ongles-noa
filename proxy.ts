@@ -20,7 +20,7 @@ const protectedPathnames = [
 ];
 
 function isProtectedPathname(pathname: string) {
-  const pathnameWithoutLocale = pathname.replace(/^\/(fr|he)(?=\/|$)/, "") || "/";
+  const pathnameWithoutLocale = pathname.replace(/^\/(fr|he|en)(?=\/|$)/, "") || "/";
 
   return protectedPathnames.some(
     (prefix) =>
@@ -32,7 +32,7 @@ function isProtectedPathname(pathname: string) {
 function getLocaleFromPathname(pathname: string) {
   const locale = pathname.split("/")[1];
 
-  if (locale === "fr" || locale === "he") {
+  if (locale === "fr" || locale === "he" || locale === "en") {
     return locale;
   }
 
