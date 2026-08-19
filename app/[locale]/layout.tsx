@@ -11,6 +11,10 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
+
 
 const nixieOne = Nixie_One({
   subsets: ["latin"],
@@ -130,6 +134,8 @@ export default async function RootLayout({
             position="top-right"
           />
         </NextIntlClientProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
