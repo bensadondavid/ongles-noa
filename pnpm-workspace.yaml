@@ -4,5 +4,7 @@ ignoredBuiltDependencies:
 
 onlyBuiltDependencies:
   - '@parcel/watcher'
+  - '@prisma/engines'
   - '@swc/core'
+  - prisma
   - protobufjs
