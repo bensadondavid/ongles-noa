@@ -31,11 +31,21 @@ function toWhatsAppAddress(phone: string) {
 }
 
 function getTwilioClient() {
-  return twilio(
-    getRequiredEnv("TWILIO_API_KEY_SID"),
-    getRequiredEnv("TWILIO_API_KEY_SECRET"),
-    { accountSid: getRequiredEnv("TWILIO_ACCOUNT_SID") },
-  );
+  const accountSid = getRequiredEnv("TWILIO_ACCOUNT_SID");
+  const apiKeySid = process.env.TWILIO_API_KEY_SID;
+  const apiKeySecret = process.env.TWILIO_API_KEY_SECRET;
+
+  if (Boolean(apiKeySid) !== Boolean(apiKeySecret)) {
+    throw new Error(
+      "TWILIO_API_KEY_SID et TWILIO_API_KEY_SECRET doivent être définis ensemble",
+    );
+  }
+
+  if (apiKeySid && apiKeySecret) {
+    return twilio(apiKeySid, apiKeySecret, { accountSid });
+  }
+
+  return twilio(accountSid, getRequiredEnv("TWILIO_AUTH_TOKEN"));
 }
 
 type AppointmentReminderInput = {
@@ -60,7 +70,7 @@ export async function sendAppointmentReminder({
   }).format(startsAt);
 
   const message = await getTwilioClient().messages.create({
-    from: getRequiredEnv("TWILIO_WHATSAPP_FROM"),
+    from: toWhatsAppAddress(getRequiredEnv("TWILIO_WHATSAPP_FROM")),
     to: toWhatsAppAddress(phone),
     contentSid:
       process.env.TWILIO_APPOINTMENT_REMINDER_CONTENT_SID ??

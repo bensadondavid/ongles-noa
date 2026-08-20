@@ -1,20 +1,31 @@
 import { inngest } from "@/lib/inngest/client";
 import { prisma } from "@/lib/data/prisma";
 import { sendAppointmentReminder } from "@/lib/twilio/whatsapp";
+import {
+  appointmentCancelledEvent,
+  appointmentCreatedEvent,
+} from "@/lib/inngest/events";
 
 const REMINDER_LEAD_TIME_MS = 24 * 60 * 60 * 1000;
 
 export const appointmentReminder = inngest.createFunction(
   {
     id: "appointment-whatsapp-reminder",
-    triggers: { event: "appointment/created" },
+    idempotency: "event.data.appointmentId",
+    singleton: {
+      key: "event.data.appointmentId",
+      mode: "skip",
+    },
+    triggers: appointmentCreatedEvent,
+    cancelOn: [
+      {
+        event: appointmentCancelledEvent,
+        match: "data.appointmentId",
+      },
+    ],
   },
   async ({ event, step }) => {
     const appointmentId = event.data.appointmentId;
-
-    if (typeof appointmentId !== "string") {
-      throw new Error("appointmentId manquant dans l'événement");
-    }
 
     const schedule = await step.run("load-reminder-schedule", async () => {
       const appointment = await prisma.appointment.findUnique({

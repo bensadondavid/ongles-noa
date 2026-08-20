@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/data/prisma";
 import { auth } from "@/lib/auth/auth";
+import { inngest } from "@/lib/inngest/client";
+import { appointmentCancelledEvent } from "@/lib/inngest/events";
 
 export async function DELETE(req: NextRequest) {
   try {
@@ -51,6 +53,18 @@ export async function DELETE(req: NextRequest) {
         cancelledAt: new Date()
       },
     });
+
+    try {
+      await inngest.send(
+        appointmentCancelledEvent.create(
+          { appointmentId: appointment.id },
+          { id: `appointment-cancelled-${appointment.id}` },
+        ),
+      );
+    } catch (error) {
+      // Le statut en base reste la source de vérité pour empêcher le rappel.
+      console.error("Impossible d'annuler le rappel Inngest :", error);
+    }
 
     return NextResponse.json(
       { message: "Rendez-vous annulé avec succès" },

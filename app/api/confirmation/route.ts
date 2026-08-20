@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth/auth";
 import { z } from "zod";
 import { isSlotAvailable } from "@/lib/booking/is-slot-available";
 import { inngest } from "@/lib/inngest/client";
+import { appointmentCreatedEvent } from "@/lib/inngest/events";
 
 const prestationSchema = z.object({
   name: z.string().min(1),
@@ -147,11 +148,12 @@ const startDateTime = DateTime.fromObject(
     );
 
     try {
-      await inngest.send({
-        id: newAppointment.id,
-        name: "appointment/created",
-        data: { appointmentId: newAppointment.id },
-      });
+      await inngest.send(
+        appointmentCreatedEvent.create(
+          { appointmentId: newAppointment.id },
+          { id: `appointment-created-${newAppointment.id}` },
+        ),
+      );
     } catch (error) {
       // La réservation reste valide même si le service de tâches est indisponible.
       console.error("Impossible de programmer le rappel WhatsApp :", error);

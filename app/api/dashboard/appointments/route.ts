@@ -3,6 +3,8 @@ import { fromZonedTime, toZonedTime } from "date-fns-tz";
 import { format } from "date-fns";
 import { prisma } from "@/lib/data/prisma";
 import { requireAdmin } from "@/lib/auth/require-admin";
+import { inngest } from "@/lib/inngest/client";
+import { appointmentCancelledEvent } from "@/lib/inngest/events";
 
 const TIME_ZONE = "Asia/Jerusalem";
 
@@ -83,9 +85,23 @@ export async function PUT(req: NextRequest){
         id
       },
       data: {
-        status: 'CANCELLED'
+        status: 'CANCELLED',
+        cancelledAt: new Date(),
       }
     })
+
+    try {
+      await inngest.send(
+        appointmentCancelledEvent.create(
+          { appointmentId: appointment.id },
+          { id: `appointment-cancelled-${appointment.id}` },
+        ),
+      );
+    } catch (error) {
+      // Le statut en base reste la source de vérité pour empêcher le rappel.
+      console.error("Impossible d'annuler le rappel Inngest :", error);
+    }
+
      return NextResponse.json({ appointment }, { status: 200 }
     );
   }
