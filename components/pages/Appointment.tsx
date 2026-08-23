@@ -21,17 +21,13 @@ import { BookingOption, BookingPrestation } from "@/store/booking-store";
 import { AddToCalendar } from "../ui/add-to-calendar";
 
 
-
-export default function Appointment({
-  appointments,
-}: {
-  appointments: AppointmentType[];
-}) {
+export default function Appointment({ appointments }: { appointments: AppointmentType[];}) {
   const t = useTranslations("appointments");
   const tCalendar = useTranslations("addToCalendar");
   const router = useRouter();
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async ( id: string ) => {
+
     try {
       const response = await fetch("/api/delete-rdv", {
         method: "DELETE",
@@ -40,10 +36,15 @@ export default function Appointment({
         },
         body: JSON.stringify({ id }),
       });
-
+      
       if (!response.ok) {
+        const data = await response.json()
+          if(data.error == "CANCELLATION_DEADLINE"){
+            return toast(t('cancellation_deadline'))
+          } 
         return toast.error(t("delete"));
       }
+      
 
       router.refresh();
     } catch (error) {
@@ -121,7 +122,9 @@ export default function Appointment({
                         </AlertDialogCancel>
 
                         <AlertDialogAction
-                          onClick={() => handleDelete(a.id)}
+                          onClick={() =>
+                            handleDelete(a.id)
+                          }
                           className="bg-[#7d6258] text-white hover:bg-[#6b5148]"
                         >
                           {t("cancel_confirm")}{" "}

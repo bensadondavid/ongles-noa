@@ -175,6 +175,7 @@
     "prestations": "services",
     "options": "options",
     "delete": "An error occurred while cancelling the appointment",
+    "cancellation_deadline": "Appointments cannot be cancelled less than 48 hours in advance",
     "cancel_title": "Cancel this appointment?",
     "cancel_description": "Are you sure you want to cancel this appointment? This action cannot be undone.",
     "cancel_back": "Back",

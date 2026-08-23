@@ -175,6 +175,7 @@
     "prestations": "prestations",
     "options": "options",
     "delete": "Erreur lors de l'annulation du rdv",
+    "cancellation_deadline": "Impossible d'annuler un rendez-vous moins de 48 heures à l'avance",
     "cancel_title": "Annuler ce rendez-vous ?",
     "cancel_description": "Êtes-vous sûr de vouloir annuler ce rendez-vous ? Cette action est irréversible.",
     "cancel_back": "Retour",

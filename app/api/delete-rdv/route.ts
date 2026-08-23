@@ -4,6 +4,8 @@ import { auth } from "@/lib/auth/auth";
 import { inngest } from "@/lib/inngest/client";
 import { appointmentCancelledEvent } from "@/lib/inngest/events";
 
+const CANCELLATION_DEADLINE_MS = 48 * 60 * 60 * 1000;
+
 export async function DELETE(req: NextRequest) {
   try {
     const session = await auth.api.getSession({
@@ -38,9 +40,14 @@ export async function DELETE(req: NextRequest) {
         { status: 404 }
       );
     }
-    if (appointment.startsAt <= new Date()) {
+    if (
+      appointment.startsAt.getTime() - Date.now() <=
+      CANCELLATION_DEADLINE_MS
+    ) {
       return NextResponse.json(
-        { error: "Impossible d'annuler un rendez-vous après son commencement" },
+        {
+          error: "CANCELLATION_DEADLINE",
+        },
         { status: 400 }
       );
     }
