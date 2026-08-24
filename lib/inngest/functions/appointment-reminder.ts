@@ -5,6 +5,7 @@ import {
   appointmentCancelledEvent,
   appointmentCreatedEvent,
 } from "@/lib/inngest/events";
+import { areWhatsAppRemindersEnabled } from "@/lib/inngest/reminders";
 
 const REMINDER_LEAD_TIME_MS = 24 * 60 * 60 * 1000;
 
@@ -25,6 +26,10 @@ export const appointmentReminder = inngest.createFunction(
     ],
   },
   async ({ event, step }) => {
+    if (!areWhatsAppRemindersEnabled()) {
+      return { skipped: true, reason: "whatsapp-reminders-disabled" };
+    }
+
     const appointmentId = event.data.appointmentId;
 
     const schedule = await step.run("load-reminder-schedule", async () => {
@@ -53,6 +58,10 @@ export const appointmentReminder = inngest.createFunction(
     }
 
     return step.run("send-whatsapp-reminder", async () => {
+      if (!areWhatsAppRemindersEnabled()) {
+        return { skipped: true, reason: "whatsapp-reminders-disabled" };
+      }
+
       const appointment = await prisma.appointment.findUnique({
         where: { id: appointmentId },
         select: {
