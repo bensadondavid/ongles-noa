@@ -1,6 +1,6 @@
 import { inngest } from "@/lib/inngest/client";
 import { prisma } from "@/lib/data/prisma";
-import { sendAppointmentReminder } from "@/lib/twilio/whatsapp";
+import { sendAppointmentReminder } from "@/lib/whatsapp/cloud-api";
 import {
   appointmentCancelledEvent,
   appointmentCreatedEvent,

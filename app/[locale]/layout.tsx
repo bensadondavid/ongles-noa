@@ -11,10 +11,9 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-
-
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SiteFooter } from "@/components/site-footer";
 
 const nixieOne = Nixie_One({
   subsets: ["latin"],
@@ -35,8 +34,7 @@ export async function generateMetadata({
     namespace: "metadata",
   });
 
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
   const title = "Noa Bensadon";
   const description = t("description");
@@ -126,13 +124,11 @@ export default async function RootLayout({
               <SidebarTrigger className="absolute top-4 left-4 z-20" />
 
               {children}
+              <SiteFooter />
             </SidebarInset>
           </SidebarProvider>
 
-          <Toaster
-            richColors
-            position="top-right"
-          />
+          <Toaster richColors position="top-right" />
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />

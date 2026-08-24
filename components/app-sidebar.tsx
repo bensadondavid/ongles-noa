@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Calendar, Images, User, MapPin } from "lucide-react";
 import {
@@ -12,17 +12,16 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
   SignOutButton,
-  SignInButton
+  SignInButton,
 } from "@/components/ui/sidebar";
 import { NavLink } from "@/components/ui/nav-link";
 import { authClient } from "@/lib/auth/auth-client";
 import { useTranslations } from "next-intl";
 
 export function AppSidebar() {
-
-  const {data: session } = authClient.useSession()
-  const user = session?.user.name
-  const t = useTranslations('sidebar')
+  const { data: session } = authClient.useSession();
+  const user = session?.user.name;
+  const t = useTranslations("sidebar");
 
   return (
     <Sidebar>
@@ -36,29 +35,29 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="gap-1.5">
-               <SidebarMenuItem>
+              <SidebarMenuItem>
                 <NavLink href="/" icon={User}>
-                  {t('home')}
+                  {t("home")}
                 </NavLink>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <NavLink href="/profile" icon={User}>
-                  {t('infos')}
+                  {t("infos")}
                 </NavLink>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <NavLink href="/appointments" icon={Calendar}>
-                  {t('rdv')}
+                  {t("rdv")}
                 </NavLink>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <NavLink href="/galerie" icon={Images}>
-                  {t('galerie')}
+                  {t("galerie")}
                 </NavLink>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <NavLink href="/contact" icon={MapPin}>
-                  {t('contact')}
+                  {t("contact")}
                 </NavLink>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -68,7 +67,7 @@ export function AppSidebar() {
 
       <SidebarFooter className="p-3">
         <SidebarSeparator className="mx-1 mb-2 bg-border/60" />
-        {user ? <SignOutButton /> : <SignInButton /> }
+        {user ? <SignOutButton /> : <SignInButton />}
       </SidebarFooter>
     </Sidebar>
   );

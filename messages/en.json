@@ -151,7 +151,10 @@
     "infos": "My details",
     "rdv": "My appointments",
     "galerie": "Gallery",
-    "contact": "Contact"
+    "contact": "Contact",
+    "legalNavigation": "Legal information",
+    "legalNotice": "Legal notice",
+    "terms": "Terms"
   },
   "contact": {
     "title": "Contact",
