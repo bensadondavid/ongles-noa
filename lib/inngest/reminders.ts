@@ -3,10 +3,9 @@ import {
   appointmentCancelledEvent,
   appointmentCreatedEvent,
 } from "@/lib/inngest/events";
+import { areWhatsAppRemindersEnabled } from "@/lib/whatsapp/config";
 
-export function areWhatsAppRemindersEnabled() {
-  return process.env.WHATSAPP_REMINDERS_ENABLED?.trim().toLowerCase() === "true";
-}
+export { areWhatsAppRemindersEnabled } from "@/lib/whatsapp/config";
 
 export async function scheduleAppointmentReminder(appointmentId: string) {
   if (!areWhatsAppRemindersEnabled()) {

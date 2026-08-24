@@ -1,16 +1,11 @@
+import {
+  getWhatsAppConfig,
+  getWhatsAppDateLocale,
+} from "@/lib/whatsapp/config";
+
 const TIME_ZONE = "Asia/Jerusalem";
 
-function getRequiredEnv(name: string) {
-  const value = process.env[name]?.trim();
-
-  if (!value) {
-    throw new Error(`Variable d'environnement manquante : ${name}`);
-  }
-
-  return value;
-}
-
-function normalizePhoneNumber(phone: string) {
+export function normalizeWhatsAppPhoneNumber(phone: string) {
   let normalized = phone.trim().replace(/^whatsapp:/i, "");
   normalized = normalized.replace(/[\s().-]/g, "");
 
@@ -47,40 +42,37 @@ export async function sendAppointmentReminder({
   phone,
   startsAt,
 }: AppointmentReminderInput) {
-  const apiVersion = getRequiredEnv("WHATSAPP_GRAPH_API_VERSION");
-  if (!/^v\d+\.\d+$/.test(apiVersion)) {
-    throw new Error("WHATSAPP_GRAPH_API_VERSION doit être au format vXX.X");
-  }
+  const config = getWhatsAppConfig();
+  const dateLocale = getWhatsAppDateLocale(config.templateLanguage);
 
-  const date = new Intl.DateTimeFormat("en-GB", {
+  const date = new Intl.DateTimeFormat(dateLocale, {
     dateStyle: "long",
     timeZone: TIME_ZONE,
   }).format(startsAt);
-  const time = new Intl.DateTimeFormat("en-GB", {
+  const time = new Intl.DateTimeFormat(dateLocale, {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
     timeZone: TIME_ZONE,
   }).format(startsAt);
 
-  const phoneNumberId = getRequiredEnv("WHATSAPP_PHONE_NUMBER_ID");
   const response = await fetch(
-    `https://graph.facebook.com/${apiVersion}/${phoneNumberId}/messages`,
+    `https://graph.facebook.com/${config.apiVersion}/${config.phoneNumberId}/messages`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${getRequiredEnv("WHATSAPP_ACCESS_TOKEN")}`,
+        Authorization: `Bearer ${config.accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         messaging_product: "whatsapp",
         recipient_type: "individual",
-        to: normalizePhoneNumber(phone),
+        to: normalizeWhatsAppPhoneNumber(phone),
         type: "template",
         template: {
-          name: getRequiredEnv("WHATSAPP_APPOINTMENT_REMINDER_TEMPLATE"),
+          name: config.templateName,
           language: {
-            code: getRequiredEnv("WHATSAPP_TEMPLATE_LANGUAGE"),
+            code: config.templateLanguage,
           },
           components: [
             {
@@ -97,7 +89,20 @@ export async function sendAppointmentReminder({
     },
   );
 
-  const result = (await response.json()) as WhatsAppApiResponse;
+  const responseText = await response.text();
+  let result: WhatsAppApiResponse = {};
+
+  if (responseText) {
+    try {
+      result = JSON.parse(responseText) as WhatsAppApiResponse;
+    } catch {
+      if (!response.ok) {
+        throw new Error(
+          `Échec WhatsApp Cloud API (${response.status}) : réponse illisible`,
+        );
+      }
+    }
+  }
 
   if (!response.ok) {
     const details = result.error;

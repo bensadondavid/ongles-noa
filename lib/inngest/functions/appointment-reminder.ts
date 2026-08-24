@@ -6,8 +6,7 @@ import {
   appointmentCreatedEvent,
 } from "@/lib/inngest/events";
 import { areWhatsAppRemindersEnabled } from "@/lib/inngest/reminders";
-
-const REMINDER_LEAD_TIME_MS = 24 * 60 * 60 * 1000;
+import { getWhatsAppReminderLeadHours } from "@/lib/whatsapp/config";
 
 export const appointmentReminder = inngest.createFunction(
   {
@@ -44,7 +43,8 @@ export const appointmentReminder = inngest.createFunction(
 
       return {
         reminderAt: new Date(
-          appointment.startsAt.getTime() - REMINDER_LEAD_TIME_MS,
+          appointment.startsAt.getTime() -
+            getWhatsAppReminderLeadHours() * 60 * 60 * 1000,
         ).toISOString(),
       };
     });
