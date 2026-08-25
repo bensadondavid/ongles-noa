@@ -98,7 +98,8 @@
     "depose_confirm_title": "Dépose de gel",
     "depose_confirm_description": "Attention, veuillez valider cette prestation uniquement si vous ne souhaitez faire QU'UNE DÉPOSE SEULE, sinon la dépose est comprise dans toutes les autres prestations.",
     "depose_confirm_cancel": "Annuler",
-    "depose_confirm_ok": "Sélctionner quand même"
+    "depose_confirm_ok": "Sélctionner quand même",
+    "empty": "Aucune prestation disponible pour le moment."
   },
   "options": {
     "title": "options",
@@ -112,7 +113,8 @@
     "option_7": "Nail art simple par ongle",
     "option_8": "Nail art élaboré par ongle",
     "next": "Suivant",
-    "previous": "Precedent"
+    "previous": "Precedent",
+    "empty": "Aucune option disponible pour le moment."
   },
   "reservation": {
     "title": "créneaux",

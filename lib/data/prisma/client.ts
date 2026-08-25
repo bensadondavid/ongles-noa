@@ -81,3 +81,13 @@ export type Appointment = Prisma.AppointmentModel
  * 
  */
 export type Image = Prisma.ImageModel
+/**
+ * Model Prestations
+ * 
+ */
+export type Prestations = Prisma.PrestationsModel
+/**
+ * Model Options
+ * 
+ */
+export type Options = Prisma.OptionsModel

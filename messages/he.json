@@ -99,7 +99,8 @@
     "depose_confirm_title": "הסרת ג'ל",
     "depose_confirm_description": "שימו לב, אשרו טיפול זה רק אם ברצונכם בהסרה בלבד, אחרת ההסרה כלולה בכל שאר הטיפולים",
     "depose_confirm_cancel": "ביטול",
-    "depose_confirm_ok": "לבחור בכל זאת"
+    "depose_confirm_ok": "לבחור בכל זאת",
+    "empty": "אין כרגע טיפולים זמינים."
   },
   "options": {
     "title": "תוספות",
@@ -113,7 +114,8 @@
     "option_7": "נייל ארט פשוט לכל ציפורן",
     "option_8": "נייל ארט מורכב לכל ציפורן",
     "next": "הבא",
-    "previous": "הקודם"
+    "previous": "הקודם",
+    "empty": "אין כרגע אפשרויות זמינות."
   },
   "reservation": {
     "title": "משבצות זמן",

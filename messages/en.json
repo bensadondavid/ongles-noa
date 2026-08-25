@@ -98,7 +98,8 @@
     "depose_confirm_title": "Gel removal",
     "depose_confirm_description": "Please select this service only if you want removal alone. Otherwise, removal is included with all other services.",
     "depose_confirm_cancel": "Cancel",
-    "depose_confirm_ok": "Select anyway"
+    "depose_confirm_ok": "Select anyway",
+    "empty": "No services are currently available."
   },
   "options": {
     "title": "options",
@@ -112,7 +113,8 @@
     "option_7": "Simple nail art per nail",
     "option_8": "Detailed nail art per nail",
     "next": "Next",
-    "previous": "Previous"
+    "previous": "Previous",
+    "empty": "No options are currently available."
   },
   "reservation": {
     "title": "time slots",

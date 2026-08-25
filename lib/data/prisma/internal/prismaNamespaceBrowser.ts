@@ -58,7 +58,9 @@ export const ModelName = {
   AvailabilityRule: 'AvailabilityRule',
   TimeOff: 'TimeOff',
   Appointment: 'Appointment',
-  Image: 'Image'
+  Image: 'Image',
+  Prestations: 'Prestations',
+  Options: 'Options'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -188,6 +190,30 @@ export const ImageScalarFieldEnum = {
 } as const
 
 export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
+
+
+export const PrestationsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PrestationsScalarFieldEnum = (typeof PrestationsScalarFieldEnum)[keyof typeof PrestationsScalarFieldEnum]
+
+
+export const OptionsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OptionsScalarFieldEnum = (typeof OptionsScalarFieldEnum)[keyof typeof OptionsScalarFieldEnum]
 
 
 export const SortOrder = {

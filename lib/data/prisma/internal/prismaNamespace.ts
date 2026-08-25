@@ -391,7 +391,9 @@ export const ModelName = {
   AvailabilityRule: 'AvailabilityRule',
   TimeOff: 'TimeOff',
   Appointment: 'Appointment',
-  Image: 'Image'
+  Image: 'Image',
+  Prestations: 'Prestations',
+  Options: 'Options'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "availabilityRule" | "timeOff" | "appointment" | "image"
+    modelProps: "user" | "session" | "account" | "verification" | "availabilityRule" | "timeOff" | "appointment" | "image" | "prestations" | "options"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1003,6 +1005,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Prestations: {
+      payload: Prisma.$PrestationsPayload<ExtArgs>
+      fields: Prisma.PrestationsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PrestationsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PrestationsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload>
+        }
+        findFirst: {
+          args: Prisma.PrestationsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PrestationsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload>
+        }
+        findMany: {
+          args: Prisma.PrestationsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload>[]
+        }
+        create: {
+          args: Prisma.PrestationsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload>
+        }
+        createMany: {
+          args: Prisma.PrestationsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PrestationsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload>[]
+        }
+        delete: {
+          args: Prisma.PrestationsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload>
+        }
+        update: {
+          args: Prisma.PrestationsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload>
+        }
+        deleteMany: {
+          args: Prisma.PrestationsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PrestationsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PrestationsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload>[]
+        }
+        upsert: {
+          args: Prisma.PrestationsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrestationsPayload>
+        }
+        aggregate: {
+          args: Prisma.PrestationsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePrestations>
+        }
+        groupBy: {
+          args: Prisma.PrestationsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PrestationsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PrestationsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PrestationsCountAggregateOutputType> | number
+        }
+      }
+    }
+    Options: {
+      payload: Prisma.$OptionsPayload<ExtArgs>
+      fields: Prisma.OptionsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OptionsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OptionsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload>
+        }
+        findFirst: {
+          args: Prisma.OptionsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OptionsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload>
+        }
+        findMany: {
+          args: Prisma.OptionsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload>[]
+        }
+        create: {
+          args: Prisma.OptionsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload>
+        }
+        createMany: {
+          args: Prisma.OptionsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.OptionsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload>[]
+        }
+        delete: {
+          args: Prisma.OptionsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload>
+        }
+        update: {
+          args: Prisma.OptionsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload>
+        }
+        deleteMany: {
+          args: Prisma.OptionsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OptionsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.OptionsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload>[]
+        }
+        upsert: {
+          args: Prisma.OptionsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OptionsPayload>
+        }
+        aggregate: {
+          args: Prisma.OptionsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOptions>
+        }
+        groupBy: {
+          args: Prisma.OptionsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OptionsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OptionsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OptionsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1153,6 +1303,30 @@ export const ImageScalarFieldEnum = {
 } as const
 
 export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
+
+
+export const PrestationsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PrestationsScalarFieldEnum = (typeof PrestationsScalarFieldEnum)[keyof typeof PrestationsScalarFieldEnum]
+
+
+export const OptionsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OptionsScalarFieldEnum = (typeof OptionsScalarFieldEnum)[keyof typeof OptionsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1431,6 +1605,8 @@ export type GlobalOmitConfig = {
   timeOff?: Prisma.TimeOffOmit
   appointment?: Prisma.AppointmentOmit
   image?: Prisma.ImageOmit
+  prestations?: Prisma.PrestationsOmit
+  options?: Prisma.OptionsOmit
 }
 
 /* Types for Logging */
