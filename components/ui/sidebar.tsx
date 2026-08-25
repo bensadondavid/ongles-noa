@@ -273,7 +273,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <User className="size-8 rounded-full border border-white p-1 text-white" />
+      <User className="size-10 rounded-full bg-white border border-text p-1 text-text" />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
