@@ -37,7 +37,7 @@ export async function GET(request: Request) {
   if (
     mode !== "subscribe" ||
     !challenge ||
-    token !== getRequiredWebhookEnv("WHATSAPP_WEBHOOK_VERIFY_TOKEN")
+    token !== getRequiredWebhookEnv("WHATSAPP_VERIFY_TOKEN")
   ) {
     return new Response("Forbidden", { status: 403 });
   }
