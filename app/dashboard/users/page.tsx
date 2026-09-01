@@ -5,6 +5,9 @@ export default async function Users(){
     const users = await prisma.user.findMany({
         where: {
             role: "CLIENT"
+        },
+        orderBy:{
+            createdAt: "asc"
         }
     })
     if(!users)
@@ -12,12 +15,11 @@ export default async function Users(){
     else{
         return(
             <ol className="pt-15 flex flex-col gap-3 justify-center items-center">
-                {users.map((user)=>(
+                {users.map((user, index)=>(
                     <li key={user.id} className="h-fit w-4/5 bg-border/40 text-white text-md p-3 rounded-2xl">
-                        <p>{user.name}</p>
+                        <p className="font-bold">{index + 1}. {user.name}</p>
                         <p>{user.email}</p>
                         <p>{user.phone || ""}</p>
-                        <p>{user.emailVerified ? "Email Vérifié" : "Email non vérifié"}</p>                   
                     </li>
                 ))}
             </ol>
