@@ -192,7 +192,7 @@ export default function DashboardAvailability() {
         }}
         modifiersClassNames={{
           open: "after:absolute after:bottom-1 after:left-1/2 after:size-1.5 after:-translate-x-1/2 after:rounded-full after:bg-white",
-          booked: "before:absolute before:right-1 before:top-1 before:size-2 before:rounded-full before:bg-amber-300 before:ring-2 before:ring-border",
+          booked: "before:absolute before:right-1 before:top-1 before:size-2 before:rounded-full before:bg-pink-300 before:ring-2 before:ring-border",
         }}
         className="rounded-3xl bg-border p-4 text-white font-bold [--cell-size:2.5rem]"
       />
@@ -280,7 +280,7 @@ export default function DashboardAvailability() {
             <div className="mt-6 border-t border-white/15 pt-5">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="font-primary text-base">Rendez-vous</h3>
-                <span className="rounded-full bg-amber-300 px-2.5 py-1 text-xs font-bold text-border">
+                <span className="rounded-full bg-pink-300 px-2.5 py-1 text-xs font-bold text-border">
                   {dayAppointments.length}
                 </span>
               </div>

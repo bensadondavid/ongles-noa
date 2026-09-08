@@ -1,8 +1,7 @@
 'use client'
 
-import { useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
-import { Button } from "@/components/ui/button"
 
 type ImageItem = { id: string; url: string; name: string }
 
@@ -18,8 +17,13 @@ export default function GalleryPage({
   const [images, setImages] = useState<ImageItem[]>(initialImages)
   const [hasMore, setHasMore] = useState(initialHasMore)
   const [loading, setLoading] = useState(false)
+  const loadMoreTriggerRef = useRef<HTMLDivElement>(null)
+  const isLoadingRef = useRef(false)
 
-  const loadMore = async () => {
+  const loadMore = useCallback(async () => {
+    if (!hasMore || isLoadingRef.current) return
+
+    isLoadingRef.current = true
     setLoading(true)
     try {
       const res = await fetch(`/api/gallery?skip=${images.length}`)
@@ -28,9 +32,25 @@ export default function GalleryPage({
       setImages((prev) => [...prev, ...data.images])
       setHasMore(data.hasMore)
     } finally {
+      isLoadingRef.current = false
       setLoading(false)
     }
-  }
+  }, [hasMore, images.length])
+
+  useEffect(() => {
+    const trigger = loadMoreTriggerRef.current
+    if (!trigger || !hasMore) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) void loadMore()
+      },
+      { rootMargin: "200px 0px" },
+    )
+
+    observer.observe(trigger)
+    return () => observer.disconnect()
+  }, [hasMore, loadMore])
 
   return (
     <div className="flex flex-col items-center pt-10 pb-10 px-4 w-full">
@@ -53,13 +73,13 @@ export default function GalleryPage({
       )}
 
       {hasMore && (
-        <Button
-          onClick={loadMore}
-          disabled={loading}
-          className="rounded-full bg-white/70 text-text hover:bg-white/90 h-[45px] px-6"
+        <div
+          ref={loadMoreTriggerRef}
+          className="flex min-h-[45px] items-center justify-center text-sm text-white/80"
+          aria-live="polite"
         >
-          {loading ? t('loading') : t('loadMore')}
-        </Button>
+          {loading && t('loading')}
+        </div>
       )}
     </div>
   )
