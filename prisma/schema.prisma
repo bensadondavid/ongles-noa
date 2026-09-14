@@ -133,7 +133,8 @@ model Appointment {
   customerEmail String
   customerPhone String
 
-  cancelledAt DateTime?
+  cancelledAt    DateTime?
+  reminderSentAt DateTime?
 
   appointmentItem   Json
   appointmentOption Json?

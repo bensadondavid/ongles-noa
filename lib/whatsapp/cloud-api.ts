@@ -1,6 +1,7 @@
 import {
   getWhatsAppConfig,
   getWhatsAppDateLocale,
+  type WhatsAppTemplateLanguage,
 } from "@/lib/whatsapp/config";
 
 const TIME_ZONE = "Asia/Jerusalem";
@@ -27,6 +28,7 @@ export function normalizeWhatsAppPhoneNumber(phone: string) {
 type AppointmentReminderInput = {
   phone: string;
   startsAt: Date;
+  locale: WhatsAppTemplateLanguage;
 };
 
 type WhatsAppApiResponse = {
@@ -41,9 +43,10 @@ type WhatsAppApiResponse = {
 export async function sendAppointmentReminder({
   phone,
   startsAt,
+  locale,
 }: AppointmentReminderInput) {
   const config = getWhatsAppConfig();
-  const dateLocale = getWhatsAppDateLocale(config.templateLanguage);
+  const dateLocale = getWhatsAppDateLocale(locale);
 
   const date = new Intl.DateTimeFormat(dateLocale, {
     dateStyle: "long",
@@ -72,7 +75,7 @@ export async function sendAppointmentReminder({
         template: {
           name: config.templateName,
           language: {
-            code: config.templateLanguage,
+            code: locale,
           },
           components: [
             {

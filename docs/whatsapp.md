@@ -1,9 +1,10 @@
 # Rappels WhatsApp
 
-Le site programme un rappel WhatsApp avant chaque rendez-vous confirmé. Inngest
-attend jusqu'à l'heure du rappel, recharge le rendez-vous depuis la base, puis
-envoie un modèle approuvé via la WhatsApp Cloud API. Un rendez-vous annulé ou
-déjà commencé n'est jamais envoyé.
+Chaque jour à 20 h, heure d'Israël, Inngest recherche les rendez-vous confirmés
+du lendemain et crée un envoi indépendant pour chacun. Une réservation pour le
+lendemain créée après 20 h déclenche immédiatement son rappel. Avant l'envoi,
+le rendez-vous est rechargé depuis la base ; un rendez-vous annulé, déjà commencé
+ou déjà rappelé n'est jamais envoyé.
 
 ## 1. Préparer Meta WhatsApp Business
 
@@ -15,17 +16,18 @@ déjà commencé n'est jamais envoyé.
    l'application et le compte WhatsApp Business, puis générer un jeton permanent
    avec les permissions `whatsapp_business_messaging` et
    `whatsapp_business_management`.
-4. Dans WhatsApp Manager, créer le modèle `appointment_reminder` dans la langue
-   choisie. Le corps doit avoir exactement deux variables, dans cet ordre :
+4. Dans WhatsApp Manager, créer le modèle `appointment_reminder` dans les
+   langues `fr`, `he` et `en`. Chaque corps doit avoir exactement deux variables,
+   dans cet ordre :
 
    ```text
    Rappel : votre rendez-vous est prévu le {{1}} à {{2}}.
    ```
 
-   Attendre que le modèle soit marqué **Approved**. Le nom et le code de langue
-   doivent correspondre exactement aux variables d'environnement.
+   Attendre que chaque traduction soit marquée **Approved**. La langue est
+   choisie automatiquement à partir de la locale enregistrée sur le rendez-vous.
 5. Dans la configuration WhatsApp de l'application Meta, renseigner le callback
-   `https://VOTRE-DOMAINE/api/whatsapp/webhook`, choisir soi-même une longue
+   `https://VOTRE-DOMAINE/api/webhook/whatsapp`, choisir soi-même une longue
    valeur aléatoire comme token de vérification, puis s'abonner au champ
    `messages`.
 
@@ -40,11 +42,9 @@ dans les variables du projet Vercel pour la production :
 - `WHATSAPP_PHONE_NUMBER_ID` : identifiant numérique relevé dans API Setup ;
 - `META_APP_SECRET` : secret de l'application Meta, utilisé pour vérifier la
   signature `X-Hub-Signature-256` des webhooks ;
-- `WHATSAPP_WEBHOOK_VERIFY_TOKEN` : secret choisi par vous et recopié à
+- `WHATSAPP_VERIFY_TOKEN` : secret choisi par vous et recopié à
   l'identique dans le formulaire de webhook Meta ;
 - `WHATSAPP_APPOINTMENT_REMINDER_TEMPLATE` : `appointment_reminder` ;
-- `WHATSAPP_TEMPLATE_LANGUAGE` : code exact du modèle (`fr`, `he`, `en_US`, etc.) ;
-- `WHATSAPP_REMINDER_LEAD_HOURS` : nombre entier de 1 à 168, `24` par défaut ;
 - `WHATSAPP_REMINDERS_ENABLED` : garder `false` jusqu'au test final, puis `true`.
 
 Ne jamais préfixer ces variables par `NEXT_PUBLIC_` et ne jamais committer le
@@ -73,11 +73,13 @@ npx inngest-cli@latest dev -u http://localhost:3000/api/inngest
    encore en mode test.
 2. Créer un rendez-vous futur avec un numéro au format `+972...`, `05...` ou un
    autre format E.164 international.
-3. Vérifier dans Inngest que l'événement `appointment/created` a lancé la fonction
-   `appointment-whatsapp-reminder` et qu'elle est en attente.
-4. Pour un test rapide, régler temporairement `WHATSAPP_REMINDER_LEAD_HOURS=1`
-   et créer un rendez-vous un peu plus d'une heure dans le futur.
-5. Après réception du message, remettre le délai voulu et passer
+3. Vérifier dans Inngest que les fonctions
+   `schedule-daily-appointment-whatsapp-reminders`,
+   `schedule-late-appointment-whatsapp-reminder` et
+   `send-appointment-whatsapp-reminder` sont synchronisées.
+4. Pour un test rapide après 20 h, créer un rendez-vous pour le lendemain :
+   l'heure du rappel étant déjà passée, la fonction poursuit immédiatement.
+5. Après réception du message de test et validation des trois langues, passer
    `WHATSAPP_REMINDERS_ENABLED=true` dans l'environnement de production.
 
 Les erreurs Meta (modèle non approuvé, langue incorrecte, jeton expiré, numéro

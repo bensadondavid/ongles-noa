@@ -9,6 +9,9 @@ export const appointmentCreatedEvent = eventType("appointment/created", {
   schema: appointmentEventSchema,
 });
 
-export const appointmentCancelledEvent = eventType("appointment/cancelled", {
-  schema: appointmentEventSchema,
-});
+export const appointmentReminderRequestedEvent = eventType(
+  "appointment/reminder.requested",
+  {
+    schema: appointmentEventSchema,
+  },
+);
