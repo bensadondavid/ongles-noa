@@ -25,3 +25,12 @@ export const AppointmentStatus = {
 } as const
 
 export type AppointmentStatus = (typeof AppointmentStatus)[keyof typeof AppointmentStatus]
+
+
+export const Locale = {
+  fr: 'fr',
+  he: 'he',
+  en: 'en'
+} as const
+
+export type Locale = (typeof Locale)[keyof typeof Locale]

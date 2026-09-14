@@ -1280,6 +1280,7 @@ export const AppointmentScalarFieldEnum = {
   startsAt: 'startsAt',
   endsAt: 'endsAt',
   message: 'message',
+  locale: 'locale',
   status: 'status',
   customerName: 'customerName',
   customerEmail: 'customerEmail',
@@ -1443,6 +1444,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Locale'
+ */
+export type EnumLocaleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Locale'>
+    
+
+
+/**
+ * Reference to a field of type 'Locale[]'
+ */
+export type ListEnumLocaleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Locale[]'>
     
 
 

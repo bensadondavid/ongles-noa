@@ -167,6 +167,7 @@ export const AppointmentScalarFieldEnum = {
   startsAt: 'startsAt',
   endsAt: 'endsAt',
   message: 'message',
+  locale: 'locale',
   status: 'status',
   customerName: 'customerName',
   customerEmail: 'customerEmail',

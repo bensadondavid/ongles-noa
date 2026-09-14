@@ -2,7 +2,7 @@
 
 import { Link } from "@/i18n/navigation";
 import { useBookingStore } from "@/store/booking-store";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useState } from "react";
 import { format } from "date-fns";
 import { useRouter } from "@/i18n/navigation";
@@ -11,7 +11,7 @@ import { Input } from "../ui/input";
 
 export default function ConfirmationPage({phone}: {phone: string}) {
 
-
+  const locale = useLocale()
   const t = useTranslations("confirmation");
   const [conditionsAccepted, setConditionsAccepted] = useState(false);
   const time = useBookingStore((state) => state.time);
@@ -36,7 +36,7 @@ export default function ConfirmationPage({phone}: {phone: string}) {
       const response = await fetch("/api/confirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date, time, prestations, options, message, tel }),
+        body: JSON.stringify({ date, time, prestations, options, message, tel, locale }),
       });
       if (!response.ok) {
         setIsLoading(false)

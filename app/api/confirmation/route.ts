@@ -14,20 +14,12 @@ const optionSchema = z.object({
 });
 const confirmationSchema = z.object({
   date: z.string().min(1, "Date manquante"),
-  time: z
-    .string()
-    .regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Heure invalide"),
-  prestations: z
-    .array(prestationSchema)
-    .min(1, "Aucune prestation sélectionnée"),
+  time: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Heure invalide"),
+  prestations: z.array(prestationSchema).min(1, "Aucune prestation sélectionnée"),
   options: z.array(optionSchema),
   tel: z.string().min(8),
-  message: z
-    .string()
-    .trim()
-    .max(1000, "Message trop long")
-    .nullable()
-    .optional()
+  message: z.string().trim().max(1000, "Message trop long").nullable().optional(),
+  locale: z.enum(["fr", "he", "en"])
 });
 
 
@@ -59,7 +51,7 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
-    const { date, time, prestations, options, message, tel } = result.data;
+    const { date, time, prestations, options, message, tel, locale } = result.data;
 
     const slotAvailable = await isSlotAvailable({
       date,
@@ -137,7 +129,8 @@ const startDateTime = DateTime.fromObject(
             customerName: user.name,
             customerEmail: user.email,
             customerPhone: tel,
-            status: "CONFIRMED"
+            status: "CONFIRMED",
+            locale : locale
           },
         });
       },

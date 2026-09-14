@@ -113,12 +113,19 @@ enum AppointmentStatus {
   NO_SHOW
 }
 
+enum Locale {
+  fr
+  he
+  en
+}
+
 model Appointment {
   id       String   @id @default(cuid())
   userId   String
   startsAt DateTime
   endsAt   DateTime
   message  String?
+  locale   Locale   @default(fr)
 
   status AppointmentStatus @default(PENDING)
 
