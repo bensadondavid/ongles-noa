@@ -1,5 +1,58 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 
+function asRecord(value: unknown): Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
+}
+
+function asArray(value: unknown): unknown[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function logMessageStatuses(event: unknown) {
+  for (const entry of asArray(asRecord(event).entry)) {
+    for (const change of asArray(asRecord(entry).changes)) {
+      const value = asRecord(asRecord(change).value);
+      for (const item of asArray(value.statuses)) {
+        const status = asRecord(item);
+        if (
+          typeof status.status !== "string" ||
+          !["sent", "delivered", "read", "failed"].includes(status.status)
+        ) {
+          continue;
+        }
+
+        // Liste blanche uniquement : jamais recipient_id, contenu, ni détails
+        // libres d'erreur Meta (qui peuvent contenir des données personnelles).
+        const messageId =
+          typeof status.id === "string" &&
+          /^wamid\.[A-Za-z0-9+/=_-]{1,512}$/.test(status.id)
+            ? status.id
+            : undefined;
+        const errorCodes = asArray(status.errors)
+          .map((error) => asRecord(error).code)
+          .filter((code): code is number =>
+            typeof code === "number" && Number.isSafeInteger(code) && code >= 0,
+          );
+        const log = JSON.stringify({
+          event: "whatsapp.message_status",
+          route: "/api/webhook/whatsapp",
+          status: status.status,
+          messageId,
+          errorCodes,
+        });
+
+        if (status.status === "failed") {
+          console.error(log);
+        } else {
+          console.info(log);
+        }
+      }
+    }
+  }
+}
+
 function getRequiredWebhookEnv(name: string) {
   const value = process.env[name]?.trim();
 
@@ -62,17 +115,12 @@ export async function POST(request: Request) {
     return new Response("Invalid JSON", { status: 400 });
   }
 
-  // L'accusé de réception doit être rapide. Les statuts sont visibles dans les
-  // logs Vercel sans journaliser le corps complet ni les données du client.
-  if (
-    typeof event === "object" &&
-    event !== null &&
-    "object" in event &&
-    event.object !== "whatsapp_business_account"
-  ) {
+  // Aucun appel réseau ou base de données : accusé de réception rapide.
+  if (asRecord(event).object !== "whatsapp_business_account") {
     return new Response("Ignored", { status: 200 });
   }
 
+  logMessageStatuses(event);
   console.info("Webhook WhatsApp reçu et vérifié");
 
   return new Response("EVENT_RECEIVED", { status: 200 });

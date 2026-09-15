@@ -85,3 +85,13 @@ npx inngest-cli@latest dev -u http://localhost:3000/api/inngest
 Les erreurs Meta (modèle non approuvé, langue incorrecte, jeton expiré, numéro
 non autorisé) apparaissent dans l'exécution Inngest et sont automatiquement
 retentées par la plateforme.
+
+Un envoi `accepted` dans Inngest signifie que Meta a accepté la demande, pas
+que le message est livré. Dans les logs Vercel de `/api/webhook/whatsapp`,
+chercher `whatsapp.message_status` : `sent`, `delivered`, `read` ou `failed`.
+Le champ `messageId` permet de retrouver l'envoi Inngest ; `errorCodes` contient
+les codes numériques Meta en cas d'échec. Aucun numéro, contenu de message ou
+détail libre d'erreur n'est journalisé par ce diagnostic.
+
+Test local du webhook (sans envoi réel) :
+`node --experimental-strip-types --test tests/whatsapp-webhook.test.mjs`.
