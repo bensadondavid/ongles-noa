@@ -26,6 +26,88 @@ type WhatsAppApiResponse = {
   };
 };
 
+type WhatsAppTextInput = {
+  phone: string;
+  text: string;
+  replyToMessageId?: string;
+};
+
+async function readWhatsAppResponse(response: Response) {
+  const responseText = await response.text();
+  let result: WhatsAppApiResponse = {};
+
+  if (responseText) {
+    try {
+      result = JSON.parse(responseText) as WhatsAppApiResponse;
+    } catch {
+      if (!response.ok) {
+        throw new Error(
+          `Échec WhatsApp Cloud API (${response.status}) : réponse illisible`,
+        );
+      }
+    }
+  }
+
+  if (!response.ok) {
+    const details = result.error;
+    throw new Error(
+      `Échec WhatsApp Cloud API (${response.status}${
+        details?.code ? `/${details.code}` : ""
+      }) : ${details?.message ?? details?.type ?? "erreur inconnue"}`,
+    );
+  }
+
+  const messageId = result.messages?.[0]?.id;
+  if (!messageId) {
+    throw new Error("WhatsApp Cloud API n'a retourné aucun identifiant de message");
+  }
+
+  return messageId;
+}
+
+export async function sendWhatsAppText({
+  phone,
+  text,
+  replyToMessageId,
+}: WhatsAppTextInput) {
+  const config = getWhatsAppConfig();
+  const normalizedText = text.trim();
+
+  if (!normalizedText || normalizedText.length > 4_096) {
+    throw new Error("Le message doit contenir entre 1 et 4 096 caractères");
+  }
+
+  const response = await fetch(
+    `https://graph.facebook.com/${config.apiVersion}/${config.phoneNumberId}/messages`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${config.accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messaging_product: "whatsapp",
+        recipient_type: "individual",
+        to: normalizeWhatsAppPhoneNumber(phone),
+        ...(replyToMessageId
+          ? { context: { message_id: replyToMessageId } }
+          : {}),
+        type: "text",
+        text: {
+          body: normalizedText,
+          preview_url: false,
+        },
+      }),
+      signal: AbortSignal.timeout(15_000),
+    },
+  );
+
+  return {
+    id: await readWhatsAppResponse(response),
+    status: "accepted" as const,
+  };
+}
+
 export async function sendAppointmentReminder({
   phone,
   startsAt,
@@ -78,34 +160,8 @@ export async function sendAppointmentReminder({
     },
   );
 
-  const responseText = await response.text();
-  let result: WhatsAppApiResponse = {};
-
-  if (responseText) {
-    try {
-      result = JSON.parse(responseText) as WhatsAppApiResponse;
-    } catch {
-      if (!response.ok) {
-        throw new Error(
-          `Échec WhatsApp Cloud API (${response.status}) : réponse illisible`,
-        );
-      }
-    }
-  }
-
-  if (!response.ok) {
-    const details = result.error;
-    throw new Error(
-      `Échec WhatsApp Cloud API (${response.status}${
-        details?.code ? `/${details.code}` : ""
-      }) : ${details?.message ?? details?.type ?? "erreur inconnue"}`,
-    );
-  }
-
-  const messageId = result.messages?.[0]?.id;
-  if (!messageId) {
-    throw new Error("WhatsApp Cloud API n'a retourné aucun identifiant de message");
-  }
-
-  return { id: messageId, status: "accepted" as const };
+  return {
+    id: await readWhatsAppResponse(response),
+    status: "accepted" as const,
+  };
 }

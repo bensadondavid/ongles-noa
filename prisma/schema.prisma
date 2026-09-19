@@ -163,6 +163,20 @@ model WhatsAppInboundMessage {
   @@index([fromPhone, receivedAt])
 }
 
+model WhatsAppOutboundMessage {
+  id               String   @id @default(cuid())
+  messageId        String   @unique
+  toPhone          String
+  text             String
+  replyToMessageId String?
+  status           String   @default("accepted")
+  sentAt           DateTime @default(now())
+  createdAt        DateTime @default(now())
+
+  @@index([sentAt])
+  @@index([toPhone, sentAt])
+}
+
 model Image {
   id        String   @id @default(cuid())
   url       String

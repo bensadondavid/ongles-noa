@@ -24,7 +24,7 @@ export * as $Enums from './enums'
 export * from "./enums"
 /**
  * ## Prisma Client
- * 
+ *
  * Type-safe database client for TypeScript
  * @example
  * ```
@@ -81,6 +81,11 @@ export type Appointment = Prisma.AppointmentModel
  * 
  */
 export type WhatsAppInboundMessage = Prisma.WhatsAppInboundMessageModel
+/**
+ * Model WhatsAppOutboundMessage
+ *
+ */
+export type WhatsAppOutboundMessage = Prisma.WhatsAppOutboundMessageModel
 /**
  * Model Image
  * 

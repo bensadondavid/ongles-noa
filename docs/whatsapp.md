@@ -60,6 +60,12 @@ de profil éventuel, le type, le texte et la date sont conservés ; le payload
 Meta complet n'est pas stocké. La migration Prisma doit être appliquée avant de
 déployer le code qui active cette boîte de réception.
 
+Depuis `/dashboard/messages`, un administrateur peut répondre en texte pendant
+les 24 heures qui suivent le dernier message du contact. Les réponses envoyées
+sont enregistrées dans `WhatsAppOutboundMessage` et affichées dans la
+conversation. Une fois cette fenêtre terminée, WhatsApp impose l'utilisation
+d'un modèle approuvé.
+
 ## 3. Relier Inngest
 
 L'endpoint du projet est `/api/inngest`. En production, renseigner

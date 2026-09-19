@@ -59,6 +59,7 @@ export const ModelName = {
   TimeOff: 'TimeOff',
   Appointment: 'Appointment',
   WhatsAppInboundMessage: 'WhatsAppInboundMessage',
+  WhatsAppOutboundMessage: 'WhatsAppOutboundMessage',
   Image: 'Image',
   Prestations: 'Prestations',
   Options: 'Options'
@@ -196,6 +197,20 @@ export const WhatsAppInboundMessageScalarFieldEnum = {
 } as const
 
 export type WhatsAppInboundMessageScalarFieldEnum = (typeof WhatsAppInboundMessageScalarFieldEnum)[keyof typeof WhatsAppInboundMessageScalarFieldEnum]
+
+
+export const WhatsAppOutboundMessageScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  toPhone: 'toPhone',
+  text: 'text',
+  replyToMessageId: 'replyToMessageId',
+  status: 'status',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt'
+} as const
+
+export type WhatsAppOutboundMessageScalarFieldEnum = (typeof WhatsAppOutboundMessageScalarFieldEnum)[keyof typeof WhatsAppOutboundMessageScalarFieldEnum]
 
 
 export const ImageScalarFieldEnum = {
