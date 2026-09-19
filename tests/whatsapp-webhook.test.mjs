@@ -36,6 +36,31 @@ test("extrait uniquement les données nécessaires des messages entrants", () =>
   });
 });
 
+test("extrait l’emoji d’une réaction WhatsApp", () => {
+  const [message] = extractInboundMessages({
+    object: "whatsapp_business_account",
+    entry: [{
+      changes: [{
+        value: {
+          messages: [{
+            id: "wamid.REACTION123=",
+            from: "972587879024",
+            timestamp: "1789837201",
+            type: "reaction",
+            reaction: {
+              message_id: "wamid.ORIGINAL123=",
+              emoji: "❤️",
+            },
+          }],
+        },
+      }],
+    }],
+  });
+
+  assert.equal(message.type, "reaction");
+  assert.equal(message.text, "❤️");
+});
+
 test("webhook signé : statuts corrélables sans données personnelles", async (t) => {
   const originalEnv = process.env;
   process.env = {

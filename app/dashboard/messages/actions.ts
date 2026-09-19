@@ -12,6 +12,8 @@ const replySchema = z.object({
   text: z.string().trim().min(1).max(4_096),
 });
 
+const phoneSchema = z.string().regex(/^[1-9]\d{6,14}$/);
+
 export type ReplyState = {
   status: "idle" | "success" | "error";
   message: string;
@@ -99,4 +101,24 @@ export async function replyToWhatsAppMessage(
     status: "success",
     message: "Message accepté par WhatsApp. Livraison en cours.",
   };
+}
+
+export async function deleteWhatsAppConversation(phone: string) {
+  await verifAdmin();
+
+  const parsedPhone = phoneSchema.safeParse(phone);
+  if (!parsedPhone.success) {
+    throw new Error("Numéro WhatsApp invalide");
+  }
+
+  await prisma.$transaction([
+    prisma.whatsAppInboundMessage.deleteMany({
+      where: { fromPhone: parsedPhone.data },
+    }),
+    prisma.whatsAppOutboundMessage.deleteMany({
+      where: { toPhone: parsedPhone.data },
+    }),
+  ]);
+
+  revalidatePath("/dashboard/messages");
 }

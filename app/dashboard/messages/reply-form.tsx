@@ -33,18 +33,28 @@ export function ReplyForm({ inboundMessageId, canReply }: ReplyFormProps) {
 
   if (!canReply) {
     return (
-      <p className="mt-4 rounded-2xl bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
-        La fenêtre de 24 h est terminée. Utilise un modèle approuvé pour
-        reprendre la conversation.
-      </p>
+      <div className="mt-4 flex items-start gap-3 rounded-2xl border border-amber-300/15 bg-amber-400/10 px-4 py-3 text-sm text-amber-50/90">
+        <div className="mt-1 size-2 shrink-0 rounded-full bg-amber-300" />
+        <p>
+          La fenêtre de 24 h est terminée. Utilise un modèle approuvé pour
+          reprendre la conversation.
+        </p>
+      </div>
     );
   }
 
   return (
-    <form ref={formRef} action={formAction} className="mt-4">
+    <form
+      ref={formRef}
+      action={formAction}
+      className="mt-4 rounded-2xl border border-white/10 bg-white/[0.045] p-3"
+    >
       <input type="hidden" name="inboundMessageId" value={inboundMessageId} />
-      <label htmlFor={`reply-${inboundMessageId}`} className="sr-only">
-        Réponse WhatsApp
+      <label
+        htmlFor={`reply-${inboundMessageId}`}
+        className="mb-2 block px-1 text-xs font-medium text-white/55"
+      >
+        Répondre sur WhatsApp
       </label>
       <textarea
         id={`reply-${inboundMessageId}`}
@@ -54,7 +64,7 @@ export function ReplyForm({ inboundMessageId, canReply }: ReplyFormProps) {
         rows={3}
         dir="auto"
         placeholder="Écrire une réponse…"
-        className="w-full resize-y rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-white outline-none placeholder:text-white/45 focus:border-white/50 focus:ring-2 focus:ring-white/15"
+        className="w-full resize-y rounded-xl border border-white/10 bg-black/15 px-4 py-3 text-sm leading-6 text-white outline-none transition-colors placeholder:text-white/35 focus:border-emerald-300/40 focus:ring-2 focus:ring-emerald-300/10"
       />
       <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
         <p
@@ -67,7 +77,11 @@ export function ReplyForm({ inboundMessageId, canReply }: ReplyFormProps) {
         >
           {state.message}
         </p>
-        <Button type="submit" disabled={pending} className="min-w-28">
+        <Button
+          type="submit"
+          disabled={pending}
+          className="min-w-28 rounded-xl bg-emerald-500 text-white hover:bg-emerald-400"
+        >
           <Send aria-hidden="true" />
           {pending ? "Envoi…" : "Envoyer"}
         </Button>

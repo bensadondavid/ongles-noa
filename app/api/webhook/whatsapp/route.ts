@@ -32,6 +32,7 @@ function getInboundMessageText(message: Record<string, unknown>) {
     asRecord(message.image).caption,
     asRecord(message.video).caption,
     asRecord(message.document).caption,
+    asRecord(message.reaction).emoji,
   ];
 
   const text = candidates.find(
