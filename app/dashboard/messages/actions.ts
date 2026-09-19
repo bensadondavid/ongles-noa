@@ -95,5 +95,8 @@ export async function replyToWhatsAppMessage(
   }
 
   revalidatePath("/dashboard/messages");
-  return { status: "success", message: "Message envoyé." };
+  return {
+    status: "success",
+    message: "Message accepté par WhatsApp. Livraison en cours.",
+  };
 }

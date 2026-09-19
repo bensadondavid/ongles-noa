@@ -8,6 +8,14 @@ import { normalizePhoneNumber } from "@/lib/phone";
 const TIME_ZONE = "Asia/Jerusalem";
 
 export function normalizeWhatsAppPhoneNumber(phone: string) {
+  const trimmedPhone = phone.trim().replace(/^whatsapp:/i, "");
+
+  // Meta fournit les numéros entrants en E.164 sans le signe `+`.
+  // Ils sont déjà complets et ne doivent pas recevoir un second indicatif.
+  if (/^[1-9]\d{6,14}$/.test(trimmedPhone)) {
+    return trimmedPhone;
+  }
+
   return normalizePhoneNumber(phone, "IL").slice(1);
 }
 
