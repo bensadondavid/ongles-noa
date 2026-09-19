@@ -391,6 +391,7 @@ export const ModelName = {
   AvailabilityRule: 'AvailabilityRule',
   TimeOff: 'TimeOff',
   Appointment: 'Appointment',
+  WhatsAppInboundMessage: 'WhatsAppInboundMessage',
   Image: 'Image',
   Prestations: 'Prestations',
   Options: 'Options'
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "availabilityRule" | "timeOff" | "appointment" | "image" | "prestations" | "options"
+    modelProps: "user" | "session" | "account" | "verification" | "availabilityRule" | "timeOff" | "appointment" | "whatsAppInboundMessage" | "image" | "prestations" | "options"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -931,6 +932,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    WhatsAppInboundMessage: {
+      payload: Prisma.$WhatsAppInboundMessagePayload<ExtArgs>
+      fields: Prisma.WhatsAppInboundMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WhatsAppInboundMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WhatsAppInboundMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.WhatsAppInboundMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WhatsAppInboundMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload>
+        }
+        findMany: {
+          args: Prisma.WhatsAppInboundMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload>[]
+        }
+        create: {
+          args: Prisma.WhatsAppInboundMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload>
+        }
+        createMany: {
+          args: Prisma.WhatsAppInboundMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WhatsAppInboundMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.WhatsAppInboundMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload>
+        }
+        update: {
+          args: Prisma.WhatsAppInboundMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.WhatsAppInboundMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WhatsAppInboundMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WhatsAppInboundMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.WhatsAppInboundMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.WhatsAppInboundMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWhatsAppInboundMessage>
+        }
+        groupBy: {
+          args: Prisma.WhatsAppInboundMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppInboundMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WhatsAppInboundMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppInboundMessageCountAggregateOutputType> | number
+        }
+      }
+    }
     Image: {
       payload: Prisma.$ImagePayload<ExtArgs>
       fields: Prisma.ImageFieldRefs
@@ -1296,6 +1371,20 @@ export const AppointmentScalarFieldEnum = {
 export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
 
 
+export const WhatsAppInboundMessageScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  fromPhone: 'fromPhone',
+  profileName: 'profileName',
+  type: 'type',
+  text: 'text',
+  receivedAt: 'receivedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type WhatsAppInboundMessageScalarFieldEnum = (typeof WhatsAppInboundMessageScalarFieldEnum)[keyof typeof WhatsAppInboundMessageScalarFieldEnum]
+
+
 export const ImageScalarFieldEnum = {
   id: 'id',
   url: 'url',
@@ -1620,6 +1709,7 @@ export type GlobalOmitConfig = {
   availabilityRule?: Prisma.AvailabilityRuleOmit
   timeOff?: Prisma.TimeOffOmit
   appointment?: Prisma.AppointmentOmit
+  whatsAppInboundMessage?: Prisma.WhatsAppInboundMessageOmit
   image?: Prisma.ImageOmit
   prestations?: Prisma.PrestationsOmit
   options?: Prisma.OptionsOmit

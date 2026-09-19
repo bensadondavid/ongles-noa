@@ -53,6 +53,13 @@ jeton. Après toute modification sur Vercel, redéployer l'application.
 Le webhook accepte le challenge `GET` de Meta et refuse tout événement `POST`
 dont la signature ne correspond pas au secret de l'application.
 
+Les réponses entrantes sont enregistrées de façon idempotente dans
+`WhatsAppInboundMessage`, puis affichées aux administrateurs dans
+`/dashboard/messages`. Seuls l'identifiant Meta, le numéro expéditeur, le nom
+de profil éventuel, le type, le texte et la date sont conservés ; le payload
+Meta complet n'est pas stocké. La migration Prisma doit être appliquée avant de
+déployer le code qui active cette boîte de réception.
+
 ## 3. Relier Inngest
 
 L'endpoint du projet est `/api/inngest`. En production, renseigner

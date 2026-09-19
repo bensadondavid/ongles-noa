@@ -1,5 +1,8 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 
+const WHATSAPP_MESSAGE_ID_PATTERN = /^wamid\.[A-Za-z0-9+/=_-]{1,512}$/;
+const WHATSAPP_PHONE_PATTERN = /^[1-9]\d{6,14}$/;
+
 function asRecord(value: unknown): Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value)
     ? (value as Record<string, unknown>)
@@ -8,6 +11,95 @@ function asRecord(value: unknown): Record<string, unknown> {
 
 function asArray(value: unknown): unknown[] {
   return Array.isArray(value) ? value : [];
+}
+
+type InboundMessage = {
+  messageId: string;
+  fromPhone: string;
+  profileName?: string;
+  type: string;
+  text?: string;
+  receivedAt: Date;
+};
+
+function getInboundMessageText(message: Record<string, unknown>) {
+  const interactive = asRecord(message.interactive);
+  const candidates = [
+    asRecord(message.text).body,
+    asRecord(message.button).text,
+    asRecord(interactive.button_reply).title,
+    asRecord(interactive.list_reply).title,
+    asRecord(message.image).caption,
+    asRecord(message.video).caption,
+    asRecord(message.document).caption,
+  ];
+
+  const text = candidates.find(
+    (candidate): candidate is string =>
+      typeof candidate === "string" && Boolean(candidate.trim()),
+  );
+
+  return text?.trim().slice(0, 4096);
+}
+
+export function extractInboundMessages(event: unknown): InboundMessage[] {
+  const messages: InboundMessage[] = [];
+
+  for (const entry of asArray(asRecord(event).entry)) {
+    for (const change of asArray(asRecord(entry).changes)) {
+      const value = asRecord(asRecord(change).value);
+      const contactNames = new Map<string, string>();
+
+      for (const item of asArray(value.contacts)) {
+        const contact = asRecord(item);
+        const profileName = asRecord(contact.profile).name;
+        if (
+          typeof contact.wa_id === "string" &&
+          WHATSAPP_PHONE_PATTERN.test(contact.wa_id) &&
+          typeof profileName === "string" &&
+          profileName.trim()
+        ) {
+          contactNames.set(contact.wa_id, profileName.trim().slice(0, 200));
+        }
+      }
+
+      for (const item of asArray(value.messages)) {
+        const message = asRecord(item);
+        if (
+          typeof message.id !== "string" ||
+          !WHATSAPP_MESSAGE_ID_PATTERN.test(message.id) ||
+          typeof message.from !== "string" ||
+          !WHATSAPP_PHONE_PATTERN.test(message.from) ||
+          typeof message.timestamp !== "string" ||
+          !/^\d{1,16}$/.test(message.timestamp)
+        ) {
+          continue;
+        }
+
+        const receivedAt = new Date(Number(message.timestamp) * 1000);
+        if (Number.isNaN(receivedAt.getTime())) {
+          continue;
+        }
+
+        const type =
+          typeof message.type === "string" && message.type.length <= 50
+            ? message.type
+            : "unknown";
+        const text = getInboundMessageText(message);
+
+        messages.push({
+          messageId: message.id,
+          fromPhone: message.from,
+          profileName: contactNames.get(message.from),
+          type,
+          text,
+          receivedAt,
+        });
+      }
+    }
+  }
+
+  return messages;
 }
 
 function logMessageStatuses(event: unknown) {
@@ -27,7 +119,7 @@ function logMessageStatuses(event: unknown) {
         // libres d'erreur Meta (qui peuvent contenir des données personnelles).
         const messageId =
           typeof status.id === "string" &&
-          /^wamid\.[A-Za-z0-9+/=_-]{1,512}$/.test(status.id)
+          WHATSAPP_MESSAGE_ID_PATTERN.test(status.id)
             ? status.id
             : undefined;
         const errorCodes = asArray(status.errors)
@@ -115,9 +207,16 @@ export async function POST(request: Request) {
     return new Response("Invalid JSON", { status: 400 });
   }
 
-  // Aucun appel réseau ou base de données : accusé de réception rapide.
   if (asRecord(event).object !== "whatsapp_business_account") {
     return new Response("Ignored", { status: 200 });
+  }
+
+  const inboundMessages = extractInboundMessages(event);
+  if (inboundMessages.length > 0) {
+    const { persistInboundMessages } = await import(
+      "@/lib/whatsapp/inbound-messages"
+    );
+    await persistInboundMessages(inboundMessages);
   }
 
   logMessageStatuses(event);

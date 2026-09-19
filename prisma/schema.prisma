@@ -149,6 +149,20 @@ model Appointment {
   @@index([customerEmail])
 }
 
+model WhatsAppInboundMessage {
+  id          String   @id @default(cuid())
+  messageId   String   @unique
+  fromPhone   String
+  profileName String?
+  type        String
+  text        String?
+  receivedAt  DateTime
+  createdAt   DateTime @default(now())
+
+  @@index([receivedAt])
+  @@index([fromPhone, receivedAt])
+}
+
 model Image {
   id        String   @id @default(cuid())
   url       String

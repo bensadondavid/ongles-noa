@@ -53,6 +53,11 @@ export type TimeOff = Prisma.TimeOffModel
  */
 export type Appointment = Prisma.AppointmentModel
 /**
+ * Model WhatsAppInboundMessage
+ * 
+ */
+export type WhatsAppInboundMessage = Prisma.WhatsAppInboundMessageModel
+/**
  * Model Image
  * 
  */

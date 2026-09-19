@@ -58,6 +58,7 @@ export const ModelName = {
   AvailabilityRule: 'AvailabilityRule',
   TimeOff: 'TimeOff',
   Appointment: 'Appointment',
+  WhatsAppInboundMessage: 'WhatsAppInboundMessage',
   Image: 'Image',
   Prestations: 'Prestations',
   Options: 'Options'
@@ -181,6 +182,20 @@ export const AppointmentScalarFieldEnum = {
 } as const
 
 export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
+
+
+export const WhatsAppInboundMessageScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  fromPhone: 'fromPhone',
+  profileName: 'profileName',
+  type: 'type',
+  text: 'text',
+  receivedAt: 'receivedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type WhatsAppInboundMessageScalarFieldEnum = (typeof WhatsAppInboundMessageScalarFieldEnum)[keyof typeof WhatsAppInboundMessageScalarFieldEnum]
 
 
 export const ImageScalarFieldEnum = {

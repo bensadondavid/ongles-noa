@@ -1,7 +1,40 @@
 import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
 import { test } from "node:test";
-import { GET, POST } from "../app/api/webhook/whatsapp/route.ts";
+import {
+  GET,
+  POST,
+  extractInboundMessages,
+} from "../app/api/webhook/whatsapp/route.ts";
+
+test("extrait uniquement les données nécessaires des messages entrants", () => {
+  const [message] = extractInboundMessages({
+    object: "whatsapp_business_account",
+    entry: [{
+      changes: [{
+        value: {
+          contacts: [{ wa_id: "972587879024", profile: { name: "Noa" } }],
+          messages: [{
+            id: "wamid.INBOUND123=",
+            from: "972587879024",
+            timestamp: "1789837200",
+            type: "text",
+            text: { body: "  Bonjour  " },
+          }],
+        },
+      }],
+    }],
+  });
+
+  assert.deepEqual(message, {
+    messageId: "wamid.INBOUND123=",
+    fromPhone: "972587879024",
+    profileName: "Noa",
+    type: "text",
+    text: "Bonjour",
+    receivedAt: new Date(1789837200 * 1000),
+  });
+});
 
 test("webhook signé : statuts corrélables sans données personnelles", async (t) => {
   const originalEnv = process.env;
