@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth/auth";
 import { z } from "zod";
 import { isSlotAvailable } from "@/lib/booking/is-slot-available";
 import { scheduleAppointmentReminder } from "@/lib/inngest/reminders";
+import { normalizePhoneNumber, supportedPhoneCountries } from "@/lib/phone";
 
 const prestationSchema = z.object({
   name: z.string().min(1),
@@ -18,6 +19,7 @@ const confirmationSchema = z.object({
   prestations: z.array(prestationSchema).min(1, "Aucune prestation sélectionnée"),
   options: z.array(optionSchema),
   tel: z.string().min(8),
+  phoneCountry: z.enum(supportedPhoneCountries).default("IL"),
   message: z.string().trim().max(1000, "Message trop long").nullable().optional(),
   locale: z.enum(["fr", "he", "en"])
 });
@@ -51,7 +53,17 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
-    const { date, time, prestations, options, message, tel, locale } = result.data;
+    const { date, time, prestations, options, message, tel, phoneCountry, locale } = result.data;
+
+    let customerPhone: string;
+    try {
+      customerPhone = normalizePhoneNumber(tel, phoneCountry);
+    } catch {
+      return NextResponse.json(
+        { error: "Numéro de téléphone invalide" },
+        { status: 400 }
+      );
+    }
 
     const slotAvailable = await isSlotAvailable({
       date,
@@ -128,7 +140,7 @@ const startDateTime = DateTime.fromObject(
             message,
             customerName: user.name,
             customerEmail: user.email,
-            customerPhone: tel,
+            customerPhone,
             status: "CONFIRMED",
             locale : locale
           },

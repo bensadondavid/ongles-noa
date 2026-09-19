@@ -3,26 +3,12 @@ import {
   getWhatsAppDateLocale,
   type WhatsAppTemplateLanguage,
 } from "@/lib/whatsapp/config";
+import { normalizePhoneNumber } from "@/lib/phone";
 
 const TIME_ZONE = "Asia/Jerusalem";
 
 export function normalizeWhatsAppPhoneNumber(phone: string) {
-  let normalized = phone.trim().replace(/^whatsapp:/i, "");
-  normalized = normalized.replace(/[\s().-]/g, "");
-
-  if (normalized.startsWith("00")) {
-    normalized = normalized.slice(2);
-  } else if (normalized.startsWith("+")) {
-    normalized = normalized.slice(1);
-  } else if (normalized.startsWith("0")) {
-    normalized = `972${normalized.slice(1)}`;
-  }
-
-  if (!/^[1-9]\d{6,14}$/.test(normalized)) {
-    throw new Error("Le numéro WhatsApp doit être au format international E.164");
-  }
-
-  return normalized;
+  return normalizePhoneNumber(phone, "IL").slice(1);
 }
 
 type AppointmentReminderInput = {

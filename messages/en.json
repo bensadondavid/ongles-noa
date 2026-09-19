@@ -140,6 +140,7 @@
     "message": "Message",
     "error": "Something went wrong. Please try again.",
     "tel": "Phone number",
+    "phone_country": "Country calling code",
     "error_tel": "Please enter a phone number"
   },
   "infos": {

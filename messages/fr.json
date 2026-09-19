@@ -139,7 +139,8 @@
     "previous": "Precedent",
     "message": "Message",
     "error": "Une erreur est survenue, veuillez réessayer",
-    "tel": "Télephone",
+    "tel": "Téléphone",
+    "phone_country": "Indicatif du pays",
     "error_tel": "Veuillez rentrer un numéro de téléphone"
   },
   "infos": {

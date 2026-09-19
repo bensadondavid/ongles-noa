@@ -9,8 +9,33 @@ import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { Input } from "../ui/input";
 
+type PhoneCountry = "IL" | "FR";
+
+function getInitialPhoneState(phone: string): {
+  country: PhoneCountry;
+  nationalNumber: string;
+} {
+  const normalized = phone.replace(/[\s().-]/g, "");
+
+  if (normalized.startsWith("+33")) {
+    return { country: "FR", nationalNumber: `0${normalized.slice(3)}` };
+  }
+  if (normalized.startsWith("0033")) {
+    return { country: "FR", nationalNumber: `0${normalized.slice(4)}` };
+  }
+  if (normalized.startsWith("+972")) {
+    return { country: "IL", nationalNumber: `0${normalized.slice(4)}` };
+  }
+  if (normalized.startsWith("00972")) {
+    return { country: "IL", nationalNumber: `0${normalized.slice(5)}` };
+  }
+
+  return { country: "IL", nationalNumber: phone };
+}
+
 export default function ConfirmationPage({phone}: {phone: string}) {
 
+  const initialPhone = getInitialPhoneState(phone);
   const locale = useLocale()
   const t = useTranslations("confirmation");
   const [conditionsAccepted, setConditionsAccepted] = useState(false);
@@ -21,7 +46,10 @@ export default function ConfirmationPage({phone}: {phone: string}) {
   const options = useBookingStore((state) => state.options);
   const message = useBookingStore((state) => state.message);
   const setMessage = useBookingStore((state) => state.setMessage);
-  const [tel, setTel] = useState<string>(phone || "")
+  const [tel, setTel] = useState<string>(initialPhone.nationalNumber)
+  const [phoneCountry, setPhoneCountry] = useState<PhoneCountry>(
+    initialPhone.country,
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const reset = useBookingStore((state)=>state.resetBooking)
 
@@ -36,7 +64,16 @@ export default function ConfirmationPage({phone}: {phone: string}) {
       const response = await fetch("/api/confirmation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date, time, prestations, options, message, tel, locale }),
+        body: JSON.stringify({
+          date,
+          time,
+          prestations,
+          options,
+          message,
+          tel,
+          phoneCountry,
+          locale,
+        }),
       });
       if (!response.ok) {
         setIsLoading(false)
@@ -153,20 +190,32 @@ export default function ConfirmationPage({phone}: {phone: string}) {
           >
             {t("tel")}
           </label>
-
-          <span className="text-xs text-white/50">
-            {message?.length ?? 0}/300
-          </span>
         </div>
 
-        <Input
-          type="tel"
-          id="phone"
-          name="phone"
-          value={tel}
-          onChange={(e) => setTel(e.target.value)}
-          className="w-full resize-none rounded-2xl border border-white/20 bg-white/95 px-4 py-3 font-primary font-bold text-sm leading-6 text-border outline-none transition placeholder:text-border/40 focus:border-white focus:ring-2 focus:ring-white/25"
-        />
+        <div className="flex gap-2" dir="ltr">
+          <select
+            value={phoneCountry}
+            onChange={(event) =>
+              setPhoneCountry(event.target.value as PhoneCountry)
+            }
+            aria-label={t("phone_country")}
+            className="shrink-0 rounded-2xl border border-white/20 bg-white/95 px-3 py-3 font-primary text-sm font-bold text-border outline-none transition focus:border-white focus:ring-2 focus:ring-white/25"
+          >
+            <option value="IL">🇮🇱 +972</option>
+            <option value="FR">🇫🇷 +33</option>
+          </select>
+
+          <Input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={tel}
+            onChange={(e) => setTel(e.target.value)}
+            autoComplete="tel"
+            inputMode="tel"
+            className="min-w-0 flex-1 resize-none rounded-2xl border border-white/20 bg-white/95 px-4 py-3 font-primary text-sm font-bold leading-6 text-border outline-none transition placeholder:text-border/40 focus:border-white focus:ring-2 focus:ring-white/25"
+          />
+        </div>
       </div>
 
       <label className="mt-5 flex w-full max-w-xl cursor-pointer items-start gap-3 px-2">
