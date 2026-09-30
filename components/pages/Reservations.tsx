@@ -20,6 +20,38 @@ export default function Reservations() {
 
   const [hours, setHours] = useState<string[]>([]);
   const [isLoadingHours, setIsLoadingHours] = useState(false);
+  const [calendarMonth, setCalendarMonth] = useState(() => startOfMonth(new Date()));
+  const [availability, setAvailability] = useState<{
+    key: string;
+    dates: Set<string>;
+  } | null>(null);
+  const availabilityKey = `${format(calendarMonth, "yyyy-MM")}:${prestaLength}`;
+  const availableDates =
+    availability?.key === availabilityKey ? availability.dates : null;
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const getAvailableDates = async () => {
+      try {
+        const month = availabilityKey.split(":")[0];
+        const response = await fetch(
+          `/api/available-dates?month=${month}&prestaLength=${prestaLength}`,
+          { signal: controller.signal, cache: "no-store" },
+        );
+        if (!response.ok) throw new Error("Impossible de charger les disponibilités");
+        const data: { availableDates: string[] } = await response.json();
+        setAvailability({ key: availabilityKey, dates: new Set(data.availableDates) });
+      } catch {
+        if (!controller.signal.aborted) {
+          toast.error("Impossible de charger les disponibilités");
+        }
+      }
+    };
+
+    if (prestaLength > 0) getAvailableDates();
+    return () => controller.abort();
+  }, [availabilityKey, prestaLength]);
 
   useEffect(() => {
     if (!dateStore) return;
@@ -86,6 +118,8 @@ export default function Reservations() {
         showOutsideDays={false}
         startMonth={startOfMonth(new Date())}
         endMonth={endOfMonth(addMonths(new Date(), 1))}
+        month={calendarMonth}
+        onMonthChange={setCalendarMonth}
         selected={selectedDate}
         onSelect={(date) => {
           if (!date) return;
@@ -94,7 +128,10 @@ export default function Reservations() {
         }}
         disabled={[
           { before: new Date(), after: endOfMonth(addMonths(new Date(), 1)) },
-          { dayOfWeek: [5, 6] },
+          { dayOfWeek: [6] },
+          (date) =>
+            availableDates !== null &&
+            !availableDates.has(format(date, "yyyy-MM-dd")),
         ]}
         className="
           rounded-3xl bg-border p-4 text-white font-bold
