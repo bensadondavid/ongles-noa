@@ -6,6 +6,7 @@ import { z } from "zod";
 import { isSlotAvailable } from "@/lib/booking/is-slot-available";
 import { scheduleAppointmentReminder } from "@/lib/inngest/reminders";
 import { normalizePhoneNumber, supportedPhoneCountries } from "@/lib/phone";
+import { sendNewAppointmentPush } from "@/lib/push/admin-push";
 
 const prestationSchema = z.object({
   name: z.string().min(1),
@@ -156,6 +157,13 @@ const startDateTime = DateTime.fromObject(
     } catch (error) {
       // La réservation reste valide même si le service de tâches est indisponible.
       console.error("Impossible de programmer le rappel WhatsApp :", error);
+    }
+
+    try {
+      await sendNewAppointmentPush(newAppointment);
+    } catch (error) {
+      // Une erreur de notification ne doit jamais annuler la réservation.
+      console.error("Impossible de notifier le nouveau rendez-vous :", error);
     }
 
     return NextResponse.json(
