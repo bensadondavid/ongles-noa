@@ -7,8 +7,8 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <DashboardPushControl />
       <DashboardAvailability />
+      <DashboardPushControl />
     </>
   );
 }
