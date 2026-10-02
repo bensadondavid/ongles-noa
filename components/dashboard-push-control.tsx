@@ -36,7 +36,7 @@ export function DashboardPushControl() {
   useEffect(() => {
     let active = true;
     async function prepare() {
-      if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
+      if (!("serviceWorker" in navigator)) {
         throw new Error("Les notifications ne sont pas disponibles sur cet appareil.");
       }
       const [worker, key] = await Promise.all([
@@ -47,6 +47,13 @@ export function DashboardPushControl() {
           return data.publicKey;
         }),
       ]);
+      if (!("pushManager" in worker) || !worker.pushManager) {
+        throw new Error(
+          isStandalone()
+            ? "Cette installation ne donne pas accès aux notifications. Supprimez l’ancienne icône et ajoutez le site à nouveau depuis Safari."
+            : "Ouvrez le site depuis son icône sur l’écran d’accueil pour activer les notifications.",
+        );
+      }
       const current = await worker.pushManager.getSubscription();
       if (!active) return;
       setRegistration(worker);
