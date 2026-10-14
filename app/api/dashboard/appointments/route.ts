@@ -3,6 +3,7 @@ import { fromZonedTime, toZonedTime } from "date-fns-tz";
 import { format } from "date-fns";
 import { prisma } from "@/lib/data/prisma";
 import { requireAdmin } from "@/lib/auth/require-admin";
+import { sendCancelledAppointmentPush } from "@/lib/push/admin-push";
 
 const TIME_ZONE = "Asia/Jerusalem";
 
@@ -74,19 +75,26 @@ export async function PUT(req: NextRequest){
     const body = await req.json()
     const { id } = body
 
-     if (!id) {
-      return NextResponse.json({ error: "ID manquant" }, { status: 400 });
+     if (typeof id !== "string" || !id) {
+      return NextResponse.json({ error: "ID invalide" }, { status: 400 });
     }
 
-    const appointment = await prisma.appointment.update({
-      where:{
-        id
-      },
+    const [appointment] = await prisma.appointment.updateManyAndReturn({
+      where: { id, status: { not: "CANCELLED" } },
       data: {
         status: 'CANCELLED',
         cancelledAt: new Date(),
       }
     })
+    if (!appointment) {
+      return NextResponse.json({ error: "Rendez-vous introuvable ou déjà annulé" }, { status: 404 });
+    }
+
+    try {
+      await sendCancelledAppointmentPush(appointment);
+    } catch (error) {
+      console.error("Impossible de notifier l'annulation du rendez-vous :", error);
+    }
 
      return NextResponse.json({ appointment }, { status: 200 }
     );

@@ -13,18 +13,21 @@ self.addEventListener("push", (event) => {
       icon: "/logo-noa-fav.png",
       badge: "/logo-noa-fav.png",
       tag: data.tag,
-      data: { url: "/dashboard" },
+      data: { url: data.url === "/dashboard/messages" ? data.url : "/dashboard" },
     }),
   );
 });
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
+  const url = event.notification.data?.url === "/dashboard/messages"
+    ? "/dashboard/messages"
+    : "/dashboard";
   event.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true }).then((windows) => {
-      const dashboard = windows.find((window) => new URL(window.url).pathname.startsWith("/dashboard"));
-      if (dashboard) return dashboard.focus();
-      return clients.openWindow("/dashboard");
+      const target = windows.find((window) => new URL(window.url).pathname === url);
+      if (target) return target.navigate(url).then((window) => window?.focus());
+      return clients.openWindow(url);
     }),
   );
 });

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/data/prisma";
 import { auth } from "@/lib/auth/auth";
+import { sendCancelledAppointmentPush } from "@/lib/push/admin-push";
 
 const CANCELLATION_DEADLINE_MS = 48 * 60 * 60 * 1000;
 
@@ -49,15 +50,26 @@ export async function DELETE(req: NextRequest) {
         { status: 400 }
       );
     }
-    await prisma.appointment.update({
+    const result = await prisma.appointment.updateMany({
       where: {
         id,
+        userId: session.user.id,
+        status: { not: "CANCELLED" },
       },
       data: {
         status: "CANCELLED",
         cancelledAt: new Date()
       },
     });
+    if (result.count === 0) {
+      return NextResponse.json({ error: "Rendez-vous introuvable" }, { status: 404 });
+    }
+
+    try {
+      await sendCancelledAppointmentPush(appointment);
+    } catch (error) {
+      console.error("Impossible de notifier l'annulation du rendez-vous :", error);
+    }
 
     return NextResponse.json(
       { message: "Rendez-vous annulé avec succès" },

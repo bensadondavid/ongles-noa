@@ -13,11 +13,14 @@ export function getVapidPublicKey() {
   return publicKey;
 }
 
-export async function sendNewAppointmentPush(appointment: {
-  id: string;
-  startsAt: Date;
-  customerName: string;
-}) {
+type PushPayload = {
+  title: string;
+  body: string;
+  tag: string;
+  url: "/dashboard" | "/dashboard/messages";
+};
+
+async function sendAdminPush(payload: PushPayload) {
   if (!getVapidPublicKey()) return;
 
   const subscriptions = await prisma.pushSubscription.findMany({
@@ -25,22 +28,12 @@ export async function sendNewAppointmentPush(appointment: {
   });
   if (subscriptions.length === 0) return;
 
-  const date = DateTime.fromJSDate(appointment.startsAt)
-    .setZone("Asia/Jerusalem")
-    .setLocale("fr")
-    .toFormat("cccc d LLLL 'à' HH:mm");
-  const payload = JSON.stringify({
-    title: "Nouveau rendez-vous",
-    body: `${appointment.customerName} — ${date}`,
-    tag: `appointment-${appointment.id}`,
-  });
-
   await Promise.all(
     subscriptions.map(async ({ id, endpoint, p256dh, auth }) => {
       try {
         await webpush.sendNotification(
           { endpoint, keys: { p256dh, auth } },
-          payload,
+          JSON.stringify(payload),
           { TTL: 3600, timeout: 5000 },
         );
       } catch (error) {
@@ -51,9 +44,55 @@ export async function sendNewAppointmentPush(appointment: {
         if (statusCode === 404 || statusCode === 410) {
           await prisma.pushSubscription.deleteMany({ where: { id } });
         } else {
-          console.error("Envoi de la notification de rendez-vous impossible :", error);
+          console.error("Envoi de la notification impossible :", error);
         }
       }
     }),
   );
+}
+
+type AppointmentPush = {
+  id: string;
+  startsAt: Date;
+  customerName: string;
+};
+
+function appointmentDate(appointment: AppointmentPush) {
+  const date = DateTime.fromJSDate(appointment.startsAt)
+    .setZone("Asia/Jerusalem")
+    .setLocale("fr")
+    .toFormat("cccc d LLLL 'à' HH:mm");
+  return date;
+}
+
+export async function sendNewAppointmentPush(appointment: AppointmentPush) {
+  await sendAdminPush({
+    title: "Nouveau rendez-vous",
+    body: `${appointment.customerName} — ${appointmentDate(appointment)}`,
+    tag: `appointment-${appointment.id}`,
+    url: "/dashboard",
+  });
+}
+
+export async function sendCancelledAppointmentPush(appointment: AppointmentPush) {
+  await sendAdminPush({
+    title: "Rendez-vous annulé",
+    body: `${appointment.customerName} — ${appointmentDate(appointment)}`,
+    tag: `appointment-cancelled-${appointment.id}`,
+    url: "/dashboard",
+  });
+}
+
+export async function sendNewWhatsAppMessagePush(message: {
+  messageId: string;
+  fromPhone: string;
+  profileName?: string;
+}) {
+  const sender = message.profileName || `+${message.fromPhone}`;
+  await sendAdminPush({
+    title: "Nouveau message WhatsApp",
+    body: `${sender} vous a écrit.`,
+    tag: `whatsapp-${message.messageId}`,
+    url: "/dashboard/messages",
+  });
 }

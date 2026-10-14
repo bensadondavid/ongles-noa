@@ -118,14 +118,14 @@ export function DashboardPushControl() {
   }
 
   return (
-    <section className="mx-auto max-w-4xl px-6 pt-16" aria-label="Notifications de rendez-vous">
+    <section className="mx-auto max-w-4xl px-6 pt-16" aria-label="Notifications administrateur">
       <div className="flex flex-col gap-3 rounded-3xl bg-border p-5 text-white sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="flex items-center gap-2 font-primary text-lg">
-            <Bell className="size-5" aria-hidden="true" /> Notifications de rendez-vous
+              <Bell className="size-5" aria-hidden="true" /> Notifications
           </h2>
           <p className="mt-1 text-sm text-white/70">
-            {subscription ? "Activées sur cet appareil." : "Recevez une alerte pour chaque nouveau rendez-vous."}
+            {subscription ? "Activées sur cet appareil." : "Recevez les nouveaux rendez-vous, les annulations et les messages WhatsApp."}
           </p>
           {!installed && (
             <p className="mt-2 text-sm text-white/70">
